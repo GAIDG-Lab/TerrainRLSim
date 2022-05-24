@@ -7,7 +7,7 @@ This project is designed to learn good navigation skills for simulated character
 
 This section covers some of the steps to setup and compile the code. The software depends on many libraries that need to be carefully prepared and placed for the building and linking to work properly. 
 ```
-git clone https://github.com/UBCMOCCA/TerrainRL.git
+git clone [https://github.com/GAIDG-Lab/TerrainRLSim.git](https://github.com/GAIDG-Lab/TerrainRLSim.git)
 ```
 
 ## Linux (Ubuntu 16.04)
