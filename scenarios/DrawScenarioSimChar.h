@@ -39,6 +39,7 @@ protected:
 	bool mDrawPolicyPlots;
 	bool mEnableCharDrawShapes;
 	bool mPauseSim;
+	bool mDrawGRFs;
 
 	bool mEnableTrace;
 	cCharTracer mTracer;

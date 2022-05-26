@@ -16,6 +16,8 @@
 #include "render/DrawObj.h"
 #include "render/DrawPerturb.h"
 #include "render/GraphUtil.h"
+#include <iostream>
+#include <fstream>
 
 void cDrawSimCharacter::Draw(const cSimCharacter& character, const tVector& fill_tint, const tVector& line_col, bool enable_draw_shape)
 {
@@ -118,30 +120,18 @@ void cDrawSimCharacter::DrawGroundReactionForces(const cSimCharacter& character,
 	tVector ground_pos = root_pos;
 	ground_pos[1] = ground_h;
 
-	cDrawUtil::SetColor(tVector(pos_col[0], pos_col[1], pos_col[2], pos_col[3]));
-	cDrawUtil::DrawArrow2D(ground_pos + offset, root_pos + offset, arrow_size);
+	/*When visualize the result, create an arrow to display the difference between current speed and desired speed*/
+	tVector com = character.CalcCOM();
+	tVector net_velocity = character.CalcCOMVel();
+	double sp = net_velocity.norm();
+	double dp = character.GetDesiredSpeed();
+	double diff = sp - dp;
+	std::ofstream outfile;
+	outfile.open("/home/beth/Desktop/output1.txt", std::ios_base::app); //append instead of overwrite
+	outfile << "\n\n current speed is:" << sp << "\n desired speed is:" << dp;
 
-	for (int i = 0; i < character.GetNumBodyParts(); ++i)
-	{
-		if (character.IsValidBodyPart(i))
-		{
-			const auto& curr_part = character.GetBodyPart(i);
-			if (curr_part->IsInContact())
-			// if (curr_part->IsInContact() && character.IsEndEffector(i))
-			{
-				tVector curr_impulse = curr_part->GetContactImpulse() * 10;
-				// std::cout << "current link: " << i << " contact impulse: " << curr_impulse << std::endl;
-
-				tVector pos = curr_part->GetPos();
-				// tVector vel = curr_part->GetLinearVelocity();
-
-				// cDrawUtil::SetColor(tVector(pos_col[0], pos_col[1], pos_col[2], pos_col[3]));
-				// cDrawUtil::DrawArrow2D(root_pos + offset, pos + offset, arrow_size);
-				cDrawUtil::SetColor(tVector(vel_col[0], vel_col[1], vel_col[2], vel_col[3]));
-				cDrawUtil::DrawArrow2D(pos, pos + curr_impulse, arrow_size);
-			}
-		}
-	}
+	cDrawUtil::SetColor(tVector(vel_col[0], vel_col[1], vel_col[2], vel_col[3]));
+	cDrawUtil::DrawArrow2D(com, com + diff * net_velocity.normalized(), arrow_size);
 }
 
 void cDrawSimCharacter::DrawTerainFeatures(const cSimCharacter& character, double marker_size,

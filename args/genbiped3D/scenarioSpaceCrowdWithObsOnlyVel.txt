@@ -50,7 +50,7 @@
 -rand_target_pos_time_min= 50
 -rand_target_pos_time_max= 100
 
--num_characters= 2
+-num_characters= 0
 -spawn_radius= 7.0
 -rand_target_bound= 5
 
