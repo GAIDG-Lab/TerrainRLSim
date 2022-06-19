@@ -607,6 +607,23 @@ void cSimAdapter::init()
 			gScenario = std::shared_ptr<cDrawScenario>(scenario__);
 			this->_gScenario = gScenario;
 		}
+		else if (scenario_name == "imitate_mocap_eval")
+		{
+			std::shared_ptr<cDrawScenarioSimChar> scenario__ = std::shared_ptr<cDrawScenarioImitateMocapStepEval>(new cDrawScenarioImitateMocapStepEval(gCamera));
+			this->_scene = std::shared_ptr<cScenarioSimChar>(scenario__->GetScene());
+			this->_gScenario = scenario__;
+			if (this->_gScenario != NULL)
+			{
+				auto sim_char_scene = std::dynamic_pointer_cast<cDrawScenarioTerrainRL>(scenario__);
+				if (sim_char_scene != nullptr)
+				{
+					sim_char_scene->SetOutputTex(gIntermediateFrameBuffer);
+				}
+
+			}
+			gScenario = std::shared_ptr<cDrawScenario>(scenario__);
+			this->_gScenario = gScenario;
+		}
 		else if (scenario_name == "hike_eval")
 		{
 			gCameraPosition = tVector(0, 30, 30, 0);

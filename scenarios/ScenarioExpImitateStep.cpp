@@ -362,6 +362,7 @@ void cScenarioExpImitateStep::SetupKinController()
 	std::shared_ptr<cKinController> kin_ctrl;
 	BuildKinController(kin_ctrl);
 	
+	printf("ScenarioExpImitateStep.cpp SetupKinController\n");
 	auto step_ctrl = std::dynamic_pointer_cast<cMocapStepController>(kin_ctrl);
 	if (step_ctrl != nullptr)
 	{
@@ -374,6 +375,7 @@ void cScenarioExpImitateStep::SetupKinController()
 			step_ctrl->SetHandJoints(8,	14);
 
 		}
+		printf("ScenarioExpImitateStep.cpp mCycleDur: %f\n", mCtrlParams.mCycleDur);
 		step_ctrl->SetCyclePeriod(mCtrlParams.mCycleDur);
 		step_ctrl->Init(mKinChar.get(), mKinCtrlFile);
 	}

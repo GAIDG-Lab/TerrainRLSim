@@ -16,6 +16,8 @@ public:
 	virtual void Init();
 
 	virtual const std::shared_ptr<cKinCharacter>& GetKinChar() const;
+	virtual const std::shared_ptr<cKinCharacter>& GetKinChar2() const;
+	virtual const std::vector<std::shared_ptr<cKinCharacter>>& GetKinChars() const;
 	virtual void EnableRandStateReset(bool enable);
 	virtual bool EnabledRandStateReset() const;
 	virtual bool HasFallen() const;
@@ -28,6 +30,8 @@ protected:
 
 	std::string mMotionFile;
 	std::shared_ptr<cKinCharacter> mKinChar;
+	std::shared_ptr<cKinCharacter> mKinChar2;
+	std::vector<std::shared_ptr<cKinCharacter>> mKinChars;
 	Eigen::VectorXd mJointWeights;
 	bool mAddTorquePenalty;
 	bool mEnableRandStateReset;

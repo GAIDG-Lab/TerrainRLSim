@@ -62,6 +62,7 @@ void cBipedSymStepController3D::BuildPhaseState(Eigen::VectorXd& out_state) cons
 
 void cBipedSymStepController3D::BuildTaskState(Eigen::VectorXd& out_state) const
 {
+	// LLC State Observation
 	out_state = tSymTaskParams::Zero();
 	double tar_heading = mStepPlan.mRootHeading;
 	tVector heading_dir = tVector(std::cos(tar_heading), 0, -std::sin(tar_heading), 0);

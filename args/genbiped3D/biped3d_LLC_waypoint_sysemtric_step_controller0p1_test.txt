@@ -1,4 +1,4 @@
--scenario= imitate_step_eval
+-scenario= imitate_step_eval_test
 
 -character_file= data/characters/biped3d_mocap.txt
 -motion_file= data/motions/biped3d_walk.txt
@@ -17,9 +17,21 @@
 -char_ctrl_cycle_dur= 1
 -char_ctrl_waypoint_init_step_len= 0.5
 -terrain_file= data/terrain/plane.txt
+//-cam_track_mode = still
+-cam_pos_0= 140
+-cam_pos_1= 100
+-cam_pos_2= 0
+-cam_focus_0= 0
+-cam_focus_1= 0
+-cam_focus_2= 0
+-cam_zoom= 1
+
+//-num_update_steps= 100
+//-num_sim_substeps= 1
 
 //-num_update_steps= 20
 //-num_sim_substeps= 5
+
 -num_update_steps= 100
 -num_sim_substeps= 1
 -world_scale= 4
@@ -58,7 +70,7 @@
 -episode_time_lim_max= 200
 
 -step_max_heading_turn_rate= 0.25
--step_sharp_turn_prob= 0.05
+-step_sharp_turn_prob= 0.1
 -step_length_min= 0.45
 -step_length_max= 0.55
 -step_mean_width= 0.15

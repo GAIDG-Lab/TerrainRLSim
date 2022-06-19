@@ -153,6 +153,7 @@ void cMocapStepController::ResetParams()
 
 bool cMocapStepController::LoadParams(const std::string& param_file)
 {
+	std::cout << "MocapStepController.cpp param_file: " << param_file << std::endl;
 	bool succ = true;
 	if (param_file != "")
 	{
@@ -264,6 +265,7 @@ void cMocapStepController::LoadMotions(const std::vector<std::string>& motion_fi
 	{
 		const std::string& curr_file = motion_files[f];
 
+		std::cout << "MocapStepController.cpp LoadMotions motion_file: " << curr_file << std::endl;
 		cMotion curr_motion;
 		bool succ = curr_motion.Load(_relativeFilePath + curr_file);
 		if (succ)
@@ -352,14 +354,20 @@ int cMocapStepController::GetNumMotions() const
 	return static_cast<int>(mMotions.size());
 }
 
+//phase is double value in [0,1] s
 double cMocapStepController::CalcMotionPhase(double time) const
 {
 	double motionDuration = mMotions[mCurrMotionID].GetDuration();
 	// std::cout << "motionDuration: " << motionDuration << std::endl;
 	// double phase = time / motionDuration;
-	double phase = time / mCyclePeriod;
+	//double phase = time / mCyclePeriod;
+	
+	double phase = time / 1.0;//mCyclePeriod; //myCyclePeriod = 1
+	//printf("\nMocapStepController.cpp CalcmotionPhase time: %f\n", time);
+	//printf("MocapStepController.cpp CalcmotionPhase mCyclePeriod: %f\n", mCyclePeriod);
 	phase -= static_cast<int>(phase);
 	phase = (phase < 0) ? (1 + phase) : phase;
+	//printf("MocapStepController.cpp CalcmotionPhase phase: %f\n", phase);
 	return phase;
 }
 
@@ -372,6 +380,8 @@ double cMocapStepController::CalcStepPhase(double motion_phase) const
 
 void cMocapStepController::CalcMotionPose(double time, int motion_id, Eigen::VectorXd& out_pose) const
 {
+	//printf("MocapStepController.cpp CalcmotionPose mTime: %f\n", mTime);
+	//printf("MocapStepController.cpp CalcmotionPose time: %f\n", time);
 	double curr_phase = CalcMotionPhase(mTime);
 	double phase = CalcMotionPhase(time);
 	double curr_step_phase = CalcStepPhase(curr_phase);
