@@ -1,10 +1,11 @@
 #include "scenarios/DrawScenarioImitateMocapStepEval.h"
-#include "scenarios/ScenarioImitateStepEval.h"
+#include "scenarios/ScenarioImitateMocapStepEval.h" // change this line has issue
 #include "render/DrawUtil.h"
 #include "util/FileUtil.h"
 
 cDrawScenarioImitateMocapStepEval::cDrawScenarioImitateMocapStepEval(cCamera& cam)
-	: cDrawScenarioImitateTargetEval(cam)
+	: cDrawScenarioImitateMocapTargetEval(cam)
+	// issue too
 {
 #if defined(ENABLE_HACK_RECORD_ACTION_PERTURB)
 	mHackEnableRecordActionPerturb = false;
@@ -19,23 +20,23 @@ cDrawScenarioImitateMocapStepEval::~cDrawScenarioImitateMocapStepEval()
 
 void cDrawScenarioImitateMocapStepEval::Init()
 {
-	cDrawScenarioImitateTargetEval::Init();
+	cDrawScenarioImitateMocapTargetEval::Init();
 }
 
 void cDrawScenarioImitateMocapStepEval::BuildScene(std::shared_ptr<cScenarioSimChar>& out_scene) const
 {
-	out_scene = std::shared_ptr<cScenarioImitateStepEval>(new cScenarioImitateStepEval());
+	out_scene = std::shared_ptr<cScenarioImitateMocapStepEval>(new cScenarioImitateMocapStepEval());
 }
 
 bool cDrawScenarioImitateMocapStepEval::EnableTargetPos() const
 {
-	auto step_scene = std::dynamic_pointer_cast<cScenarioExpImitateStep>(mScene);
+	auto step_scene = std::dynamic_pointer_cast<cScenarioExpImitateMocapStep>(mScene);
 	return step_scene->EnableTargetPos();
 }
 
 void cDrawScenarioImitateMocapStepEval::SetTargetPos(const tVector& pos)
 {
-	auto scene = std::dynamic_pointer_cast<cScenarioImitateStepEval>(mScene);
+	auto scene = std::dynamic_pointer_cast<cScenarioImitateMocapStepEval>(mScene);
 	scene->SetTargetPos(pos);
 	scene->EnableTargetPos(true);
 	scene->EnableRandTargetPos(false);
@@ -43,16 +44,16 @@ void cDrawScenarioImitateMocapStepEval::SetTargetPos(const tVector& pos)
 
 void cDrawScenarioImitateMocapStepEval::ResetCallback()
 {
-	cDrawScenarioImitateTargetEval::ResetCallback();
+	cDrawScenarioImitateMocapTargetEval::ResetCallback();
 
-	//auto scene = std::dynamic_pointer_cast<cScenarioImitateStepEval>(mScene);
+	//auto scene = std::dynamic_pointer_cast<cScenarioImitateMocapStepEval>(mScene);
 	//scene->EnableTargetPos(false);
 	//scene->EnableRandTargetPos(true);
 }
 
 void cDrawScenarioImitateMocapStepEval::DrawMisc() const
 {
-	cDrawScenarioImitateEval::DrawMisc();
+	cDrawScenarioImitateMocapEval::DrawMisc();
 	if (drawStepPlan)
 	{
 		DrawStepPlan();
@@ -70,7 +71,7 @@ void cDrawScenarioImitateMocapStepEval::DrawStepPlan() const
 	const tVector& pos1_col = tVector(0, 0.5, 0, 0.5);
 	const tVector& heading_col = tVector(1, 0, 0, 0.5);
 
-	auto step_scene = std::dynamic_pointer_cast<cScenarioExpImitateStep>(mScene);
+	auto step_scene = std::dynamic_pointer_cast<cScenarioExpImitateMocapStep>(mScene);
 	const auto& step_plan = step_scene->GetStepPlan();
 
 	DrawStepPos(step_plan.mStepPos0, pos0_col);
@@ -117,7 +118,7 @@ void cDrawScenarioImitateMocapStepEval::ToggleDrawStepPlan()
 
 void cDrawScenarioImitateMocapStepEval::Keyboard(unsigned char key, int x, int y)
 {
-	cDrawScenarioImitateTargetEval::Keyboard(key, x, y);
+	cDrawScenarioImitateMocapTargetEval::Keyboard(key, x, y);
 
 	switch (key)
 	{
@@ -135,13 +136,13 @@ tVector cDrawScenarioImitateMocapStepEval::GetCamTrackPos() const
 	const auto& kin_char = GetKinChar();
 	return kin_char->GetRootPos();
 #endif
-	return cDrawScenarioImitateTargetEval::GetCamTrackPos();
+	return cDrawScenarioImitateMocapTargetEval::GetCamTrackPos();
 }
 
 #if defined(ENABLE_HACK_LLC_LERP)
 void cDrawScenarioImitateMocapStepEval::Keyboard(unsigned char key, int x, int y)
 {
-	cDrawScenarioImitateTargetEval::Keyboard(key, x, y);
+	cDrawScenarioImitateMocapTargetEval::Keyboard(key, x, y);
 
 	switch (key)
 	{
@@ -158,7 +159,7 @@ void cDrawScenarioImitateMocapStepEval::Keyboard(unsigned char key, int x, int y
 
 std::string cDrawScenarioImitateMocapStepEval::BuildTextInfoStr() const
 {
-	std::string str = cDrawScenarioImitateTargetEval::BuildTextInfoStr();
+	std::string str = cDrawScenarioImitateMocapTargetEval::BuildTextInfoStr();
 
 	const auto& character = mScene->GetCharacter();
 	const auto& ctrl = character->GetController();
@@ -195,7 +196,7 @@ void cDrawScenarioImitateMocapStepEval::AdjustHackLerp(double delta)
 // get rid of these
 void cDrawScenarioImitateMocapStepEval::Keyboard(unsigned char key, int x, int y)
 {
-	cDrawScenarioImitateTargetEval::Keyboard(key, x, y);
+	cDrawScenarioImitateMocapTargetEval::Keyboard(key, x, y);
 
 	switch (key)
 	{
@@ -268,7 +269,7 @@ void cDrawScenarioImitateMocapStepEval::HackRecordActionPerturb()
 #if defined(ENABLE_HACK_ADJUST_PERIOD)
 void cDrawScenarioImitateMocapStepEval::Keyboard(unsigned char key, int x, int y)
 {
-	cDrawScenarioImitateTargetEval::Keyboard(key, x, y);
+	cDrawScenarioImitateMocapTargetEval::Keyboard(key, x, y);
 
 	switch (key)
 	{
@@ -285,7 +286,7 @@ void cDrawScenarioImitateMocapStepEval::Keyboard(unsigned char key, int x, int y
 
 std::string cDrawScenarioImitateMocapStepEval::BuildTextInfoStr() const
 {
-	std::string str = cDrawScenarioImitateTargetEval::BuildTextInfoStr();
+	std::string str = cDrawScenarioImitateMocapTargetEval::BuildTextInfoStr();
 	auto ctrl = std::dynamic_pointer_cast<cCtPhaseController>(mScene->GetCharacter()->GetController());
 	if (ctrl != nullptr)
 	{

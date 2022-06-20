@@ -1,11 +1,11 @@
 #pragma once
-#include "scenarios/DrawScenarioImitateTargetEval.h"
+#include "scenarios/DrawScenarioImitateMocapTargetEval.h"
 #include "sim/BipedStepController3D.h"
 
 //#define ENABLE_HACK_RECORD_ACTION_PERTURB
 //#define ENABLE_HACK_ADJUST_PERIOD
 
-class cDrawScenarioImitateMocapStepEval : public cDrawScenarioImitateTargetEval
+class cDrawScenarioImitateMocapStepEval : public cDrawScenarioImitateMocapTargetEval
 {
 public:
 	EIGEN_MAKE_ALIGNED_OPERATOR_NEW

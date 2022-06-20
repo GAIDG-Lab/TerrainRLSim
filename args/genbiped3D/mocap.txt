@@ -112,4 +112,4 @@
 -trainer_pg_iw_clip= 2
 -trainer_pg_adv_clip= 2
 
--kin_ctrl_file= data/controllers/humanoid3d/mocap_step_ctrl0_1.txt
+-kin_ctrl_file= data/controllers/humanoid3d/mocap_step_ctrl0.txt
