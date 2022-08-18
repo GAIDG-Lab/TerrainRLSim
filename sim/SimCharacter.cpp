@@ -27,15 +27,6 @@ cSimCharacter::~cSimCharacter()
 {
 }
 
-double cSimCharacter::GetDesiredSpeed() const {
-	if((desired_speed >= desired_speed_min) && (desired_speed <= desired_speed_max)){
-		return desired_speed;
-	}
-	else {
-		std::cout << "Failed to load a desired speed." << std::endl;
-	}
-}
-
 bool cSimCharacter::Init(std::shared_ptr<cWorld> world, const tParams& params)
 {
 	bool succ = true;
@@ -43,9 +34,6 @@ bool cSimCharacter::Init(std::shared_ptr<cWorld> world, const tParams& params)
 	succ &= succ_skeleton;
 
 	mWorld = world;
-
-	double random_f = (double)rand() / RAND_MAX;
-	desired_speed = desired_speed_min + random_f * (desired_speed_max - desired_speed_min);
 
 	bool succ_body = true;
 	if (succ_skeleton)

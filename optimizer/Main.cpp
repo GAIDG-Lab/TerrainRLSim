@@ -25,7 +25,6 @@
 #include "scenarios/OptScenarioImitateEval.h"
 #include "scenarios/OptScenarioImitateTargetEval.h"
 #include "scenarios/OptScenarioImitateStepEval.h"
-#include "scenarios/OptScenarioImitateMocapStepEval.h"
 #include "scenarios/OptScenarioHikeEval.h"
 #include "scenarios/OptScenarioSoccerEval.h"
 #include "scenarios/OptScenarioLocoEval.h"
@@ -278,14 +277,6 @@ void SetupScenario()
 	else if (scenario_name == "imitate_step_eval")
 	{
 		auto scene = std::shared_ptr<cOptScenarioImitateStepEval>(new cOptScenarioImitateStepEval());
-		scene->SetTimeStep(cOptScenario::gTimeStep);
-		scene->SetPoolSize(gNumThreads);
-
-		gScenario = scene;
-	}
-	else if (scenario_name == "imitate_mocap_eval")
-	{
-		auto scene = std::shared_ptr<cOptScenarioImitateMocapStepEval>(new cOptScenarioImitateMocapStepEval());
 		scene->SetTimeStep(cOptScenario::gTimeStep);
 		scene->SetPoolSize(gNumThreads);
 

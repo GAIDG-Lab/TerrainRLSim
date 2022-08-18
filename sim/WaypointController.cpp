@@ -273,18 +273,6 @@ int cWaypointController::GetGroundSampleRes() const
 void cWaypointController::BuildPoliState(Eigen::VectorXd& out_state) const
 {
 	cCtTargetController::BuildPoliState(out_state);
-	double desired_sp = mChar->GetDesiredSpeed();
-	int out_state_size = out_state.size();
-	out_state.resize(out_state_size + 1);
-	out_state[out_state_size] = desired_sp;
-
-	/*In HLC, print desired speed*/
-	//1 second for 30 times
-	/*tVector com = mChar->CalcCOM();
-	tVector net_velocity = mChar->CalcCOMVel();
-	double sp = net_velocity.norm();
-	double diff = sp - desired_sp;
-	std::cout << "\n\n current speed is:" << sp << "\n desired speed is:" << dp << std::endl;*/
 
 #if defined(ENABLE_BILINEAR_PHASE)
 	Eigen::VectorXd phase_state;

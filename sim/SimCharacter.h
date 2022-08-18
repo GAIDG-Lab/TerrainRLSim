@@ -36,7 +36,6 @@ public:
 	virtual void Clear();
 	virtual void Reset();
 	virtual void Update(double time_step);
-	virtual double GetDesiredSpeed() const;
 
 	virtual tVector GetRootPos() const;
 	virtual void GetRootRotation(tVector& out_axis, double& out_theta) const;
@@ -115,9 +114,6 @@ public:
 	virtual bool HasDrawShapes() const;
 
 	virtual const std::shared_ptr<cWorld>& GetWorld() const;
-	double desired_speed = 1.0;
-	const double desired_speed_min = 0.5;
-	const double desired_speed_max = 2.5;
 
 protected:
 	tVector currentGroundTarget;

@@ -11,6 +11,7 @@
 #include "sim/WaypointController.h"
 #include "anim/KinSimCharacter.h"
 #include "scenarios/ScenarioExp.h"
+#include "scenarios/DrawScenarioImitateEvalDog.h"
 #include "scenarios/DrawScenarioImitateEval.h"
 #include "scenarios/DrawScenarioImitateVizEval.h"
 #include "scenarios/ScenarioImitate.h"
@@ -538,7 +539,25 @@ void cSimAdapter::init()
 		InitCamera();
 		ClearScenario();
 
-		if (scenario_name == "imitate_eval")
+		if (scenario_name == "imitate_dog")
+		{
+			std::shared_ptr<cDrawScenarioSimChar> scenario__ = std::shared_ptr<cDrawScenarioImitateEvalDog>(new cDrawScenarioImitateEvalDog(gCamera));
+			// std::shared_ptr<cDrawScenarioSimChar> scenario__ = std::shared_ptr<cDrawScenarioSimChar>(new cDrawScenarioSimChar(gCamera));
+			this->_scene = std::shared_ptr<cScenarioSimChar>(scenario__->GetScene());
+			this->_gScenario = scenario__;
+			if (this->_gScenario != NULL)
+			{
+				auto sim_char_scene = std::dynamic_pointer_cast<cDrawScenarioTerrainRL>(scenario__);
+				if (sim_char_scene != nullptr)
+				{
+					sim_char_scene->SetOutputTex(gIntermediateFrameBuffer);
+				}
+
+			}
+			gScenario = std::shared_ptr<cDrawScenario>(scenario__);
+			this->_gScenario = gScenario;
+		}		
+		else if (scenario_name == "imitate_eval")
 		{
 			std::shared_ptr<cDrawScenarioSimChar> scenario__ = std::shared_ptr<cDrawScenarioImitateEval>(new cDrawScenarioImitateEval(gCamera));
 			// std::shared_ptr<cDrawScenarioSimChar> scenario__ = std::shared_ptr<cDrawScenarioSimChar>(new cDrawScenarioSimChar(gCamera));
@@ -593,23 +612,6 @@ void cSimAdapter::init()
 		else if (scenario_name == "imitate_step_eval")
 		{
 			std::shared_ptr<cDrawScenarioSimChar> scenario__ = std::shared_ptr<cDrawScenarioImitateStepEval>(new cDrawScenarioImitateStepEval(gCamera));
-			this->_scene = std::shared_ptr<cScenarioSimChar>(scenario__->GetScene());
-			this->_gScenario = scenario__;
-			if (this->_gScenario != NULL)
-			{
-				auto sim_char_scene = std::dynamic_pointer_cast<cDrawScenarioTerrainRL>(scenario__);
-				if (sim_char_scene != nullptr)
-				{
-					sim_char_scene->SetOutputTex(gIntermediateFrameBuffer);
-				}
-
-			}
-			gScenario = std::shared_ptr<cDrawScenario>(scenario__);
-			this->_gScenario = gScenario;
-		}
-		else if (scenario_name == "imitate_mocap_eval")
-		{
-			std::shared_ptr<cDrawScenarioSimChar> scenario__ = std::shared_ptr<cDrawScenarioImitateMocapStepEval>(new cDrawScenarioImitateMocapStepEval(gCamera));
 			this->_scene = std::shared_ptr<cScenarioSimChar>(scenario__->GetScene());
 			this->_gScenario = scenario__;
 			if (this->_gScenario != NULL)
@@ -837,8 +839,18 @@ void cSimAdapter::init()
 	else
 	{
 		ClearScenario();
-		if (scenario_name == "imitate_eval")
+		if (scenario_name == "imitate_dog")
 		{
+			// std::shared_ptr<cScenarioImitate> scenario__ = std::shared_ptr<cScenarioImitate>(new cScenarioImitate());
+			std::shared_ptr<cScenarioSimChar> scenario__ = std::shared_ptr<cScenarioSimChar>(new cScenarioImitateEval() );
+			this->_scene = std::dynamic_pointer_cast<cScenarioSimChar>(scenario__);
+			// gScenario = std::shared_ptr<cScenario>(scenario__);
+			this->_gScenario = scenario__ ;
+		}
+		else if (scenario_name == "imitate_eval")
+		{
+			std::cout << "SimA.cpp 2" << std::endl;
+
 			// std::shared_ptr<cScenarioImitate> scenario__ = std::shared_ptr<cScenarioImitate>(new cScenarioImitate());
 			std::shared_ptr<cScenarioSimChar> scenario__ = std::shared_ptr<cScenarioSimChar>(new cScenarioImitateEval() );
 			this->_scene = std::dynamic_pointer_cast<cScenarioSimChar>(scenario__);

@@ -33,7 +33,6 @@ cDrawScenarioSimChar::cDrawScenarioSimChar(cCamera& cam)
 	mDrawPolicyPlots = false;
 	mEnableCharDrawShapes = false;
 	mPauseSim = false;
-	mDrawGRFs = false;
 	mPrevGroundUpdateCount = gInitGroundUpdateCount;
 }
 
@@ -131,10 +130,6 @@ void cDrawScenarioSimChar::Keyboard(unsigned char key, int x, int y)
 
 	switch (key)
 	{
-	case '2':
-		mPauseSim = !mPauseSim;
-	case '1':
-		mDrawGRFs = !mDrawGRFs;
 	case 'f':
 		mDrawInfo = !mDrawInfo;
 		break;
@@ -471,9 +466,7 @@ void cDrawScenarioSimChar::DrawInfo() const
 		DrawCtrlInfo();
 		DrawGroundReactionForces();
 	}
-	if (mDrawGRFs) {
-		DrawGroundReactionForces();
-	}
+
 	if (mDrawPoliInfo)
 	{
 		DrawPoliInfo();

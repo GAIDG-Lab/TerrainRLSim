@@ -233,7 +233,6 @@ bool cKinCharacter::LoadMotion(const std::string& motion_file)
 		mVel0 = GetVel();
 	}
 
-	printf("mMotion.GetNumFrames: %d\n", mMotion.GetNumFrames());
 	return succ;
 }
 

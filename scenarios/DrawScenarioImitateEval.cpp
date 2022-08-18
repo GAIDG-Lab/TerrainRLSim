@@ -56,7 +56,7 @@ void cDrawScenarioImitateEval::BuildScene(std::shared_ptr<cScenarioSimChar>& out
 
 void cDrawScenarioImitateEval::DrawCharacters() const
 {
-	//cDrawScenarioPoliEval::DrawCharacters();
+	cDrawScenarioPoliEval::DrawCharacters();
 
 	if (mDrawKinChar)
 	{
@@ -66,27 +66,11 @@ void cDrawScenarioImitateEval::DrawCharacters() const
 
 void cDrawScenarioImitateEval::DrawKinChar() const
 {
-	/**
 	const auto& kin_char = GetKinChar();
 	cDrawUtil::PushMatrix();
 	cDrawUtil::Translate(GetDrawKinCharOffset());
 	cDrawCharacter::Draw(*kin_char.get(), gLinkWidth, gFilLColor, GetLineColor());
 	cDrawUtil::PopMatrix();
-
-	const auto& kin_char2 = GetKinChar2();
-	cDrawUtil::PushMatrix();
-	cDrawUtil::Translate(tVector(1, 0, 0, 0));
-	cDrawCharacter::Draw(*kin_char2.get(), gLinkWidth, gFilLColor, GetLineColor());
-	cDrawUtil::PopMatrix();
-	**/
-	std::vector<std::shared_ptr<cKinCharacter>> chars = GetKinChars();
-	for(int i = 0; i < chars.size(); i++){
-		const auto& kin_char = chars[i];
-		cDrawUtil::PushMatrix();
-		cDrawUtil::Translate(tVector(i-10, 0, 0, 0));
-		cDrawCharacter::Draw(*kin_char.get(), gLinkWidth, gFilLColor, GetLineColor());
-		cDrawUtil::PopMatrix();
-	}
 }
 
 const std::shared_ptr<cKinCharacter>& cDrawScenarioImitateEval::GetKinChar() const
@@ -95,33 +79,11 @@ const std::shared_ptr<cKinCharacter>& cDrawScenarioImitateEval::GetKinChar() con
 	return scene->GetKinChar();
 }
 
-const std::shared_ptr<cKinCharacter>& cDrawScenarioImitateEval::GetKinChar2() const
-{
-	auto scene = std::dynamic_pointer_cast<cScenarioImitateEval>(mScene);
-	return scene->GetKinChar2();
-}
-
-const std::vector<std::shared_ptr<cKinCharacter>>& cDrawScenarioImitateEval::GetKinChars() const
-{
-	auto scene = std::dynamic_pointer_cast<cScenarioImitateEval>(mScene);
-	return scene->GetKinChars();
-}
-
-const std::shared_ptr<cKinCharacter>& cDrawScenarioImitateEval::CreateKinChar() const
-{
-	auto kin_char = std::shared_ptr<cKinCharacter>(new cKinCharacter());
-	kin_char->EnableVelUpdate(true);
-	bool succ = kin_char->Init("/home/beth/Desktop/playground/TerrainRLSim/data/characters/biped3d_mocap.txt",
-							   "/home/beth/Desktop/playground/TerrainRLSim/data/motions/biped3d_walk.txt");
-	return kin_char;
-}
-
 void cDrawScenarioImitateEval::ToggleDrawKinChar()
 {
 	mDrawKinChar = !mDrawKinChar;
 	if (mDrawKinChar)
 	{
-		printf("Mocap\n");
 		printf("Enable draw kin character\n");
 	}
 	else

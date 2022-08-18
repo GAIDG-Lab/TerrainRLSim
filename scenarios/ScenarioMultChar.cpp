@@ -29,7 +29,6 @@ cScenarioMultChar::cScenarioMultChar() :
 	mReachTargetBonus = 200;
 	mUsePursuitConfig = false;
 	mTargetRewardWeight = 1;
-	mUseDesiredSpeed = false;
 }
 
 cScenarioMultChar::~cScenarioMultChar()
@@ -72,8 +71,6 @@ void cScenarioMultChar::ParseMiscArgs(const std::shared_ptr<cArgParser>& parser)
 	parser->ParseBool("use_repulsive_reward", mUseRepulsiveReward);
 	parser->ParseBool("use_persuit_config", mUsePursuitConfig);
 	parser->ParseBool("use_simple_distance_reward", mUseSimpleDistanceReward);
-	// if using desired speed
-	parser->ParseBool("use_desired_speed", mUseDesiredSpeed);
 }
 
 const std::shared_ptr<cSimCharacter>& cScenarioMultChar::GetSpaceCharacter() const
@@ -208,11 +205,7 @@ bool cScenarioMultChar::EnableLLCFeedbackReward() const
 
 double cScenarioMultChar::CalcReward()
 {
-	double target_speed = 1.0;
-	//Generate a desired speed for Char0
-	if (mUseDesiredSpeed){
-		target_speed = mChar->GetDesiredSpeed();
-	}
+	const double target_speed = 1.0;
 
 	const tVector& prev_com = mPrevCOM;
 	// double time_elapsed = mTime - mPrevTime;
@@ -404,10 +397,7 @@ double cScenarioMultChar::calcRewardForAgent(size_t agent)
 		auto _StepPlan = ctrl_->GetStepPlan();
 	}
 	*/
-	double target_speed = mTargetSpeed;
-	if (mUseDesiredSpeed){
-		target_speed = char_->GetDesiredSpeed();
-	}
+	const double target_speed = mTargetSpeed;
 
 	const tVector& prev_com = _PrevCOM;
 	// double time_elapsed = mTime - mPrevTime;

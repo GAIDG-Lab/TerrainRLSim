@@ -270,7 +270,7 @@ cScenarioExpImitateStep::cScenarioExpImitateStep()
 	mStepLenMax = 0.4;
 	mCurrStepLen = 0.5 * (mStepLenMin + mStepLenMax);
 	mChangeStepLenProb = 0.1;
-	mStepFailDist = 0.85; //Ray
+	mStepFailDist = 1;
 	mTargetResetDist = 1;
 
 	mStepWidthMean = 0.15;
@@ -362,7 +362,6 @@ void cScenarioExpImitateStep::SetupKinController()
 	std::shared_ptr<cKinController> kin_ctrl;
 	BuildKinController(kin_ctrl);
 	
-	printf("ScenarioExpImitateStep.cpp SetupKinController\n");
 	auto step_ctrl = std::dynamic_pointer_cast<cMocapStepController>(kin_ctrl);
 	if (step_ctrl != nullptr)
 	{
@@ -375,7 +374,6 @@ void cScenarioExpImitateStep::SetupKinController()
 			step_ctrl->SetHandJoints(8,	14);
 
 		}
-		printf("ScenarioExpImitateStep.cpp mCycleDur: %f\n", mCtrlParams.mCycleDur);
 		step_ctrl->SetCyclePeriod(mCtrlParams.mCycleDur);
 		step_ctrl->Init(mKinChar.get(), mKinCtrlFile);
 	}
@@ -600,11 +598,6 @@ void cScenarioExpImitateStep::ResetStepPlan()
 
 void cScenarioExpImitateStep::UpdateStepPlan(double time_step, bool force_update /*= false*/)
 {
-	//string filename("/home/ruizhang/Desktop/data.txt");
-	//fstream file;
-
-	//file.open(filename, std::ios_base::app | std::ios_base::in);
-
 	const double step_err_tol = mStepFailDist;
 
 	eStance stance = GetStance();
@@ -620,35 +613,19 @@ void cScenarioExpImitateStep::UpdateStepPlan(double time_step, bool force_update
 		const tVector& step_pos = mStepPlan.mStepPos0;
 		tVector root_pos = mChar->GetRootPos();
 		root_pos[1] = 0.0; // project onto the ground
-		/**
 		double dist = (step_pos - root_pos).squaredNorm();
 		if ( dist >  mTargetResetDist)
 		{
 			ResetStepPlan();
 			return;
 		}
-		**/
+
 		tVector old_pos = mStepPlan.mStepPos0;
 		tVector next_pos = mStepPlan.mStepPos1;
-		/*
-		if(file.is_open()){
-			file << "\nstep plan before\n";
 
-			file << " old_pos before: " << mStepPlan.mStepPos0<< " next_pos before: " << mStepPlan.mStepPos1 << endl;
-		}
-		*/
 		int stance_foot = GetStanceFootJoint(stance);
-		int swing_foot = GetSwingFootJoint(stance);
-
 		tVector stance_pos = mChar->CalcJointPos(stance_foot);
-		tVector swing_pos = mChar->CalcJointPos(swing_foot);
-
-
-		double prev_heading = mStepPlan.mRootHeading;
-
-
 		tVector pos_delta = old_pos - stance_pos;
-
 		pos_delta[1] = 0;
 		double step_err = pos_delta.squaredNorm();
 		if (step_err > step_err_tol)
@@ -656,76 +633,27 @@ void cScenarioExpImitateStep::UpdateStepPlan(double time_step, bool force_update
 #if defined(ENABLE_STEP_FAIL)
 			mStepFail = true;
 #else
-			next_pos = root_pos + step_err_tol * ((next_pos - root_pos) / (next_pos - root_pos).squaredNorm());
+			next_pos -= pos_delta;
 			next_pos[1] = mGround->SampleHeight(next_pos);
 #endif // ENABLE_STEP_FAIL
 		}
-
-		mStepPlan.mStepPos0 = stance_pos;
-		mStepPlan.mStepPos0[1] = mGround->SampleHeight(mStepPlan.mStepPos0);
-		mStepPlan.mStepPos1 = next_pos;
-
-		/*
-		if(file.is_open()){
-			file << "\nstep plan after\n";
-
-			file << " old_pos after: " << mStepPlan.mStepPos0<< " next_pos after: " << next_pos << endl;
-		}
-		*/
+		
+		double prev_heading = mStepPlan.mRootHeading;
 		double new_heading = prev_heading;
 		tVector new_pos = tVector::Zero();
-
 
 		new_heading = CalcNextHeading(prev_heading);
 		new_pos = CalcNextStepPos(stance, new_heading, next_pos);
 
 #if defined(ENABLE_ADAPTIVE_STEP_PLAN)
 		// hack
-		tVector err1 = new_pos - root_pos;
-		tVector err2 = next_pos - root_pos;
-
-		err1[1] = 0;
-		err2[1] = 0; // hack
-
-		/*
-		if(file.is_open()){
-			file << "\nFoot Update\n";
-
-			file << " err1 before: " << err1.squaredNorm() << " err2 before: " << err2.squaredNorm() << endl;
-		}
-		else{
-			printf("File not found\n");
-		}
-		file.close();
-		*/
-
-		if (err1.squaredNorm() > 2 * step_err_tol) {
-			new_pos = root_pos + 2 * step_err_tol * ((new_pos - root_pos) / (new_pos - root_pos).squaredNorm());
-		}
-		if (err2.squaredNorm() > step_err_tol) {
-			next_pos = root_pos + step_err_tol * ((next_pos - root_pos) / (next_pos - root_pos).squaredNorm());
-		}
-
-
-		new_pos[1] = mGround->SampleHeight(new_pos);
-		next_pos[1] = mGround->SampleHeight(next_pos);
+		tVector err = old_pos - stance_pos;
+		err[1] = 0;
+		err[2] = 0; // hack
+		new_pos -= err;
+		next_pos -= err;
 #endif
 
-		tVector err1 = new_pos - root_pos;
-		tVector err2 = next_pos - root_pos;
-
-		err1[1] = 0;
-		err2[1] = 0; // hack
-
-		if (err1.squaredNorm() > 2 * step_err_tol) {
-			new_pos = root_pos + 2 * step_err_tol * ((new_pos - root_pos) / (new_pos - root_pos).squaredNorm());
-		}
-		if (err2.squaredNorm() > step_err_tol) {
-			next_pos = root_pos + step_err_tol * ((next_pos - root_pos) / (next_pos - root_pos).squaredNorm());
-		}
-
-		new_pos[1] = mGround->SampleHeight(new_pos);
-		next_pos[1] = mGround->SampleHeight(next_pos);
 		mStepPlan.mStance = stance;
 		mStepPlan.mStepPos0 = next_pos;
 		mStepPlan.mStepPos1 = new_pos;

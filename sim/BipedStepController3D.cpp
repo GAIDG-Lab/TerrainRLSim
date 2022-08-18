@@ -144,15 +144,6 @@ void cBipedStepController3D::BuildPoliState(Eigen::VectorXd& out_state) const
 
 	out_state.segment(contact_offset, contact_size) = contact_state;
 	out_state.segment(task_offset, task_size) = task_state;
-
-	/*In LLC, print desired speed*/
-	//1 second for 30 times
-	tVector com = mChar->CalcCOM();
-	tVector net_velocity = mChar->CalcCOMVel();
-	double sp = net_velocity.norm();
-	double dp = mChar->GetDesiredSpeed();
-	double diff = sp - dp;
-	std::cout << "\n\n current speed is:" << sp << "\n desired speed is:" << dp << std::endl;
 }
 
 void cBipedStepController3D::BuildContactState(Eigen::VectorXd& out_state) const

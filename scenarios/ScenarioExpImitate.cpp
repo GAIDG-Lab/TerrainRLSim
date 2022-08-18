@@ -206,22 +206,6 @@ void cScenarioExpImitate::ParseArgs(const std::shared_ptr<cArgParser>& parser)
 void cScenarioExpImitate::Init()
 {
 	bool succ = BuildKinCharacter(mKinChar);
-	bool succ2 = BuildKinCharacter(mKinChar2);
-
-	int numFrames = mKinChar->GetMotion().GetNumFrames();
-	printf("ScenarioExpimitate.cpp Init KinCharacter numFrames: %d\n", numFrames);
-	for(double i = 0; i < numFrames; i++){
-		std::shared_ptr<cKinCharacter> tempChar;
-		bool temp = BuildKinCharacter(tempChar);
-
-		//tempChar->Update(i*0.3 );
-		double t = (i/numFrames) * tempChar->GetMotionDuration();
-		tempChar->Update(t);
-
-		printf("GetMotionDuration: %f\n", tempChar->GetMotionDuration());
-		mKinChars.push_back(tempChar);
-	}
-
 	if (!succ)
 	{
 		printf("Failed to build kin character\n");
@@ -241,18 +225,7 @@ void cScenarioExpImitate::Init()
 
 const std::shared_ptr<cKinCharacter>& cScenarioExpImitate::GetKinChar() const
 {
-	//printf("ScenarioExpImitate::GetKinChar\n");
 	return mKinChar;
-}
-
-const std::shared_ptr<cKinCharacter>& cScenarioExpImitate::GetKinChar2() const
-{
-	return mKinChar2;
-}
-
-const std::vector<std::shared_ptr<cKinCharacter>>& cScenarioExpImitate::GetKinChars() const
-{
-	return mKinChars;
 }
 
 void cScenarioExpImitate::EnableRandStateReset(bool enable)
@@ -317,13 +290,12 @@ void cScenarioExpImitate::UpdateCharacter(double time_step)
 
 void cScenarioExpImitate::UpdateKinChar(double time_step)
 {
-	//mKinChar->Update(time_step); //time_step=0.001667
+	mKinChar->Update(time_step);
 	//SyncCharacters(); // hack hack hack
 }
 
 void cScenarioExpImitate::UpdateTrackController()
 {
-	//printf("ScenarioExpImitate::UpdateTrackController\n");
 	auto ctrl = mChar->GetController();
 	std::shared_ptr<cCtTrackController> track_ctrl = nullptr;
 	track_ctrl = std::dynamic_pointer_cast<cCtTrackController>(ctrl);

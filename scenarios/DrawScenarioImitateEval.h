@@ -22,9 +22,6 @@ protected:
 	virtual void DrawCharacters() const;
 	virtual void DrawKinChar() const;
 	virtual const std::shared_ptr<cKinCharacter>& GetKinChar() const;
-	virtual const std::shared_ptr<cKinCharacter>& GetKinChar2() const;
-	virtual const std::vector<std::shared_ptr<cKinCharacter>>& GetKinChars() const;
-	virtual const std::shared_ptr<cKinCharacter>& CreateKinChar() const;
 
 	virtual void ToggleDrawKinChar();
 	virtual tVector GetDrawKinCharOffset() const;

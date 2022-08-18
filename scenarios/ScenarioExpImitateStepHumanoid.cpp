@@ -40,7 +40,6 @@ void cScenarioExpImitateStepHumanoid::SetupKinController()
 	std::shared_ptr<cKinController> kin_ctrl;
 	BuildKinController(kin_ctrl);
 	
-	printf("ScenarioExpImitateStepHumanoid.cpp SetupKinController\n");
 	auto step_ctrl = std::dynamic_pointer_cast<cMocapStepController>(kin_ctrl);
 	if (step_ctrl != nullptr)
 	{
