@@ -1,0 +1,20 @@
+-scenario= sim_char
+
+-character_file= data/characters/dog3d.txt
+-motion_file= data/motions/dog3d_pace.txt
+-state_file= data/states/dog_bound_state3.txt
+
+-sim_mode= 3d
+-char_type= dog
+-char_ctrl= dog
+
+-terrain_file= data/terrain/dynamicCharacters3D_ScenarioSpace.txt
+
+-cam_track_mode= x
+
+//-kin_ctrl_file= data/controllers/biped3D/dog3d_pace.txt
+//-kin_ctrl_file= data/controllers/biped3D/biped3d_mocap_step_ctrl1.txt
+
+-num_update_steps= 20
+-num_sim_substeps= 5
+-world_scale= 4

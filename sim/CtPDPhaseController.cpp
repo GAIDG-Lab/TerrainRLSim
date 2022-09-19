@@ -14,9 +14,12 @@ cCtPDPhaseController::~cCtPDPhaseController()
 void cCtPDPhaseController::Init(cSimCharacter* character, const tVector& gravity, const std::string& param_file)
 {
 	cCtPhaseController::Init(character);
+    std::cout << "cCtPhaseController Init done! "  << std::endl;
 	cCtPDController::Init(character, gravity, param_file);
+    std::cout << "cCtPDController Init done! "  << std::endl;
     // hack to default the num samples to 0 because thats what all the old args files are expecting and TerrainRLChar defaults to 200 for some reason...
     cTerrainRLCharController::SetNumGroundSamples(0);
+    std::cout << "SetNumGroundSamples done! "  << std::endl;
 }
 
 void cCtPDPhaseController::GetViewBound(tVector& out_min, tVector& out_max) const

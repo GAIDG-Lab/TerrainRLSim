@@ -639,6 +639,8 @@ int cKinTree::GetNumJoints(const Eigen::MatrixXd& joint_mat)
 int cKinTree::GetNumDof(const Eigen::MatrixXd& joint_mat)
 {
 	int num_joints = GetNumJoints(joint_mat);
+	//std::cout << "joint_mat is: " << joint_mat << std::endl;
+	//std::cout << "num_joints is: " << num_joints << std::endl; // 23, 15
 	int num_dof = cKinTree::GetParamOffset(joint_mat, num_joints - 1) + cKinTree::GetParamSize(joint_mat, num_joints - 1);
 	return num_dof;
 }

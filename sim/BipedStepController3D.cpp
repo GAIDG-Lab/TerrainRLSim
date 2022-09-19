@@ -25,13 +25,17 @@ cBipedStepController3D::~cBipedStepController3D()
 
 void cBipedStepController3D::Init(cSimCharacter* character, const tVector& gravity, const std::string& param_file)
 {
+	std::cout << "cBipedStepController3D Init 21! "  << std::endl;
 	cCtPDPhaseController::Init(character, gravity, param_file);
+	std::cout << "cCtPDPhaseController Init end! "  << std::endl;
 	InitEndEffectors();
+	std::cout << "InitEndEffectors end! "  << std::endl;
 	InitPoliState();
-
+	std::cout << "InitPoliState done 21! "  << std::endl;
 #if defined(ENABLE_HACK_LLC_LERP)
 	HackLoadNet();
 #endif
+	
 }
 
 const cBipedStepController3D::tStepPlan& cBipedStepController3D::GetStepPlan() const

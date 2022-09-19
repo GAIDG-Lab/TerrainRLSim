@@ -1,6 +1,7 @@
 #include "KinCharacter.h"
 #include <assert.h>
 #include <functional>
+#include <iostream>
 
 const double gDiffTimeStep = 1 / 60.0;
 
@@ -20,16 +21,18 @@ cKinCharacter::~cKinCharacter()
 bool cKinCharacter::Init(const std::string& char_file, const std::string& motion_file)
 {
 	bool succ = Init(char_file);
+	std::cout << "cKinCharacter Init start 11! "  << std::endl;
 	if (succ && (motion_file != ""))
 	{
 		bool succ_motion = LoadMotion(motion_file);
+		std::cout << "succ_motion Init start 11! " << succ_motion << std::endl;
 		if (!succ_motion)
 		{
 			printf("Failed to load motion from %s\n", motion_file.c_str());
 		}
 		succ &= succ_motion;
 	}
-
+	std::cout << "cKinCharacter succ! "  << std::endl;
 	return succ;
 }
 
@@ -213,16 +216,23 @@ bool cKinCharacter::LoadMotion(const std::string& motion_file)
 		int char_dof = GetNumDof();
 		int motion_dof = mMotion.GetNumDof();
 
+		std::cout << "cKinCharacter::LoadMotion char_dof 1 is: " << char_dof << std::endl; //83, 45
+		std::cout << "cKinCharacter::LoadMotion motion_dof 1 is: " << motion_dof << std::endl; //45, 45
+		
 		if (char_dof != motion_dof)
 		{
 			printf("DOF mismatch, char dof: %i, motion dof: %i\n", char_dof, motion_dof);
 			mMotion.Clear();
 			succ = false;
 		}
+
+		std::cout << "cKinCharacter::LoadMotion done! "  << std::endl;
 	}
 
 	if (succ)
 	{
+		std::cout << "cKinCharacter::LoadMotion succ! "  << std::endl; 
+
 		cMotion::tBlendFunc blend_func = std::bind(&cKinCharacter::BlendFrames, this, 
 					std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
 		mMotion.SetBlendFunc(blend_func);
@@ -231,8 +241,11 @@ bool cKinCharacter::LoadMotion(const std::string& motion_file)
 		Pose(mTime);
 		mPose0 = GetPose();
 		mVel0 = GetVel();
+
+		std::cout << "cKinCharacter::LoadMotion succ finish! "  << std::endl; 
 	}
 
+	std::cout << "succ is: " << succ  << std::endl; 
 	return succ;
 }
 

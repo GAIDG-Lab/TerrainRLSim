@@ -315,6 +315,7 @@ void cScenarioExpImitateStep::ParseArgs(const std::shared_ptr<cArgParser>& parse
 
 void cScenarioExpImitateStep::Init()
 {
+	std::cout << "cScenarioExpImitateStep Init start 11! "  << std::endl;
 	cScenarioExpImitateTarget::Init();
 
 	InitEndEffectors();

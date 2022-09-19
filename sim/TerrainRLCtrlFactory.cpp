@@ -61,6 +61,7 @@
 #include "sim/MultiCharWaypointController.h"
 #include "sim/MultiCharWaypointVelController.h"
 #include "sim/CtPDGRFController.h"
+#include <iostream>
 
 const std::string gCharCtrlName[cTerrainRLCtrlFactory::eCharCtrlMax] =
 {
@@ -196,6 +197,7 @@ bool cTerrainRLCtrlFactory::BuildController(const tCtrlParams& params, std::shar
 {
 	bool succ = true;
 
+	std::cout << "cTerrainRLCtrlFactory 11! " <<  params.mCharCtrl << std::endl;
 	switch (params.mCharCtrl)
 	{
 	case eCharCtrlNone:
@@ -369,7 +371,9 @@ bool cTerrainRLCtrlFactory::BuildController(const tCtrlParams& params, std::shar
 		succ = BuildBipedStepController3D(params, out_ctrl);
 		break;
 	case eCharCtrlBiped3DSymStep:
+		std::cout << "cTerrainRLCtrlFactory eCharCtrlBiped3DSymStep! " << std::endl;
 		succ = BuildBipedSymStepController3D(params, out_ctrl);
+		std::cout << "eCharCtrlBiped3DSymStep succ! " << succ << std::endl;
 		break;
 	case eCharCtrlBiped3DSymStepStoch:
 		succ = BuildBipedSymStepStochController3D(params, out_ctrl);
@@ -2706,18 +2710,29 @@ bool cTerrainRLCtrlFactory::BuildBipedStepController3D(const tCtrlParams& params
 
 bool cTerrainRLCtrlFactory::BuildBipedSymStepController3D(const tCtrlParams& params, std::shared_ptr<cCharController>& out_ctrl)
 {
+	std::cout << "BuildBipedSymStepController3D start! " << std::endl;
 	const double update_period = 1 / params.mCtQueryRate;
 	bool succ = true;
 
+
 	auto ctrl = std::shared_ptr<cBipedSymStepController3D>(new cBipedSymStepController3D());
 	ctrl->SetGround(params.mGround);
+	std::cout << "BuildBipedSymStepController3D start 11! " << std::endl;
     if(params.mGroundSampleRes3d >= 0)
     {
 	    ctrl->SetGroundSampleRes(params.mGroundSampleRes3d);
     }
+	std::cout << "BuildBipedSymStepController3D start 22! " << std::endl;
+	std::cout << "BuildBipedSymStepController3D params 11! " << params.mChar.get() << std::endl;
+	std::cout << "BuildBipedSymStepController3D mGravity 11! " << params.mGravity << std::endl;
+	std::cout << "BuildBipedSymStepController3D params.mCtrlParamFile 11! " << params.mCtrlParamFile << std::endl;
 	ctrl->Init(params.mChar.get(), params.mGravity, params.mCtrlParamFile);
+
+	std::cout << "BuildBipedSymStepController3D start 33! " << std::endl;
 	ctrl->SetUpdatePeriod(update_period);
+	std::cout << "BuildBipedSymStepController3D start 44! " << std::endl;
 	ctrl->SetCycleDur(params.mCycleDur);
+	std::cout << "BuildBipedSymStepController3D start 55! " << std::endl;
     if(params.mGroundSampleRes3d >= 0)
     {
         ctrl->SetGroundSampleRes(params.mGroundSampleRes3d);
@@ -2727,6 +2742,8 @@ bool cTerrainRLCtrlFactory::BuildBipedSymStepController3D(const tCtrlParams& par
 	const std::string& critic_net_file = params.mNetFiles[eNetFileCritic];
 	const std::string& critic_model_file = params.mNetFiles[eNetFileCriticModel];
 
+	std::cout << "BuildBipedSymStepController3D start 66! " << std::endl;
+
 	if (poli_net_file != "")
 	{
 		succ &= ctrl->LoadNet(poli_net_file);
@@ -2735,7 +2752,7 @@ bool cTerrainRLCtrlFactory::BuildBipedSymStepController3D(const tCtrlParams& par
 			ctrl->LoadModel(poli_model_file);
 		}
 	}
-
+	std::cout << "BuildBipedSymStepController3D start 77! " << std::endl;
 	if (critic_net_file != "")
 	{
 		bool critic_succ = ctrl->LoadCriticNet(critic_net_file);
@@ -2747,6 +2764,7 @@ bool cTerrainRLCtrlFactory::BuildBipedSymStepController3D(const tCtrlParams& par
 	}
 
 	out_ctrl = ctrl;
+	std::cout << "BuildBipedSymStepController3D succ 11! " << succ << std::endl;
 
 	return succ;
 }

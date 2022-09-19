@@ -1,0 +1,8 @@
+{
+	"ClusterMotions": true,
+	"ClusterDist": 0.01,
+	"MotionFiles":
+	[
+		"data/motions/mocap/dog/0001_retargeted.txt"
+	]
+}

@@ -4,6 +4,7 @@
 		"Joints": 
 		[
 			{
+				"ID": 0,
 				"Name": "root",
 				"Type": "planar",
 				"Parent": -1,
@@ -21,6 +22,7 @@
 			},
 
 			{
+				"ID": 1,
 				"Name": "spine0",
 				"Type": "revolute",
 				"Parent": 0,
@@ -38,6 +40,7 @@
 			},
 
 			{
+				"ID": 2,
 				"Name": "spine1",
 				"Type": "revolute",
 				"Parent": 1,
@@ -55,6 +58,7 @@
 			},
 
 			{
+				"ID": 3,
 				"Name": "spine2",
 				"Type": "revolute",
 				"Parent": 2,
@@ -72,6 +76,7 @@
 			},
 
 			{
+				"ID": 4,
 				"Name": "spine3",
 				"Type": "revolute",
 				"Parent": 3,
@@ -89,6 +94,7 @@
 			},
 
 			{
+				"ID": 5,
 				"Name": "torso",
 				"Type": "revolute",
 				"Parent": 4,
@@ -106,6 +112,7 @@
 			},
 
 			{
+				"ID": 6,
 				"Name": "neck0",
 				"Type": "revolute",
 				"Parent": 5,
@@ -123,6 +130,7 @@
 			},
 
 			{
+				"ID": 7,
 				"Name": "neck1",
 				"Type": "revolute",
 				"Parent": 6,
@@ -140,6 +148,7 @@
 			},
 
 			{
+				"ID": 8,
 				"Name": "head",
 				"Type": "revolute",
 				"Parent": 7,
@@ -157,6 +166,7 @@
 			},
 
 			{
+				"ID": 9,
 				"Name": "tail0",
 				"Type": "revolute",
 				"Parent": 0,
@@ -174,6 +184,7 @@
 			},
 
 			{
+				"ID": 10,
 				"Name": "tail1",
 				"Type": "revolute",
 				"Parent": 9,
@@ -191,6 +202,7 @@
 			},
 
 			{
+				"ID": 11,
 				"Name": "tail2",
 				"Type": "revolute",
 				"Parent": 10,
@@ -208,6 +220,7 @@
 			},
 
 			{
+				"ID": 12,
 				"Name": "tail3",
 				"Type": "revolute",
 				"Parent": 11,
@@ -225,6 +238,7 @@
 			},
 
 			{
+				"ID": 13,
 				"Name": "shoulder",
 				"Type": "revolute",
 				"Parent": 5,
@@ -242,6 +256,7 @@
 			},
 
 			{
+				"ID": 14,
 				"Name": "elbow",
 				"Type": "revolute",
 				"Parent": 13,
@@ -259,6 +274,7 @@
 			},
 
 			{
+				"ID": 15,
 				"Name": "wrist",
 				"Type": "revolute",
 				"Parent": 14,
@@ -276,6 +292,7 @@
 			},
 
 			{
+				"ID": 16,
 				"Name": "finger",
 				"Type": "revolute",
 				"Parent": 15,
@@ -293,6 +310,7 @@
 			},
 
 			{
+				"ID": 17,
 				"Name": "hip",
 				"Type": "revolute",
 				"Parent": 0,
@@ -310,6 +328,7 @@
 			},
 
 			{
+				"ID": 18,
 				"Name": "knee",
 				"Type": "revolute",
 				"Parent": 17,
@@ -327,6 +346,7 @@
 			},
 
 			{
+				"ID": 19,
 				"Name": "ankle",
 				"Type": "revolute",
 				"Parent": 18,
@@ -344,6 +364,7 @@
 			},
 
 			{
+				"ID": 20,
 				"Name": "toe",
 				"Type": "revolute",
 				"Parent": 19,
@@ -365,6 +386,7 @@
 	"BodyDefs": 
 	[
 			{
+				"ID": 0,
 				"Name": "root",
 				"Shape": "box",
 				"Mass": 2.0,
@@ -385,6 +407,7 @@
 				"ColorA": 1
 			},
 			{
+				"ID": 1,
 				"Name": "spine0",
 				"Shape": "box",
 				"Mass": 2.0,
@@ -405,6 +428,7 @@
 				"ColorA": 1
 			},
 			{
+				"ID": 2,
 				"Name": "spine1",
 				"Shape": "box",
 				"Mass": 2.0,
@@ -425,6 +449,7 @@
 				"ColorA": 1
 			},
 			{
+				"ID": 3,
 				"Name": "spine2",
 				"Shape": "box",
 				"Mass": 2.0,
@@ -445,6 +470,7 @@
 				"ColorA": 1
 			},
 			{
+				"ID": 4,
 				"Name": "spine3",
 				"Shape": "box",
 				"Mass": 2.67,
@@ -465,6 +491,7 @@
 				"ColorA": 1
 			},
 			{
+				"ID": 5,
 				"Name": "torso",
 				"Shape": "box",
 				"Mass": 5.78,
@@ -485,6 +512,7 @@
 				"ColorA": 1
 			},
 			{
+				"ID": 6,
 				"Name": "neck0",
 				"Shape": "box",
 				"Mass": 0.85,
@@ -505,6 +533,7 @@
 				"ColorA": 1
 			},
 			{
+				"ID": 7,
 				"Name": "neck1",
 				"Shape": "box",
 				"Mass": 0.85,
@@ -525,6 +554,7 @@
 				"ColorA": 1
 			},
 			{
+				"ID": 8,
 				"Name": "head",
 				"Shape": "box",
 				"Mass": 1.54,
@@ -545,6 +575,7 @@
 				"ColorA": 1
 			},
 			{
+				"ID": 9,
 				"Name": "tail0",
 				"Shape": "box",
 				"Mass": 0.25,
@@ -564,6 +595,7 @@
 				"ColorA": 1
 			},
 			{
+				"ID": 10,
 				"Name": "tail1",
 				"Shape": "box",
 				"Mass": 0.25,
@@ -583,6 +615,7 @@
 				"ColorA": 1
 			},
 			{
+				"ID": 11,
 				"Name": "tail2",
 				"Shape": "box",
 				"Mass": 0.25,
@@ -602,6 +635,7 @@
 				"ColorA": 1
 			},
 			{
+				"ID": 12,
 				"Name": "tail3",
 				"Shape": "box",
 				"Mass": 0.25,
@@ -621,6 +655,7 @@
 				"ColorA": 1
 			},
 			{
+				"ID": 13,
 				"Name": "forearm",
 				"Shape": "box",
 				"Mass": 2.75,
@@ -640,6 +675,7 @@
 				"ColorA": 1
 			},
 			{
+				"ID": 14,
 				"Name": "arm",
 				"Shape": "box",
 				"Mass": 1.33,
@@ -659,6 +695,7 @@
 				"ColorA": 1
 			},
 			{
+				"ID": 15,
 				"Name": "hand",
 				"Shape": "box",
 				"Mass": 1,
@@ -678,6 +715,7 @@
 				"ColorA": 1
 			},
 			{
+				"ID": 16,
 				"Name": "finger",
 				"Shape": "box",
 				"Mass": 1,
@@ -697,6 +735,7 @@
 				"ColorA": 1
 			},
 			{
+				"ID": 17,
 				"Name": "thigh",
 				"Shape": "box",
 				"Mass": 2.90,
@@ -716,6 +755,7 @@
 				"ColorA": 1
 			},
 			{
+				"ID": 18,
 				"Name": "leg",
 				"Shape": "box",
 				"Mass": 2.00,
@@ -735,6 +775,7 @@
 				"ColorA": 1
 			},
 			{
+				"ID": 19,
 				"Name": "foot",
 				"Shape": "box",
 				"Mass": 1,
@@ -754,6 +795,7 @@
 				"ColorA": 1
 			},
 			{
+				"ID": 20,
 				"Name": "toe",
 				"Shape": "box",
 				"Mass": 1,
@@ -777,6 +819,7 @@
 		"DrawShapeDefs": 
 		[
 			{
+				"ID": 0,
 				"Name": "root",
 				"Shape": "box",
 				"ParentJoint": 0,
@@ -795,6 +838,7 @@
 				"ColorA": 1
 			},
 			{
+				"ID": 1,
 				"Name": "spine0",
 				"Shape": "box",
 				"ParentJoint": 1,
@@ -813,6 +857,7 @@
 				"ColorA": 1
 			},
 			{
+				"ID": 2,
 				"Name": "spine1",
 				"Shape": "box",
 				"ParentJoint": 2,
@@ -831,6 +876,7 @@
 				"ColorA": 1
 			},
 			{
+				"ID": 3,
 				"Name": "spine2",
 				"Shape": "box",
 				"ParentJoint": 3,
@@ -849,6 +895,7 @@
 				"ColorA": 1
 			},
 			{
+				"ID": 4,
 				"Name": "spine3",
 				"Shape": "box",
 				"ParentJoint": 4,
@@ -867,6 +914,7 @@
 				"ColorA": 1
 			},
 			{
+				"ID": 5,
 				"Name": "torso",
 				"Shape": "box",
 				"ParentJoint": 5,
@@ -885,6 +933,7 @@
 				"ColorA": 1
 			},
 			{
+				"ID": 6,
 				"Name": "neck0",
 				"Shape": "box",
 				"ParentJoint": 6,
@@ -903,6 +952,7 @@
 				"ColorA": 1
 			},
 			{
+				"ID": 7,
 				"Name": "neck1",
 				"Shape": "box",
 				"ParentJoint": 7,
@@ -921,6 +971,7 @@
 				"ColorA": 1
 			},
 			{
+				"ID": 8,
 				"Name": "head",
 				"Shape": "box",
 				"ParentJoint": 8,
@@ -939,6 +990,7 @@
 				"ColorA": 1
 			},
 			{
+				"ID": 9,
 				"Name": "tail0",
 				"Shape": "box",
 				"ParentJoint": 9,
@@ -957,6 +1009,7 @@
 				"ColorA": 1
 			},
 			{
+				"ID": 10,
 				"Name": "tail1",
 				"Shape": "box",
 				"ParentJoint": 10,
@@ -975,6 +1028,7 @@
 				"ColorA": 1
 			},
 			{
+				"ID": 11,
 				"Name": "tail2",
 				"Shape": "box",
 				"ParentJoint": 11,
@@ -993,6 +1047,7 @@
 				"ColorA": 1
 			},
 			{
+				"ID": 12,
 				"Name": "tail3",
 				"Shape": "box",
 				"ParentJoint": 12,
@@ -1011,6 +1066,7 @@
 				"ColorA": 1
 			},
 			{
+				"ID": 13,
 				"Name": "back_forearm",
 				"Shape": "box",
 				"ParentJoint": 13,
@@ -1029,6 +1085,7 @@
 				"ColorA": 1
 			},
 			{
+				"ID": 14,
 				"Name": "back_arm",
 				"Shape": "box",
 				"ParentJoint": 14,
@@ -1047,6 +1104,7 @@
 				"ColorA": 1
 			},
 			{
+				"ID": 15,
 				"Name": "back_hand",
 				"Shape": "box",
 				"ParentJoint": 15,
@@ -1065,6 +1123,7 @@
 				"ColorA": 1
 			},
 			{
+				"ID": 16,
 				"Name": "back_finger",
 				"Shape": "box",
 				"ParentJoint": 16,
@@ -1083,6 +1142,7 @@
 				"ColorA": 1
 			},
 			{
+				"ID": 17,
 				"Name": "back_thigh",
 				"Shape": "box",
 				"ParentJoint": 17,
@@ -1101,6 +1161,7 @@
 				"ColorA": 1
 			},
 			{
+				"ID": 18,
 				"Name": "back_leg",
 				"Shape": "box",
 				"ParentJoint": 18,
@@ -1119,6 +1180,7 @@
 				"ColorA": 1
 			},
 			{
+				"ID": 19,
 				"Name": "back_foot",
 				"Shape": "box",
 				"ParentJoint": 19,
@@ -1137,6 +1199,7 @@
 				"ColorA": 1
 			},
 			{
+				"ID": 20,
 				"Name": "back_toe",
 				"Shape": "box",
 				"ParentJoint": 20,
@@ -1155,6 +1218,7 @@
 				"ColorA": 1
 			},
 			{
+				"ID": 21,
 				"Name": "left_forearm",
 				"Shape": "box",
 				"ParentJoint": 13,
@@ -1173,6 +1237,7 @@
 				"ColorA": 1
 			},
 			{
+				"ID": 22,
 				"Name": "left_arm",
 				"Shape": "box",
 				"ParentJoint": 14,
@@ -1191,6 +1256,7 @@
 				"ColorA": 1
 			},
 			{
+				"ID": 23,
 				"Name": "left_hand",
 				"Shape": "box",
 				"ParentJoint": 15,
@@ -1209,6 +1275,7 @@
 				"ColorA": 1
 			},
 			{
+				"ID": 24,
 				"Name": "left_finger",
 				"Shape": "box",
 				"ParentJoint": 16,
@@ -1227,6 +1294,7 @@
 				"ColorA": 1
 			},
 			{
+				"ID": 25,
 				"Name": "left_thigh",
 				"Shape": "box",
 				"ParentJoint": 17,
@@ -1245,6 +1313,7 @@
 				"ColorA": 1
 			},
 			{
+				"ID": 26,
 				"Name": "left_leg",
 				"Shape": "box",
 				"ParentJoint": 18,
@@ -1263,6 +1332,7 @@
 				"ColorA": 1
 			},
 			{
+				"ID": 27,
 				"Name": "left_foot",
 				"Shape": "box",
 				"ParentJoint": 19,
@@ -1281,6 +1351,7 @@
 				"ColorA": 1
 			},
 			{
+				"ID": 28,
 				"Name": "left_toe",
 				"Shape": "box",
 				"ParentJoint": 20,
@@ -1311,141 +1382,141 @@
 			},
 			{
 				"Name": "spine0",
-				"Kp": 100,
-				"Kd": 10,
+				"Kp": 200,
+				"Kd": 20,
 				"TargetTheta0": 0,
 				"UseWorldCoord": 0
 			},
 			{
 				"Name": "spine1",
-				"Kp": 100,
-				"Kd": 10,
+				"Kp": 200,
+				"Kd": 20,
 				"TargetTheta0": 0,
 				"UseWorldCoord": 0
 			},
 			{
 				"Name": "spine2",
-				"Kp": 100,
-				"Kd": 10,
+				"Kp": 200,
+				"Kd": 20,
 				"TargetTheta0": 0,
 				"UseWorldCoord": 0
 			},
 			{
 				"Name": "spine3",
-				"Kp": 100,
-				"Kd": 10,
+				"Kp": 200,
+				"Kd": 20,
 				"TargetTheta0": 0,
 				"UseWorldCoord": 0
 			},
 			{
 				"Name": "torso",
-				"Kp": 100,
-				"Kd": 10,
+				"Kp": 200,
+				"Kd": 20,
 				"TargetTheta0": 0,
 				"UseWorldCoord": 0
 			},
 			{
 				"Name": "neck0",
-				"Kp": 25,
-				"Kd": 2.5,
+				"Kp": 50,
+				"Kd": 5,
 				"TargetTheta0": 0.68507,
 				"UseWorldCoord": 0
 			},
 			{
 				"Name": "neck1",
-				"Kp": 25,
-				"Kd": 2.5,
+				"Kp": 50,
+				"Kd": 5,
 				"TargetTheta0": 0.2,
 				"UseWorldCoord": 0
 			},
 			{
 				"Name": "head",
-				"Kp": 25,
-				"Kd": 2.5,
+				"Kp": 50,
+				"Kd": 5,
 				"TargetTheta0": 0.20456,
 				"UseWorldCoord": 0
 			},
 			{
 				"Name": "tail0",
-				"Kp": 2,
-				"Kd": 0.2,
+				"Kp": 4,
+				"Kd": 0.4,
 				"TargetTheta0": 0.4,
 				"UseWorldCoord": 0
 			},
 			{
 				"Name": "tail1",
-				"Kp": 2,
-				"Kd": 0.2,
+				"Kp": 4,
+				"Kd": 0.4,
 				"TargetTheta0": 0.2,
 				"UseWorldCoord": 0
 			},
 			{
 				"Name": "tail2",
-				"Kp": 2,
-				"Kd": 0.2,
+				"Kp": 4,
+				"Kd": 0.4,
 				"TargetTheta0": 0.2,
 				"UseWorldCoord": 0
 			},
 			{
 				"Name": "tail3",
-				"Kp": 2,
-				"Kd": 0.2,
+				"Kp": 4,
+				"Kd": 0.4,
 				"TargetTheta0": 0.2,
 				"UseWorldCoord": 0
 			},
 			{
 				"Name": "shoulder",
-				"Kp": 80,
-				"Kd": 8,
+				"Kp": 160,
+				"Kd": 16,
 				"TargetTheta0": -0.52240,
 				"UseWorldCoord": 1
 			},
 			{
 				"Name": "elbow",
-				"Kp": 40,
-				"Kd": 4,
+				"Kp": 80,
+				"Kd": 8,
 				"TargetTheta0": 0.87117,
 				"UseWorldCoord": 0
 			},
 			{
 				"Name": "wrist",
-				"Kp": 40,
-				"Kd": 4,
+				"Kp": 80,
+				"Kd": 8,
 				"TargetTheta0": 0.11488,
 				"UseWorldCoord": 0
 			},
 			{
 				"Name": "finger",
-				"Kp": 40,
-				"Kd": 4,
+				"Kp": 80,
+				"Kd": 8,
 				"TargetTheta0": -0.46365,
 				"UseWorldCoord": 0
 			},
 			{
 				"Name": "hip",
-				"Kp": 65,
-				"Kd": 6.5,
+				"Kp": 130,
+				"Kd": 13,
 				"TargetTheta0": 0.61719,
 				"UseWorldCoord": 1
 			},
 			{
 				"Name": "knee",
-				"Kp": 25,
-				"Kd": 2.5,
+				"Kp": 50,
+				"Kd": 5,
 				"TargetTheta0": -1.31193,
 				"UseWorldCoord": 0
 			},
 			{
 				"Name": "ankle",
-				"Kp": 25,
-				"Kd": 2.5,
+				"Kp": 50,
+				"Kd": 5,
 				"TargetTheta0": 1.32022,
 				"UseWorldCoord": 0
 			},
 			{
 				"Name": "toe",
-				"Kp": 25,
-				"Kd": 2.5,
+				"Kp": 50,
+				"Kd": 5,
 				"TargetTheta0": -0.62549,
 				"UseWorldCoord": 0
 			}
@@ -2135,5 +2206,4 @@
 				]
 			}
 		]
-
 }

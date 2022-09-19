@@ -1,8 +1,11 @@
 #pragma once
-#include "DrawScenarioPoliEval.h"
+#include "scenarios/DrawScenarioImitateTargetEval.h"
+#include "sim/BipedStepController3D.h"
 
-class cKinCharacter;
-class cDrawScenarioImitateEvalDog : public cDrawScenarioPoliEval
+//#define ENABLE_HACK_RECORD_ACTION_PERTURB
+//#define ENABLE_HACK_ADJUST_PERIOD
+
+class cDrawScenarioImitateEvalDog : public cDrawScenarioImitateTargetEval
 {
 public:
 	EIGEN_MAKE_ALIGNED_OPERATOR_NEW
@@ -11,20 +14,52 @@ public:
 	virtual ~cDrawScenarioImitateEvalDog();
 
 	virtual void Init();
-	virtual void Reset();
-	virtual void Keyboard(unsigned char key, int x, int y);
 
 protected:
 
-	bool mDrawKinChar;
+	bool drawStepPlan;
 
 	virtual void BuildScene(std::shared_ptr<cScenarioSimChar>& out_scene) const;
-	virtual void DrawCharacters() const;
-	virtual void DrawKinChar() const;
-	virtual const std::shared_ptr<cKinCharacter>& GetKinChar() const;
+	virtual bool EnableTargetPos() const;
+	virtual void SetTargetPos(const tVector& pos);
 
-	virtual void ToggleDrawKinChar();
-	virtual tVector GetDrawKinCharOffset() const;
+	virtual void ResetCallback();
+
+	virtual void DrawMisc() const;
+	virtual void DrawStepPlan() const;
+	virtual void DrawStepPos(const tVector& pos, const tVector& col) const;
+	virtual void DrawRootHeading(const cBipedStepController3D::tStepPlan& step_plan, const tVector& col) const;
+
+	virtual void ToggleDrawStepPlan();
 
 	virtual tVector GetCamTrackPos() const;
+	virtual void Keyboard(unsigned char key, int x, int y);
+
+#if defined(ENABLE_HACK_LLC_LERP)
+public:
+	virtual std::string BuildTextInfoStr() const;
+
+protected:
+	virtual void AdjustHackLerp(double delta);
+#endif
+
+#if defined(ENABLE_HACK_RECORD_ACTION_PERTURB)
+public:
+	virtual void Keyboard(unsigned char key, int x, int y);
+
+protected:
+	bool mHackEnableRecordActionPerturb;
+	double mHackRecordActionPerturbPhase;
+
+	virtual void HackRecordActionPerturb();
+#endif
+
+#if defined(ENABLE_HACK_ADJUST_PERIOD)
+public:
+	virtual void Keyboard(unsigned char key, int x, int y);
+	virtual std::string BuildTextInfoStr() const;
+
+protected:
+	virtual void HackAdjustCtrlPeriod(double delta);
+#endif
 };

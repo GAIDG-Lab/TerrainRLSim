@@ -9,6 +9,7 @@
 #include "sim/GroundDynamicCharacters3D.h"
 #include "sim/GroundDynamicObstacles3D.h"
 #include "sim/GroundConveyor3D.h"
+#include <iostream>
 
 bool cGroundFactory::ParseParamsJson(const std::string& param_file, cGround::tParams& out_params)
 {
@@ -161,6 +162,8 @@ void cGroundFactory::BuildGroundVar2D(const std::shared_ptr<cWorld>& world, cons
 
 void cGroundFactory::BuildGroundVar3D(const std::shared_ptr<cWorld>& world, const cGround::tParams& params, std::shared_ptr<cGround>& out_ground)
 {
+	std::cout << "BuildGroundVar3D Init 21! "  << std::endl;
+
 	const double spawn_offset = 0;
 
 	std::shared_ptr<cGroundVar3D> ground_var3d = std::shared_ptr<cGroundVar3D>(new cGroundVar3D());
@@ -219,6 +222,7 @@ void cGroundFactory::BuildGroundObstacles3D(const std::shared_ptr<cWorld>& world
 
 void cGroundFactory::BuildGroundObstaclesDynamicCharacters3D(const std::shared_ptr<cWorld>& world, const cGround::tParams& params, std::shared_ptr<cGround>& out_ground)
 {
+	std::cout << "cGroundFactory: " << std::endl;
 	const double spawn_offset = 0;
 
 	auto ground = std::shared_ptr<cGroundObstaclesDynamicCharacters3D>(new cGroundObstaclesDynamicCharacters3D());
@@ -249,6 +253,8 @@ void cGroundFactory::BuildGroundObstaclesMeshDynamicCharacters3D(const std::shar
 
 void cGroundFactory::BuildGroundDynamicCharacters3D(const std::shared_ptr<cWorld>& world, const cGround::tParams& params, std::shared_ptr<cGround>& out_ground)
 {
+	std::cout << "BuildGroundDynamicCharacters3D Init 21! "  << std::endl;
+
 	// const double spawn_offset = 0;
 
 	auto ground = std::shared_ptr<cGroundDynamicCharacters3D>(new cGroundDynamicCharacters3D());

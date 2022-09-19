@@ -1,0 +1,6 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory '/home/beth/Desktop/playground/TerrainRLSim'
+make: Leaving directory '/home/beth/Desktop/playground/TerrainRLSim'
+ 
+make: *** No targets specified and no makefile found.  Stop.
+

@@ -12,7 +12,9 @@ cCtPDController::~cCtPDController()
 void cCtPDController::Init(cSimCharacter* character, const tVector& gravity, const std::string& param_file)
 {
 	cCtController::Init(character);
+	std::cout << "cCtPDController Init 11 done! "  << std::endl;
 	SetupPDControllers(param_file, gravity);
+	std::cout << "SetupPDControllers 11 done! "  << std::endl;
 }
 
 void cCtPDController::Reset()
@@ -31,21 +33,26 @@ void cCtPDController::SetupPDControllers(const std::string& param_file, const tV
 {
 	Eigen::MatrixXd pd_params;
 	bool succ = cPDController::LoadParams(param_file, pd_params);
+	std::cout << "SetupPDControllers succ: " << succ << std::endl;
 	if (succ)
 	{
+		std::cout << "mPDCtrl 0" << std::endl;
 #if defined(ENABLE_EXP_PD_CTRL)
 		mPDCtrl.Init(mChar, pd_params);
+		std::cout << "mPDCtrl 1" << std::endl;
 #else
 		mPDCtrl.Init(mChar, pd_params, gravity);
+		std::cout << "mPDCtrl 2" << std::endl;
 #endif
 	}
-
+	std::cout << "SetupPDControllers done 11!" << std::endl;
 	mValid = succ;
 	if (!mValid)
 	{
 		printf("Failed to initialize Ct-PD controller\n");
 		mValid = false;
 	}
+	std::cout << "SetupPDControllers done 22!" << std::endl;
 }
 
 void cCtPDController::UpdateBuildTau(double time_step, Eigen::VectorXd& out_tau)

@@ -42,12 +42,20 @@ cMocapStepController::~cMocapStepController()
 
 void cMocapStepController::Init(cKinCharacter* character, const std::string& param_file)
 {
-	cKinController::Init(character);
-	ResetParams();
-	InitMotionFeatureWeights(mMotionFeatureWeights);
-	SetupMirrorStanceJoints();
+	std::cout << "cMocapStepController::Init 11" << std::endl;
 
+	cKinController::Init(character);
+	std::cout << "cKinController::Init done!" << std::endl;
+	ResetParams();
+	std::cout << "ResetParams done!" << std::endl;
+	InitMotionFeatureWeights(mMotionFeatureWeights);
+	std::cout << "InitMotionFeatureWeights done!" << std::endl;
+	SetupMirrorStanceJoints();
+	std::cout << "SetupMirrorStanceJoints done!" << std::endl;
+	std::cout << "_relativeFilePath:" << _relativeFilePath << std::endl;
+	std::cout << "param_file:" << param_file << std::endl;
 	LoadParams(_relativeFilePath + param_file);
+	std::cout << "cMocapStepController Init  done!" << std::endl;
 }
 
 void cMocapStepController::Reset()

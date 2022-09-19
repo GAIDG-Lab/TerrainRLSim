@@ -286,6 +286,7 @@ void cScenarioExpImitateViz::SetupControllerParams(cTerrainRLCtrlFactory::tCtrlP
 
 bool cScenarioExpImitateViz::BuildKinCharacter(std::shared_ptr<cKinCharacter>& out_char) const
 {
+	std::cout << "cScenarioExpImitateViz start 11! "  << std::endl;
 	auto kin_char = std::shared_ptr<cKinCharacter>(new cKinSimCharacter());
 	kin_char->EnableVelUpdate(true);
 	bool succ = kin_char->Init(mCharParams.mCharFile, mMotionFile);
@@ -293,6 +294,7 @@ bool cScenarioExpImitateViz::BuildKinCharacter(std::shared_ptr<cKinCharacter>& o
 	{
 		out_char = kin_char;
 	}
+	std::cout << "cScenarioExpImitateViz done 11! " << succ  << std::endl;
 	return succ;
 }
 

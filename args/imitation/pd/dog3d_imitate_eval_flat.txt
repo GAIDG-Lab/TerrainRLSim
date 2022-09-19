@@ -1,58 +1,47 @@
--scenario= imitate_eval
+//--scene imitate
 
--character_file= data/characters/dog.txt
+//--num_update_substeps 10
+//--num_sim_substeps 2
+//--world_scale 4
+
+//--terrain_file data/terrain/plane.txt
+
+//--char_types general
+//--character_files data/characters/dog3d.txt
+//--enable_char_soft_contact false
+//--fall_contact_bodies 0 1 2 3 4 5 6 7 9 10 11 13 14 15 17 18 19 21 22
+
+//--char_ctrls ct_pd
+//--char_ctrl_files data/controllers/dog3d_phase_rot_ctrl.txt
+//--kin_ctrl motion
+//--motion_file data/motions/dog3d_pace.txt
+//--sync_char_root_pos true
+//--sync_char_root_rot false
+
+//--agent_files data/agents/ct_agent_dog_ppo.txt
+//--train_agents false
+
+//--model_files data/policies/dog3d/dog3d_pace.ckpt
+
+-scenario= imitate_dog
+
+-character_files= data/characters/dog3d.txt
+-motion_file= data/motions/dog3d_pace.txt
 -state_file= data/states/dog_bound_state3.txt
--motion_file= data/motions/dog_sim_bound.txt
 
-//-character_file= data/characters/raptor.txt
-//-motion_file= data/motions/raptor_sim_run.txt
-//-state_file= data/states/raptor_run_state.txt
+//-character_file= data/characters/dog2.txt
+//-motion_file= data/motions/dog_bound.txt
+//-state_file= data/states/dog_bound_state2.txt
 
-// -character_file= data/characters/biped.txt
-// -motion_file= data/motions/biped_walk.txt
-// -state_file= data/states/biped_stand_state.txt
+-sim_mode= 3d
+-char_type= dog
+-char_ctrl= dog
+//-char_ctrl_files=data/controllers/dog3d_phase_rot_ctrl.txt
+//-terrain_file= data/terrain/plane.txt
 
-//-character_file= data/characters/biped3d1.txt
-//-motion_file= data/motions/biped3d1_walk.txt
-//-state_file= data/states/biped3d1_stand_state.txt
-
--output_path= output/int_imitate_eval.txt
--record_reward= true
--reward_output_path= output/int_imitate_reward.txt
--pose_err_file= output/int_imitate_pose_err.txt
-
--char_type= general
--char_ctrl= ct_pd_track
--char_ctrl_ct_query_rate= 0
--terrain_file= data/terrain/flat.txt
-
--num_update_steps= 20
--num_sim_substeps= 5
+-num_update_steps= 10
+-num_sim_substeps= 2
 -world_scale= 4
 
-// -policy_solver= data/policies/dog/nets/dog_ct_track_actor_solver.prototxt
-// -policy_net= data/policies/dog/nets/dog_ct_track_actor_net.prototxt
-// -critic_solver= data/policies/dog/nets/dog_ct_track_critic_solver.prototxt
-// -critic_net= data/policies/dog/nets/dog_ct_track_critic_net.prototxt
-
-//-policy_solver= data/policies/raptor/nets/raptor_ct_track_actor_solver.prototxt
-//-policy_net= data/policies/raptor/nets/raptor_ct_track_actor_net.prototxt
-//-critic_solver= data/policies/raptor/nets/raptor_ct_track_critic_solver.prototxt
-//-critic_net= data/policies/raptor/nets/raptor_ct_track_critic_net.prototxt
-
-//-policy_solver= data/policies/biped/nets/biped_ct_track_actor_solver.prototxt
-//-policy_net= data/policies/biped/nets/biped_ct_track_actor_net.prototxt
-//-critic_solver= data/policies/biped/nets/biped_ct_track_critic_solver.prototxt
-//-critic_net= data/policies/biped/nets/biped_ct_track_critic_net.prototxt
-
-//-policy_solver= data/policies/biped3d/nets/biped3d1_ct_track_actor_solver.prototxt
-//-policy_net= data/policies/biped3d/nets/biped3d1_ct_track_actor_net.prototxt
-//-critic_solver= data/policies/biped3d/nets/biped3d1_ct_track_critic_solver.prototxt
-//-critic_net= data/policies/biped3d/nets/biped3d1_ct_track_critic_net.prototxt
-
--enable_rand_state_reset= true
--rand_seed= 21
--poli_eval_max_episodes= 32
--episode_max_time= 10
-
--num_threads= 8
+//-kin_ctrl_file= data/controllers/biped3D/biped3d_mocap_step_ctrl0.txt
+//-kin_ctrl= motion

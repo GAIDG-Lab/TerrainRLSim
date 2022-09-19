@@ -42,6 +42,7 @@ cDrawScenarioSimChar::~cDrawScenarioSimChar()
 
 void cDrawScenarioSimChar::Init()
 {
+	std::cout << "cDrawScenarioSimChar Init start 1! "  << std::endl;
 	BuildScene(mScene);
 	SetupScene(mScene);
 

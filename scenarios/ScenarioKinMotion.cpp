@@ -1,4 +1,5 @@
 #include "ScenarioKinMotion.h"
+#include <iostream>
 
 cScenarioKinMotion::cScenarioKinMotion()
 {
@@ -11,6 +12,7 @@ cScenarioKinMotion::~cScenarioKinMotion()
 
 void cScenarioKinMotion::Init()
 {
+	std::cout << "cScenarioKinMotion Init 21! "  << std::endl;
 	bool succ = BuildCharacter(mCharFile, mMotionFile);
 	if (!succ)
 	{

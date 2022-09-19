@@ -264,8 +264,7 @@ void cPDController::GetTargetTheta(Eigen::VectorXd& out_theta) const
 		tar_q = rel_rot * diff; // Add this difference to current relative rotation
 		out_theta = cMathUtil::QuatToVec(tar_q);
 	}
-
-	if (UseWorldCoord() && ((joint_type != cKinTree::eJointTypeRevolute) && (joint_type != cKinTree::eJointTypeSpherical)))
+	if (UseWorldCoord() && ((joint_type != cKinTree::eJointTypePlanar) && (joint_type != cKinTree::eJointTypeRevolute) && (joint_type != cKinTree::eJointTypeSpherical)))
 	{
 		printf("Only revolute joints support world space targets\n");
 		assert(false);

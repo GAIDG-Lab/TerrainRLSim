@@ -40,6 +40,7 @@ const std::string gCharName[cScenarioSimChar::eCharMax] =
 
 cScenarioSimChar::tObjEntry::tObjEntry()
 {
+	std::cout << "cScenarioSimChar tObjEntry! "  << std::endl;
 	mObj = nullptr;
 	mEndTime = std::numeric_limits<double>::infinity();
 	mColor = tVector(0.5, 0.5, 0.5, 1);
@@ -47,6 +48,7 @@ cScenarioSimChar::tObjEntry::tObjEntry()
 
 cScenarioSimChar::cScenarioSimChar()
 {
+	std::cout << "cScenarioSimChar cScenarioSimChar start! "  << std::endl;
 	// mRand.Seed(cMathUtil::RandUint());
 	// mRand.Seed(0);
 	mRandSeed = 0;
@@ -82,6 +84,7 @@ cScenarioSimChar::cScenarioSimChar()
 	EnableMotionRecording(false);
 
 	mOutMotionFile = "output/record_motion.txt";
+	std::cout << "cScenarioSimChar cScenarioSimChar end! "  << std::endl;
 }
 
 cScenarioSimChar::~cScenarioSimChar()
@@ -91,6 +94,7 @@ cScenarioSimChar::~cScenarioSimChar()
 
 void cScenarioSimChar::ParseArgs(const std::shared_ptr<cArgParser>& parser)
 {
+	std::cout << "cScenarioSimChar ParseArgs start! "  << std::endl;
 	bool succ = true;
 	succ = parser->ParseString("character_file", mCharParams.mCharFile);
 	if (!succ)
@@ -156,7 +160,7 @@ void cScenarioSimChar::ParseArgs(const std::shared_ptr<cArgParser>& parser)
 	std::string char_ctrl_str = "";
 	parser->ParseString("char_ctrl", char_ctrl_str);
 
-	parser->ParseString("char_ctrl_param_file", mCharCtrlParamFile);
+	parser->ParseString("char_ctrl_param_file", mCharCtrlParamFile); //char_ctrl 
 	cTerrainRLCtrlFactory::ParseCharCtrl(char_ctrl_str, mCtrlParams.mCharCtrl);
 	parser->ParseDouble("char_ctrl_ct_query_rate", mCtrlParams.mCtQueryRate);
 	parser->ParseDouble("char_ctrl_cycle_dur", mCtrlParams.mCycleDur);
@@ -218,32 +222,47 @@ void cScenarioSimChar::ParseArgs(const std::shared_ptr<cArgParser>& parser)
 	parser->ParseDouble("char_init_pos_x", mCharParams.mInitPos[0]);
 
 	parser->ParseString("out_motion_file", mOutMotionFile);
+
+	std::cout << "cScenarioSimChar ParseArgs end! "  << std::endl;
 }
 
 void cScenarioSimChar::Init()
 {
+	std::cout << "cScenarioSimChar start 00! "  << std::endl;
 	mTime = 0;
 
+	std::cout << "cScenarioSimChar start 11! "  << std::endl;
 	if (HasRandSeed())
 	{
+		std::cout << "cScenarioSimChar start 22! "  << std::endl;
 		SetRandSeed(mRandSeed);
 	}
 
+	std::cout << "cScenarioSimChar start 33! "  << std::endl;
 	if (mEnableRandPerturbs)
 	{
+		std::cout << "cScenarioSimChar start 44! "  << std::endl;
 		ResetRandPertrub();
 	}
 
+	std::cout << "cScenarioSimChar start 55! "  << std::endl;
 	BuildWorld();
+	std::cout << "cScenarioSimChar start 66! "  << std::endl;
 	BuildGround();
+	std::cout << "cScenarioSimChar start 77! "  << std::endl;
 	BuildCharacter();
+	std::cout << "cScenarioSimChar start 88! "  << std::endl;
 	SetupGround();
 
+	std::cout << "cScenarioSimChar start 99! "  << std::endl;
 	InitCharacterPos(mChar);
+	std::cout << "cScenarioSimChar start 101! "  << std::endl;
 	ResolveCharGroundIntersect(mChar);
-
+	std::cout << "cScenarioSimChar start 102! "  << std::endl;
 	ClearObjs();
+	std::cout << "cScenarioSimChar start 103! "  << std::endl;
 	EnableMotionRecording(false);
+	std::cout << "cScenarioSimChar start 104! "  << std::endl;
 	FilterPartIDs(mPerturbPartIDs);
 }
 
@@ -503,23 +522,31 @@ std::string cScenarioSimChar::GetName() const
 
 bool cScenarioSimChar::BuildCharacter()
 {
+	std::cout << "cScenarioSimChar::BuildCharacter start 11! "  << std::endl;
 	CreateCharacter(mCharType, mChar);
-
+	std::cout << "cScenarioSimChar::CreateCharacter done 11! "  << std::endl;
 	bool succ = mChar->Init(mWorld, mCharParams);
+	std::cout << "cScenarioSimChar::CreateCharacter Init 11! " << succ << std::endl;
 	if (succ)
 	{
 		mChar->setRelativeFilePath(mCharParams.mRelativeFilePath);
+		std::cout << "cScenarioSimChar::setRelativeFilePath done 11! " << std::endl;
 		mChar->RegisterContacts(cWorld::eContactFlagCharacter, cWorld::eContactFlagEnvironment);
+		std::cout << "cScenarioSimChar::RegisterContacts done 11! "  << std::endl;
 		SetupCharRootPos(mChar);
+		std::cout << "cScenarioSimChar::SetupCharRootPos done 11! "  << std::endl;
 		//InitCharacterPos(mChar);
 
 		std::shared_ptr<cCharController> ctrl;
+		std::cout << "cScenarioSimChar::BuildController start 11! " << succ << std::endl;
 		succ = BuildController(ctrl);
+		std::cout << "cScenarioSimChar::BuildController done 11! " << succ << std::endl;
 		if (succ && ctrl != nullptr)
 		{
 			mChar->SetController(ctrl);
 		}
 	}
+	std::cout << "cScenarioSimChar::BuildCharacter succ! " << succ << std::endl;
 	return succ;
 }
 
@@ -574,8 +601,11 @@ void cScenarioSimChar::SetupControllerParams(cTerrainRLCtrlFactory::tCtrlParams&
 
 bool cScenarioSimChar::BuildController(std::shared_ptr<cCharController>& out_ctrl)
 {
+	std::cout << "BuildController start 11! "  << std::endl;
 	SetupControllerParams(mCtrlParams);
+	std::cout << "BuildController SetupControllerParams 11! "  << std::endl;
 	bool succ = cTerrainRLCtrlFactory::BuildController(mCtrlParams, out_ctrl);
+	std::cout << "BuildController succ! " << succ  << std::endl;
 	return succ;
 }
 

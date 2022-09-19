@@ -37,6 +37,7 @@ cScenarioMultChar::~cScenarioMultChar()
 
 void cScenarioMultChar::Init()
 {
+	std::cout << "cScenarioMultChar Init 21! "  << std::endl;
 	cScenarioExpHike::Init();
 	cScenarioImitateStepEval::Init();
 	BuildChars();

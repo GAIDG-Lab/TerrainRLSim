@@ -30,6 +30,7 @@ void cNeuralNetLearner::Reset()
 
 void cNeuralNetLearner::Init()
 {
+	std::cout << "cNeuralNetLearner Init start 1! "  << std::endl;
 	mPrevTupleID = gInvalidIdx;
 	LoadNet(mTrainer->GetNetFile());
 	SyncNet();

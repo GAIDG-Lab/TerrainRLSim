@@ -19,6 +19,7 @@ cCtController::~cCtController()
 
 void cCtController::Init(cSimCharacter* character)
 {
+	std::cout << "cCtController Init 21! "  << std::endl;
 	cBaseControllerCacla::Init(character);
 	SetupActionBounds();
 }

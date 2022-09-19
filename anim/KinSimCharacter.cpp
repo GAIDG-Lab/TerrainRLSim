@@ -31,9 +31,12 @@ bool cKinSimCharacter::Init(const std::string& char_file,
 {
 	this->charFile = char_file;
 	bool succ = Init(char_file);
+	std::cout << "LoadMotion Init start 22! "  << std::endl;
 	if (succ && (motion_file != ""))
 	{
 		bool succ_motion = LoadMotion(motion_file);
+
+		std::cout << "LoadMotion Init done! "  << std::endl;
 		if (!succ_motion)
 		{
 			printf("Failed to load motion from %s\n", motion_file.c_str());
@@ -41,6 +44,7 @@ bool cKinSimCharacter::Init(const std::string& char_file,
 		succ &= succ_motion;
 	}
 
+	std::cout << "succ2 is: " << succ  << std::endl;
 	return succ;
 }
 
@@ -58,6 +62,7 @@ bool cKinSimCharacter::BuildBody(std::shared_ptr<cWorld> world)
 
 bool cKinSimCharacter::Init(const std::string& char_file)
 {
+	std::cout << "cKinSimCharacter Init start 1! "  << std::endl;
 	return cCharacter::Init(char_file);
 }
 
@@ -224,6 +229,8 @@ void cKinSimCharacter::BuildBodyPart(int part_id, const tVector& root_pos, doubl
 void cKinSimCharacter::BuildBoxPart(int part_id, const tVector& root_pos, double friction,
 								std::shared_ptr<cSimObj>& out_part)
 {
+	std::cout << "cKinSimCharacter::BuildBoxPart 11" << std::endl;
+	
 	tMatrix com_world_trans = cKinTree::BodyWorldTrans(mJointMat, mBodyDefs, mPose, part_id);
 	tVector pos = com_world_trans.col(3);
 	pos += root_pos;
@@ -255,6 +262,8 @@ void cKinSimCharacter::BuildBoxPart(int part_id, const tVector& root_pos, double
 void cKinSimCharacter::BuildCapsulePart(int part_id, const tVector& root_pos, double friction,
 								std::shared_ptr<cSimObj>& out_part)
 {
+	std::cout << "cKinSimCharacter::BuildBoxPart 22" << std::endl;
+
 	tMatrix com_world_trans = cKinTree::BodyWorldTrans(mJointMat, mBodyDefs, mPose, part_id);
 	tVector pos = com_world_trans.col(3);
 	pos += root_pos;
@@ -288,6 +297,8 @@ void cKinSimCharacter::BuildCapsulePart(int part_id, const tVector& root_pos, do
 void cKinSimCharacter::BuildSpherePart(int part_id, const tVector& root_pos, double friction,
 								std::shared_ptr<cSimObj>& out_part)
 {
+	std::cout << "cKinSimCharacter::BuildBoxPart 33" << std::endl;
+
 	tMatrix com_world_trans = cKinTree::BodyWorldTrans(mJointMat, mBodyDefs, mPose, part_id);
 	tVector pos = com_world_trans.col(3);
 	pos += root_pos;
@@ -321,6 +332,8 @@ void cKinSimCharacter::BuildSpherePart(int part_id, const tVector& root_pos, dou
 void cKinSimCharacter::BuildCylinderPart(int part_id, const tVector& root_pos, double friction,
 								std::shared_ptr<cSimObj>& out_part)
 {
+	std::cout << "cKinSimCharacter::BuildBoxPart 44" << std::endl;
+
 	tMatrix com_world_trans = cKinTree::BodyWorldTrans(mJointMat, mBodyDefs, mPose, part_id);
 	tVector pos = com_world_trans.col(3);
 	pos += root_pos;

@@ -22,10 +22,12 @@ cTerrainRLCharController::tAction::tAction()
 
 cTerrainRLCharController::cTerrainRLCharController() : cNNController()
 {
+	std::cout << "cTerrainRLCharController::cTerrainRLCharController start 11! " << std::endl;
     SetNumGroundSamples(gDefaultNumGroundSamples);
 	SetViewDist(gDefaultViewDist);
 	mSkipDecideAction = false;
 	mGroundSampleTrans.setIdentity();
+	std::cout << "cTerrainRLCharController::cTerrainRLCharController done 11! " << std::endl;
 }
 
 cTerrainRLCharController::~cTerrainRLCharController()
@@ -34,13 +36,19 @@ cTerrainRLCharController::~cTerrainRLCharController()
 
 void cTerrainRLCharController::Init(cSimCharacter* character)
 {
+	std::cout << "cTerrainRLCharController::Init start 11! " << std::endl;
 	// param_file should contain parameters for the pd controllers
 	cNNController::Init(character);
+	std::cout << "cTerrainRLCharController::Init start 22! " << std::endl;
 	ResetParams();
+	std::cout << "cTerrainRLCharController::Init start 33! " << std::endl;
 	InitPoliState();
+	std::cout << "cTerrainRLCharController::Init start 44! " << std::endl;
 	InitCurrAction();
+	std::cout << "cTerrainRLCharController::Init start 55! " << std::endl;
 
 	InitGroundSamples();
+	std::cout << "cTerrainRLCharController::Init start 66! " << std::endl;
 
 	mValid = true;
 
@@ -48,6 +56,8 @@ void cTerrainRLCharController::Init(cSimCharacter* character)
 	mPoliValLog.Reserve(gPoliValLogSize);
 	mPoliValLog.Clear();
 #endif // ENABLE_DEBUG_VISUALIZATION
+
+	std::cout << "cTerrainRLCharController::Init done 11! " << std::endl;
 }
 
 void cTerrainRLCharController::Reset()

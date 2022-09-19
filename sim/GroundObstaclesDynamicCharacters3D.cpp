@@ -31,6 +31,7 @@ cGroundObstaclesDynamicCharacters3D::eClass cGroundObstaclesDynamicCharacters3D:
 
 void cGroundObstaclesDynamicCharacters3D::Init(std::shared_ptr<cWorld> world, const tParams& params)
 {
+	std::cout << "cGroundObstaclesDynamicCharacters3D Init 21! "  << std::endl;
 	cGroundDynamicCharacters3D::Init(world, params);
 	BuildObstacles();
 }

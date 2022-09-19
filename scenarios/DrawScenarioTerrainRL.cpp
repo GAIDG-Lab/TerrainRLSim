@@ -32,6 +32,7 @@ cDrawScenarioTerrainRL::~cDrawScenarioTerrainRL()
 
 void cDrawScenarioTerrainRL::Init()
 {
+	std::cout << "cDrawScenarioTerrainRL Init start 1! "  << std::endl;
 	cDrawScenario::Init();
 
 	InitRenderResources();

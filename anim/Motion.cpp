@@ -45,6 +45,7 @@ bool cMotion::Load(const std::string& file)
 	bool succ = reader.parse(f_stream, root);
 	f_stream.close();
 
+	std::cout << "cMotion::Load 1 is: " << std::endl;
 	if (succ)
 	{
 		succ = LoadJson(root);
@@ -147,17 +148,29 @@ cMotion::tFrame cMotion::CalcFramePhase(double phase) const
 
 bool cMotion::LoadJson(const Json::Value& root)
 {
+	//std::cout << "root 1 is: " << root << std::endl;
+	std::cout << "root 1 gLoopKey is: " << gLoopKey << std::endl;
+	std::cout << "root[gLoopKey] is: " << root[gLoopKey] << "\r\n gLoopKey is:" << gLoopKey << std::endl;
+	std::cout << "root[gFrameKey] length is: " << root[gFrameKey].size() << "\r\n gFrameKey is:" << gFrameKey << std::endl;
+
 	bool succ = true;
 	if (!root[gLoopKey].isNull())
 	{
+		std::cout << "not isNull() 111" << std::endl;
 		mLoop = root[gLoopKey].asBool();
+		std::cout << "mLoop is:" << mLoop << std::endl;
+		std::cout << "not isNull() 1 done" << std::endl;
 	}
+	std::cout << "not isNull() 2 begin" << std::endl;
+	std::cout << "root[gFrameKey] 3" << !root[gFrameKey].isNull() << std::endl;
 
 	if (!root[gFrameKey].isNull())
 	{
-		Json::Value frames = root.get(gFrameKey, 0);
+		std::cout << "not isNull() 2" << std::endl;
+		Json::Value frames = root.get(gFrameKey, 0); // assign num_frames
 		assert(frames.isArray());
 		int num_frames = frames.size();
+		std::cout << "num_frames 2 is: " << num_frames << std::endl;
 
 		int data_size = 0;
 		if (num_frames > 0)
@@ -165,6 +178,7 @@ bool cMotion::LoadJson(const Json::Value& root)
 			int idx0 = 0;
 			Json::Value frame_json = frames.get(idx0, 0);
 			data_size = frame_json.size();
+			std::cout << "frame_json size 2 is: " << data_size << std::endl;
 			mFrames.resize(num_frames, data_size);
 		}
 
@@ -172,6 +186,7 @@ bool cMotion::LoadJson(const Json::Value& root)
 		{
 			Eigen::VectorXd curr_frame;
 			succ = ParseFrameJson(frames.get(f, 0), curr_frame);
+			std::cout << "succ 2 is: " << succ << std::endl;
 			if (succ)
 			{
 				assert(mFrames.cols() == curr_frame.size());

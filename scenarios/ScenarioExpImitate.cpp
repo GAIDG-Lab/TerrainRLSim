@@ -205,22 +205,34 @@ void cScenarioExpImitate::ParseArgs(const std::shared_ptr<cArgParser>& parser)
 
 void cScenarioExpImitate::Init()
 {
-	bool succ = BuildKinCharacter(mKinChar);
+	std::cout << "cScenarioExpImitate start 21! "  << std::endl;
+	bool succ = BuildKinCharacter(mKinChar); // Create human kin characters
+	std::cout << "cScenarioExpImitate succ 11! " << succ << std::endl;
 	if (!succ)
 	{
 		printf("Failed to build kin character\n");
 		assert(false);
 	}
 
+	std::cout << "cScenarioExpCacla start 21! "  << std::endl;
 	cScenarioExpCacla::Init();
+	
+	std::cout << "InitJointWeights start 21! "  << std::endl;
 	InitJointWeights();
+	std::cout << "InitJointWeights done 21! "  << std::endl;
 
+	
 	if (EnableSyncChar())
 	{
+		std::cout << "EnableSyncChar start 21! "  << std::endl;
 		SyncCharacters();
+		std::cout << "EnableSyncChar start 22! "  << std::endl;
 		InitCharacterPos(mChar);
+		std::cout << "EnableSyncChar start 23! "  << std::endl;
 		ResolveCharGroundIntersect(mChar);
+		std::cout << "EnableSyncChar start 24! "  << std::endl;
 	}
+	std::cout << "cScenarioExpImitate done 21! "  << std::endl;
 }
 
 const std::shared_ptr<cKinCharacter>& cScenarioExpImitate::GetKinChar() const
@@ -271,6 +283,7 @@ void cScenarioExpImitate::SetupControllerParams(cTerrainRLCtrlFactory::tCtrlPara
 
 bool cScenarioExpImitate::BuildKinCharacter(std::shared_ptr<cKinCharacter>& out_char) const
 {
+	std::cout << "BuildKinCharacter start 11! "  << std::endl;
 	auto kin_char = std::shared_ptr<cKinCharacter>(new cKinCharacter());
 	kin_char->EnableVelUpdate(true);
 	bool succ = kin_char->Init(mCharParams.mCharFile, mMotionFile);
@@ -278,6 +291,7 @@ bool cScenarioExpImitate::BuildKinCharacter(std::shared_ptr<cKinCharacter>& out_
 	{
 		out_char = kin_char;
 	}
+	std::cout << "BuildKinCharacter start succ!! " << succ << std::endl;
 	return succ;
 }
 

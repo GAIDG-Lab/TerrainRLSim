@@ -70,6 +70,7 @@ void cScenarioExpMimic::ParseArgs(const std::shared_ptr<cArgParser>& parser)
 
 void cScenarioExpMimic::Init()
 {
+	std::cout << "cScenarioExpMimic Init start 11! "  << std::endl;
 	bool succ = BuildKinCharacter(mKinChar);
 	if (!succ)
 	{
@@ -155,6 +156,7 @@ void cScenarioExpMimic::ParseMimicMode(const std::string& str, eMimicMode& out_m
 
 bool cScenarioExpMimic::BuildKinCharacter(std::shared_ptr<cKinCharacter>& out_char) const
 {
+	std::cout << "cScenarioExpMimic start 11! "  << std::endl;
 	auto kin_char = std::shared_ptr<cKinCharacter>(new cKinCharacter());
 	kin_char->EnableVelUpdate(true);
 	bool succ = kin_char->Init(mCharParams.mCharFile, mMotionFile);
@@ -162,6 +164,7 @@ bool cScenarioExpMimic::BuildKinCharacter(std::shared_ptr<cKinCharacter>& out_ch
 	{
 		out_char = kin_char;
 	}
+	std::cout << "cScenarioExpMimic done 11! " << succ  << std::endl;
 	return succ;
 }
 

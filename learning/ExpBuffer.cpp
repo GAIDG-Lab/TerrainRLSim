@@ -1,4 +1,5 @@
 #include "learning/ExpBuffer.h"
+#include <iostream>
 
 cExpBuffer::tParams::tParams()
 {
@@ -21,6 +22,7 @@ cExpBuffer::~cExpBuffer()
 
 void cExpBuffer::Init(const tParams& params)
 {
+	std::cout << "cExpBuffer Init start 1! "  << std::endl;
 	Clear();
 	mParams = params;
 

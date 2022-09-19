@@ -22,6 +22,7 @@ cDrawScenarioKinMotion::~cDrawScenarioKinMotion()
 
 void cDrawScenarioKinMotion::Init()
 {
+	std::cout << "cDrawScenarioKinMotion Init start 1! "  << std::endl;
 	cDrawScenarioTerrainRL::Init();
 	mScene.Init();
 }

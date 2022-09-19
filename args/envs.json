@@ -413,7 +413,10 @@
 	"time_limit": 256,
 	"TerrainRL_Parameters":
     {	
-    	"render_mode": "3d"
+    	"render_mode": "3d",
+		"terrain_file": "data/terrain/dynamicCharacters3D_Obs_0.txt",
+    	"character_file": "data/characters/dog3d.txt",
+		"motion_file": "data/motions/dog3d_pace.txt"
     }	
 },
 "PD_Dog2D_Incline_Terrain-v0": 
@@ -1690,6 +1693,16 @@
 		"include_arms_in_mirror": "true",
 		"target_reset_dist": "2.5",
 		"enable_rand_target_pos": "true"
+    }
+},        
+"PD_Humanoid3D_LLC_Symetric_Step_MultiAgent_Terrain_WithObs_v1_Dog": 
+{
+	"config_file": "./args/genbiped3D/biped3d_LLC_waypoint_sysemtric_step_controller_dog.txt",
+	"time_limit": 512,
+		"comment__": "Parameters that are for the TerrainRL simulation directly",
+    "TerrainRL_Parameters":
+    {	
+     	"terrain_file": "data/terrain/dynamicCharacters3D_Obs_0.txt"
     }
 },        
 "PD_Humanoid3D_LLC_Symetric_Step_MultiAgent_Terrain_WithObs_NewContacts_v0": 

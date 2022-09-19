@@ -11,6 +11,7 @@ cDrawScenarioTrain::~cDrawScenarioTrain()
 
 void cDrawScenarioTrain::Init()
 {
+	std::cout << "cDrawScenarioTrain Init start 1! "  << std::endl;
 	BuildTrainScene(mTrain);
 	SetupTrainScene(mTrain, mScene);
 

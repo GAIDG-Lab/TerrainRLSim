@@ -85,30 +85,36 @@ void cScenarioExp::ParseArgs(const std::shared_ptr<cArgParser>& parser)
 
 void cScenarioExp::Init()
 {
+	std::cout << "cScenarioExp start 11! "  << std::endl;
 	cScenarioSimChar::Init();
 
+	std::cout << "cScenarioExp start 22! "  << std::endl;
 	ResetParams();
 	mCurriculumPhase = 0;
 	mPrevCOM = mChar->CalcCOM();
 	
+	std::cout << "cScenarioExp start 33! "  << std::endl;
 	mTupleBuffer.resize(mTupleBufferSize);
 	ResetTupleBuffer();
 	
+	std::cout << "cScenarioExp start 44! "  << std::endl;
 	EnableExplore(mEnableExplore);
 	SetExpParams(mExpParams);
 
+	std::cout << "cScenarioExp start 55! "  << std::endl;
 	if (EnableRandInitAction())
 	{
 		// start off with random action to get more diverse initial states
 		CommandRandAction();
 	}
-
+	std::cout << "cScenarioExp start 66! "  << std::endl;
 	if (EnableRandTimeLim())
 	{
 		SetRandTimeLim();
 	}
-
+	std::cout << "cScenarioExp start 77! "  << std::endl;
 	InitMisc();
+	std::cout << "cScenarioExp start 88! "  << std::endl;
 }
 
 void cScenarioExp::Reset()

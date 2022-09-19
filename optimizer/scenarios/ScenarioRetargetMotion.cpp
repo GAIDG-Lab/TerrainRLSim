@@ -1,5 +1,6 @@
 #include "scenarios/ScenarioRetargetMotion.h"
 #include "util/FileUtil.h"
+#include <iostream>
 
 cScenarioRetargetMotion::cScenarioRetargetMotion()
 {
@@ -56,11 +57,17 @@ bool cScenarioRetargetMotion::BuildCharacter(const std::string& char_file, cKinC
 
 void cScenarioRetargetMotion::RetargetMotions(const std::vector<std::string>& motion_files, cKinCharacter& src_char, cKinCharacter& dst_char)
 {
+	std::cout << "RetargetMotions start done! " << std::endl;
+
 	size_t num_files = motion_files.size();
 	for (size_t f = 0; f < num_files; ++f)
 	{
 		const std::string& curr_motion_file = motion_files[f];
+		
 		bool succ = src_char.LoadMotion(curr_motion_file);
+
+		std::cout << "RetargetMotions Init done! " << succ  << std::endl;
+
 		if (!succ)
 		{
 			printf("Failed to load motion from %s\n", curr_motion_file.c_str());

@@ -1,6 +1,7 @@
 #include "Controller.h"
 #include "sim/SimCharacter.h"
 #include "util/FileUtil.h"
+#include <iostream>
 
 cController::cController()
 {
@@ -14,9 +15,11 @@ cController::~cController()
 
 void cController::Init(cSimCharacter* character)
 {
+	std::cout << "cController Init 21! "  << std::endl;
 	assert(character != nullptr);
 	Clear();
 	mChar = character;
+	std::cout << "cController Init done 21! "  << std::endl;
 }
 
 void cController::Reset()

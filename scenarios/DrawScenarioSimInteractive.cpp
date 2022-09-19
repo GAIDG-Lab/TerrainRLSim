@@ -17,6 +17,7 @@ cDrawScenarioSimInteractive::~cDrawScenarioSimInteractive()
 
 void cDrawScenarioSimInteractive::Init()
 {
+	std::cout << "cDrawScenarioSimInteractive Init start 1! "  << std::endl;
 	cDrawScenarioTerrainRL::Init();
 	ResetUI();
 }

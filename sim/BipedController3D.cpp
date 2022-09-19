@@ -193,6 +193,8 @@ cBipedController3D::~cBipedController3D()
 
 void cBipedController3D::Init(cSimCharacter* character, const tVector& gravity, const std::string& param_file)
 {
+	std::cout << "cBipedController3D Init 21! "  << std::endl;
+
 	// param_file should contain parameters for the pd controllers
 	cTerrainRLCharController::Init(character);
 

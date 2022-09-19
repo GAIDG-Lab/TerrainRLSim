@@ -10,8 +10,10 @@ cNNController::~cNNController()
 
 void cNNController::Init(cSimCharacter* character)
 {
+	std::cout << "cNNController::Init start 11! " << std::endl;
 	cCharController::Init(character);
 	BuildNet(mNet);
+	std::cout << "cNNController::Init done 11! " << std::endl;
 }
 
 int cNNController::GetPoliStateSize() const

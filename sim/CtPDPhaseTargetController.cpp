@@ -12,6 +12,7 @@ cCtPDPhaseTargetController::~cCtPDPhaseTargetController()
 
 void cCtPDPhaseTargetController::Init(cSimCharacter* character)
 {
+	std::cout << "cCtPDPhaseTargetController Init 21! "  << std::endl;
 	assert(false); // do not use
 	cCtTargetController::Init(character);
 }
