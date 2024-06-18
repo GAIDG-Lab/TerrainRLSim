@@ -135,6 +135,7 @@ public:
 	virtual eRenderMode GetRenderMode() const;
 	virtual tVector GetGravity() const;
 	virtual double GetScale() const;
+	virtual double GetTimeStep() const;
 	virtual void SetDefaultLinearDamping(double damping);
 	virtual void SetDefaultAngularDamping(double damping);
 	virtual void SetDamping(double linear_damping, double angular_damping, cSimObj& out_obj);
@@ -188,6 +189,13 @@ public:
 
 	virtual tVector GetContactImpulse(const cContactManager::tContactHandle& handle) const;
 	virtual tVector GetManifoldImpulse(const btManifoldPoint& manifold_pt) const;
+
+	virtual double GetManifoldImpulseValue(const btManifoldPoint& manifold_pt) const;
+	virtual double GetManifoldImpulseLateral1(const btManifoldPoint& manifold_pt) const;
+	virtual double GetManifoldImpulseLateral2(const btManifoldPoint& manifold_pt) const;
+
+	virtual tVector GetTotalForce(const cSimObj* obj) const; //Ray
+
 protected:
 	struct tConstraintEntry
 	{
@@ -195,6 +203,7 @@ protected:
 		cSimObj* mObj1;
 	};
 
+	double mTimeStep;
 	tParams mParams;
 	double mDefaultLinearDamping;
 	double mDefaultAngularDamping;

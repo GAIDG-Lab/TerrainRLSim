@@ -473,6 +473,136 @@ bool cSimCharacter::HasStumbled() const
 	return false;
 }
 
+tVector cSimCharacter::GetNetExternalForce() const
+{
+	int num_joints = GetNumJoints();
+	tVector net_external_force = tVector::Zero();
+
+	for (int j = 0; j < num_joints; ++j)
+	{
+		const cJoint& joint = GetJoint(j);
+		if (joint.IsValid())
+		{
+			const auto& curr_part = mBodyParts[j];
+
+			net_external_force += curr_part->mExternalForce.external_force_ground;
+			net_external_force += curr_part->mExternalForce.external_force_obstacle;
+			net_external_force += curr_part->mExternalForce.external_force_agent;
+
+		}
+	}
+	return net_external_force;
+}
+tVector cSimCharacter::GetCollisionExternalForce() const
+{
+	int num_joints = GetNumJoints();
+	tVector collision_external_force = tVector::Zero();
+
+	for (int j = 0; j < num_joints; ++j)
+	{
+		const cJoint& joint = GetJoint(j);
+		if (joint.IsValid())
+		{
+			const auto& curr_part = mBodyParts[j];
+
+			collision_external_force += curr_part->mExternalForce.external_force_obstacle;
+			collision_external_force += curr_part->mExternalForce.external_force_agent;
+			if(!IsEndEffector(j)){
+				collision_external_force += curr_part->mExternalForce.external_force_ground;
+			}
+		}
+	}
+	return collision_external_force;
+}
+tVector cSimCharacter::GetNetExternalForcePos() const
+{
+	int num_joints = GetNumJoints();
+	tVector net_external_force_pos = tVector::Zero();
+	double num_forces = 0;
+
+	for (int j = 0; j < num_joints; ++j)
+	{
+		const cJoint& joint = GetJoint(j);
+		if (joint.IsValid())
+		{
+			const auto& curr_part = mBodyParts[j];
+
+			net_external_force_pos += curr_part->mExternalForce.force_ground_pos;
+			net_external_force_pos += curr_part->mExternalForce.force_obstacle_pos;
+			net_external_force_pos += curr_part->mExternalForce.force_agent_pos;
+
+			num_forces += curr_part->mExternalForce.num_force_ground;
+			num_forces += curr_part->mExternalForce.num_force_obstacle;
+			num_forces += curr_part->mExternalForce.num_force_agent;
+		}
+	}
+	return net_external_force_pos/num_forces;
+}
+tVector cSimCharacter::GetInsNetExternalForce() const
+{
+	int num_joints = GetNumJoints();
+	tVector net_external_force_ins = tVector::Zero();
+
+	for (int j = 0; j < num_joints; ++j)
+	{
+		const cJoint& joint = GetJoint(j);
+		if (joint.IsValid())
+		{
+			const auto& curr_part = mBodyParts[j];
+
+			net_external_force_ins += curr_part->mExternalForce.external_force_ground_ins;
+			net_external_force_ins += curr_part->mExternalForce.external_force_obstacle_ins;
+			net_external_force_ins += curr_part->mExternalForce.external_force_agent_ins;
+
+		}
+	}
+	return net_external_force_ins;
+}
+
+tVector cSimCharacter::GetAvgNetExternalForce() const
+{
+	int num_joints = GetNumJoints();
+	tVector net_external_force = tVector::Zero();
+	double num_forces = 0;
+
+	for (int j = 0; j < num_joints; ++j)
+	{
+		const cJoint& joint = GetJoint(j);
+		if (joint.IsValid())
+		{
+			const auto& curr_part = mBodyParts[j];
+
+			net_external_force += curr_part->mExternalForce.external_force_ground;
+			net_external_force += curr_part->mExternalForce.external_force_obstacle;
+			net_external_force += curr_part->mExternalForce.external_force_agent;
+
+			num_forces += curr_part->mExternalForce.num_force_ground;
+			num_forces += curr_part->mExternalForce.num_force_obstacle;
+			num_forces += curr_part->mExternalForce.num_force_agent;
+		}
+	}
+	if(num_forces == 0)
+	{
+		return tVector::Zero();
+	}
+	return net_external_force/num_forces;
+}
+
+void cSimCharacter::ResetExternalForce()
+{
+	int num_joints = GetNumJoints();
+
+	for (int j = 0; j < num_joints; ++j)
+	{
+		const cJoint& joint = GetJoint(j);
+		if (joint.IsValid())
+		{
+			const auto& curr_part = mBodyParts[j];
+			curr_part->ResetExternalForce();
+		}
+	}
+}
+
 bool cSimCharacter::HasExploded() const
 {
 	const double dist_threshold = 0.02 * 0.02;
@@ -675,6 +805,8 @@ bool cSimCharacter::BuildSimBody(const tParams& params, const tVector& root_pos)
 		{
 			curr_part->UpdateContact(cWorld::eContactFlagCharacter, cWorld::eContactFlagAll);
 			curr_part->DisableDeactivation();
+			curr_part->SetPreLinearVelocity(); //Ray
+			curr_part->SetForce();
 		}
 	}
 

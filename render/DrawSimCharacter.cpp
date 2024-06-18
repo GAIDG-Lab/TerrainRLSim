@@ -71,6 +71,233 @@ void cDrawSimCharacter::DrawTorque(const cSimCharacter& character, const tVector
 	}
 }
 
+void cDrawSimCharacter::DrawLinearVelocity(const cSimCharacter& character, const tVector& offset)
+{
+	int num_parts = character.GetNumBodyParts();
+	const double marker_size = 0.10;
+	const double arrow_size = marker_size * 0.65;
+
+	for (int j = 0; j < num_parts; ++j)
+	{
+		const auto& curr_part = character.GetBodyPart(j);
+		tVector pos = curr_part->GetPos();
+		tVector vel = curr_part->GetLinearVelocity();
+		cDrawUtil::SetColor(tVector(0, 0.75, 0, 0.5));
+		cDrawUtil::DrawArrow2D(pos, pos + vel, arrow_size);
+	}
+}
+void cDrawSimCharacter::DrawTotalForce(const cSimCharacter& character, const tVector& offset)
+{
+	int num_parts = character.GetNumBodyParts();
+	const double marker_size = 0.10;
+	const double arrow_size = marker_size * 0.65;
+
+	for (int j = 0; j < num_parts; ++j)
+	{
+		const auto& curr_part = character.GetBodyPart(j);
+		tVector pos = curr_part->GetPos();
+		tVector ground = tVector(pos[0], 0, pos[2], 0);
+		cDrawUtil::SetColor(tVector(1, 0, 0, 0.5));
+		cDrawUtil::DrawArrow2D(pos, ground, arrow_size);
+	}
+}
+void cDrawSimCharacter::DrawAngularVelocity(const cSimCharacter& character, const tVector& offset)
+{
+	int num_parts = character.GetNumBodyParts();
+	const double marker_size = 0.10;
+	const double arrow_size = marker_size * 0.65;
+
+	for (int j = 0; j < num_parts; ++j)
+	{
+		const auto& curr_part = character.GetBodyPart(j);
+		tVector pos = curr_part->GetPos();
+		tVector vel = curr_part->GetAngularVelocity() * 0.1;
+		cDrawUtil::SetColor(tVector(1, 0, 0, 0.5));
+		cDrawUtil::DrawArrow2D(pos, pos + vel, arrow_size);
+	}
+}
+void cDrawSimCharacter::DrawVelocity(const cSimCharacter& character, const tVector& offset)
+{
+	int num_parts = character.GetNumBodyParts();
+	const double marker_size = 0.10;
+	const double arrow_size = marker_size * 0.65;
+
+	for (int j = 0; j < num_parts; ++j)
+	{
+		const auto& curr_part = character.GetBodyPart(j);
+		tVector pos = curr_part->GetPos();
+		tVector linear_vel = curr_part->GetLinearVelocity();
+		tVector angular_vel = curr_part->GetAngularVelocity();
+		tVector vel = (linear_vel + angular_vel) * 0.1;
+
+		cDrawUtil::SetColor(tVector(0.5, 0.75, 0, 0.5));
+		cDrawUtil::DrawArrow2D(pos, pos + vel, arrow_size);
+	}
+}
+void cDrawSimCharacter::DrawmForces(const cSimCharacter& character, const tVector& offset)
+{
+	int num_parts = character.GetNumBodyParts();
+	const double marker_size = 0.10;
+	const double arrow_size = marker_size * 0.65;
+
+	for (int j = 0; j < num_parts; ++j)
+	{
+		const auto& curr_part = character.GetBodyPart(j);
+		tVector pos = curr_part->GetPos();
+		tVector force = curr_part->GetmTorque();
+
+		printf("DrawmForces j: %d, m_force: %f %f %f\n", j, force[0], force[1], force[2]);
+		cDrawUtil::SetColor(tVector(0.5, 0.75, 0, 0.5));
+		cDrawUtil::DrawArrow2D(pos, pos + force, arrow_size);
+	}
+}
+//Draw forces from acceleration from velocityinlocalpoint
+
+void cDrawSimCharacter::DrawImpulse(const cSimCharacter& character, const tVector& offset)
+{
+	int num_parts = character.GetNumBodyParts();
+	const double marker_size = 0.10;
+	const double arrow_size = marker_size * 0.65;
+
+	for (int j = 0; j < num_parts; ++j)
+	{
+		const auto& curr_part = character.GetBodyPart(j);
+		tVector pos = curr_part->GetPos();
+		tVector impulse = curr_part->GetContactImpulse();
+		cDrawUtil::DrawArrow2D(pos, pos + impulse, arrow_size);
+	}
+}
+void cDrawSimCharacter::DrawNetLinearVelocity(const cSimCharacter& character, const tVector& offset)
+{
+	int num_parts = character.GetNumBodyParts();
+	const double marker_size = 0.10;
+	const double arrow_size = marker_size * 0.65;
+
+	tVector net_vel = tVector(0,0,0,0);
+	tVector net_pos = tVector(0,0,0,0);
+
+	for (int j = 0; j < num_parts; ++j)
+	{
+		const auto& curr_part = character.GetBodyPart(j);
+		tVector pos = curr_part->GetPos();
+		tVector vel = curr_part->GetLinearVelocity();
+
+		net_pos += pos;
+		net_vel += vel;
+	}
+	net_pos = net_pos / num_parts;
+	net_vel = net_vel / num_parts;
+
+	tVector root_pos = character.GetRootPos();
+	cDrawUtil::SetColor(tVector(0, 0.75, 0, 0.5));
+	cDrawUtil::DrawArrow2D(net_pos, net_pos + net_vel, arrow_size);
+}
+void cDrawSimCharacter::DrawNetForce(const cSimCharacter& character, const tVector& offset)
+{
+	int num_parts = character.GetNumBodyParts();
+	const double marker_size = 0.50;
+	const double arrow_size = marker_size * 0.65;
+
+	tVector net_gravity = tVector(0, 0, 0, 0);
+	for (int j = 0; j < num_parts; ++j)
+	{
+		const auto& curr_part = character.GetBodyPart(j);
+		net_gravity += curr_part->GetGravity();
+	}
+	printf("DrawSimCharacter.cpp net_gravity: %f %f %f\n",  net_gravity[0], net_gravity[1], net_gravity[2]);
+	tVector net_force = character.GetInsNetExternalForce();
+	net_force += net_gravity;
+	tVector net_force_pos = character.GetNetExternalForcePos();
+	
+
+	printf("DrawSimCharacter.cpp net_force: %f %f %f\n",  net_force[0], net_force[1], net_force[2]);
+	cDrawUtil::SetColor(tVector(1, 0, 0, 0.5));
+	cDrawUtil::DrawArrow2D(net_force_pos, net_force_pos+net_force, arrow_size);
+
+}
+
+void cDrawSimCharacter::DrawGRFs(const cSimCharacter& character, const cGround& ground, double marker_size, double vel_scale,
+										const tVector& pos_col, const tVector& vel_col, const tVector& offset)
+{
+	marker_size = 0.5;
+	const double arrow_size = marker_size * 0.65;
+	tVector root_pos = character.GetRootPos();
+	double ground_h = ground.SampleHeight(root_pos);
+	tVector ground_pos = root_pos;
+	ground_pos[1] = ground_h;
+
+	//cDrawUtil::SetColor(tVector(pos_col[0], pos_col[1], pos_col[2], pos_col[3]));
+	//cDrawUtil::DrawArrow2D(ground_pos + offset, root_pos + offset, arrow_size);
+
+	tVector gravities = tVector(0, 0, 0, 0);
+	for (int i = 0; i < character.GetNumBodyParts(); ++i)
+	{
+		if (character.IsValidBodyPart(i))
+		{
+			
+			const auto& curr_part = character.GetBodyPart(i);
+			//tVector gravity = curr_part->GetGravity();
+			//gravities += gravity;
+			//if ( (i == 5 || i == 11))
+			if (curr_part->IsInContact() && character.IsEndEffector(i))
+			{
+				tVector pos = curr_part->GetPos();
+				tVector curr_impulse = curr_part->mExternalForce.external_force_ground_ins;
+				//curr_impulse += gravity;
+				/**
+				int num_contacts = curr_part->GetNumContactGround();
+				tVector curr_impulse = tVector(0, 0, 0, 0);
+
+				if(num_contacts != 0){
+					curr_impulse = curr_part->GetContactImpulseGround() / num_contacts;;
+				}
+				
+				curr_part->ResetContactImpulse();
+				**/
+
+				cDrawUtil::SetColor(tVector(1, 0, 0, 0.5));
+				cDrawUtil::DrawArrow2D(pos, pos + curr_impulse, arrow_size);
+				printf("DrawSimCharacter::DrawGRFs joint_id: %d, GRF: %f, %f, %f\n", i, curr_impulse[0], curr_impulse[1], curr_impulse[2]);
+			}
+		}
+	}
+	//printf("Gravity of the agent is: %f\n", gravities[1]);
+	//cDrawUtil::SetColor(tVector(1, 0, 0, 0.5));
+	//cDrawUtil::DrawArrow2D(root_pos, root_pos + net, arrow_size);
+}
+void cDrawSimCharacter::DrawForces(const cSimCharacter& character, const tVector& offset)
+{
+	int num_parts = character.GetNumBodyParts();
+	const double marker_size = 0.50;
+	const double arrow_size = marker_size * 0.65;
+
+
+	for (int i = 0; i < character.GetNumBodyParts(); ++i)
+	{
+		if (character.IsValidBodyPart(i))
+		{
+			const auto& curr_part = character.GetBodyPart(i);
+			if (!character.IsEndEffector(i))
+			// if (curr_part->IsInContact() && character.IsEndEffector(i))
+			{
+				tVector pos = curr_part->GetPos();
+				tVector external_force = tVector::Zero();
+				external_force += curr_part->mExternalForce.external_force_ground_ins;
+				external_force += curr_part->mExternalForce.external_force_agent_ins;
+				external_force += curr_part->mExternalForce.external_force_obstacle_ins;
+				
+				if(external_force.norm() != 0)
+				{
+					cDrawUtil::SetColor(tVector(0.5, 0.75, 0, 0.5));
+					cDrawUtil::DrawArrow2D(pos, pos + external_force, arrow_size);
+					printf("DrawSimCharacter::DrawForces force: %f, %f, %f\n", external_force[0], external_force[1], external_force[2]);
+				}
+				
+			}
+		}
+	}
+}
+
 void cDrawSimCharacter::DrawCtrlInfo(const cCharController* ctrl, const cGround* ground, const tVector& offset, bool draw_3d)
 {
 	if (ctrl != nullptr)

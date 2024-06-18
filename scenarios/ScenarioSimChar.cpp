@@ -167,6 +167,8 @@ void cScenarioSimChar::ParseArgs(const std::shared_ptr<cArgParser>& parser)
 	parser->ParseBool("char_ctrl_enable_sym_llc", mCtrlParams.mEnableSymmetricLLC);
 	parser->ParseDouble("char_ctrl_waypoint_init_step_len", mCtrlParams.mWaypointInitStepLen);
 
+	parser->ParseString("aug_type", mCtrlParams.mAugType);
+	
 	parser->ParseString("policy_net", mCtrlParams.mNetFiles[cTerrainRLCtrlFactory::eNetFileActor]);
 	parser->ParseString("critic_net", mCtrlParams.mNetFiles[cTerrainRLCtrlFactory::eNetFileCritic]);
 	parser->ParseString("policy_net1", mCtrlParams.mNetFiles[cTerrainRLCtrlFactory::eNetFileActor1]);

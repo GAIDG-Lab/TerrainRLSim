@@ -79,6 +79,14 @@ public:
 	virtual bool HasStumbled() const;
 	virtual bool HasExploded() const;
 
+	virtual tVector GetNetExternalForce() const;
+	virtual tVector GetNetExternalForcePos() const;
+	virtual tVector GetInsNetExternalForce() const;
+	virtual tVector GetAvgNetExternalForce() const;
+
+	virtual tVector GetCollisionExternalForce() const;
+	virtual void ResetExternalForce();
+
 	virtual bool IsInContact() const;
 	virtual bool IsInContact_for_collision() const;
 

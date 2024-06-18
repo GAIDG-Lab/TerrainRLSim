@@ -14,6 +14,14 @@ public:
 		eTypeMax
 	};
 
+	enum eObjType
+	{
+		eObjTypeCharacter,
+		eObjTypeGround,
+		eObjTypeObstacle,
+		eObjTypeMax
+	};
+
 	enum eShape
 	{
 		eShapeInvalid,
@@ -26,6 +34,36 @@ public:
 	};
 
 	virtual ~cSimObj();
+
+	struct ExternalForce
+	{
+		ExternalForce();
+
+		bool collision;
+		tVector external_force_ground;
+		tVector external_force_obstacle;
+		tVector external_force_agent;
+
+		tVector external_force_ground_ins;
+		tVector external_force_obstacle_ins;
+		tVector external_force_agent_ins;
+
+		tVector force_ground_pos;
+		tVector force_obstacle_pos;
+		tVector force_agent_pos;
+
+		int num_force_ground;
+		int num_force_obstacle;
+		int num_force_agent;
+	};
+
+	mutable ExternalForce mExternalForce;
+
+	virtual eObjType GetObjType() const;
+	virtual void SetObjType(eObjType obj_type);
+
+	virtual ExternalForce GetExternalForce(); 
+	virtual void ResetExternalForce();
 
 	virtual tVector GetPos() const;
 	virtual void SetPos(const tVector& pos);
@@ -82,6 +120,18 @@ public:
 	virtual const std::unique_ptr<btCollisionShape>& GetCollisionShape() const;
 	virtual const std::shared_ptr<cWorld>& GetWorld() const;
 
+	virtual tVector GetTotalForce() const;//Ray
+	virtual tVector GetLinearForce() ;
+	virtual tVector GetForce();
+	virtual tVector GetVelocity() const;
+	virtual tVector GetNextLinearVelocity() const;
+	virtual void SetPreLinearVelocity();
+	virtual void SetForce();
+	virtual void UpdateForce();
+
+	virtual tVector GetmTorque();
+	virtual tVector GetGravity() const;
+
 protected:
 	std::shared_ptr<cWorld> mWorld;
 	std::unique_ptr<btRigidBody> mSimBody;
@@ -95,6 +145,8 @@ protected:
 	short mColGroup;
 	short mColMask;
 
+	eObjType mObjType;
+
 	cSimObj();
 
 	virtual void Init(const std::shared_ptr<cWorld>& world);
@@ -103,4 +155,12 @@ protected:
 
 	virtual int GetNumConstraints() const;
 	virtual cWorld::tConstraintHandle GetConstraint(int c) const;
+
+	tVector pre_linearvel;
+	tVector pre_vel;
+	tVector force;
+	tVector m_torque;
+	tVector next_vel;
+	tVector m_perturbforce;
+
 };

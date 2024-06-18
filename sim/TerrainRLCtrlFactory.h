@@ -87,6 +87,8 @@ public:
 		std::vector<std::string> mNetFiles;
 		std::string mCtrlParamFile;
 
+		std::string mAugType;
+
 		std::shared_ptr<cSimCharacter> mChar;
 		std::shared_ptr<cGround> mGround;
 		tVector mGravity;

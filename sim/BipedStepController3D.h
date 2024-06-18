@@ -52,8 +52,11 @@ public:
 	virtual ~cBipedStepController3D();
 
 	virtual void Init(cSimCharacter* character, const tVector& gravity, const std::string& param_file);
+	virtual void Init(cSimCharacter* character, const tVector& gravity, const std::string& param_file, const std::string a_type);
 	virtual const tStepPlan& GetStepPlan() const;
 	virtual void SetStepPlan(const tStepPlan& plan);
+
+	virtual void SetAugType(std::string atype);
 
 	virtual eStance PredictNextStance(double time_step) const;
 	virtual eStance GetStance() const;
@@ -71,7 +74,7 @@ public:
 	virtual void BuildTaskState(Eigen::VectorXd& out_state) const;
 
 protected:
-
+	int mAugType;
 	std::vector<int> mEndEffectors;
 	tStepPlan mStepPlan;
 
@@ -85,6 +88,11 @@ protected:
 	virtual int GetTaskStateSize() const;
 
 	virtual void EvalNet(const Eigen::VectorXd& x, Eigen::VectorXd& out_y) const;
+
+	virtual int GetExternalStateSize() const;
+	virtual int GetExternalStateOffset() const;	
+
+	virtual void BuildExternalState(Eigen::VectorXd& out_state) const;
 
 
 #if defined(ENABLE_HACK_LLC_LERP)

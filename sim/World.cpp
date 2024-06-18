@@ -33,6 +33,15 @@ cWorld::tJointParams::tJointParams()
 	mRefTheta = 0;
 }
 
+tVector cWorld::GetTotalForce(const cSimObj* obj) const
+{
+	auto& body = obj->GetSimBody();
+	const btVector3& bt_vel = body->getTotalForce();
+	tVector force = tVector(bt_vel[0], bt_vel[1], bt_vel[2], 0);
+	//vel /= GetScale();
+	return force;
+}
+
 cWorld::tConstraintHandle::tConstraintHandle()
 {
 	mCons = nullptr;
@@ -342,6 +351,11 @@ tVector cWorld::GetGravity() const
 double cWorld::GetScale() const
 {
 	return mParams.mScale;
+}
+
+double cWorld::GetTimeStep() const
+{
+	return mTimeStep;
 }
 
 void cWorld::SetDefaultLinearDamping(double damping)
@@ -765,6 +779,28 @@ tVector cWorld::GetManifoldImpulse(const btManifoldPoint& manifold_pt) const
 	// tVector impulseV = tVector( impulse,  impulse, impulse, 0) / scale;
 	// std::cout << "contact normal " << impulseV << std::endl;
 	return impulseV;
+}
+
+double cWorld::GetManifoldImpulseValue(const btManifoldPoint& manifold_pt) const
+{
+	double scale = GetScale();
+	double impulse = manifold_pt.getAppliedImpulse() / scale;
+
+	return impulse;
+}
+double cWorld::GetManifoldImpulseLateral1(const btManifoldPoint& manifold_pt) const
+{
+	double scale = GetScale();
+	double impulse = manifold_pt.m_appliedImpulseLateral1/ scale;
+	
+	return impulse;
+}
+double cWorld::GetManifoldImpulseLateral2(const btManifoldPoint& manifold_pt) const
+{
+	double scale = GetScale();
+	double impulse = manifold_pt.m_appliedImpulseLateral1/ scale;
+
+	return impulse;
 }
 
 std::unique_ptr<btDiscreteDynamicsWorld>& cWorld::GetInternalWorld()

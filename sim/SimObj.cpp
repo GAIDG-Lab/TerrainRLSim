@@ -1,16 +1,184 @@
 #include "SimObj.h"
+#include <iostream>
+#include <fstream>
 
 cSimObj::cSimObj()
 	: mWorld(nullptr)
 {
 	mType = eTypeDynamic;
+	mObjType = eObjTypeMax;
 	mColGroup = cContactManager::gFlagAll;
 	mColMask = cContactManager::gFlagAll;
+}
+
+cSimObj::eObjType cSimObj::GetObjType() const
+{
+	return mObjType;
+}
+void cSimObj::SetObjType(cSimObj::eObjType obj_type)
+{
+	mObjType = obj_type;
+}
+cSimObj::ExternalForce::ExternalForce()
+{
+	collision = false;
+	external_force_ground = tVector::Zero();
+	external_force_obstacle = tVector::Zero();
+	external_force_agent = tVector::Zero();
+
+	external_force_ground_ins = tVector::Zero();
+	external_force_obstacle_ins = tVector::Zero();
+	external_force_agent_ins = tVector::Zero();
+
+	force_ground_pos = tVector::Zero();
+	force_obstacle_pos = tVector::Zero();
+	force_agent_pos = tVector::Zero();
+
+	num_force_ground = 0;
+	num_force_obstacle = 0;
+	num_force_agent = 0;
+}
+
+cSimObj::ExternalForce cSimObj::GetExternalForce() 
+{
+	return mExternalForce;
+}
+void cSimObj::ResetExternalForce()
+{
+	mExternalForce.collision = false;
+	mExternalForce.external_force_ground = tVector::Zero();
+	mExternalForce.external_force_obstacle = tVector::Zero();
+	mExternalForce.external_force_agent = tVector::Zero();
+
+	mExternalForce.external_force_ground_ins = tVector::Zero();
+	mExternalForce.external_force_obstacle_ins = tVector::Zero();
+	mExternalForce.external_force_agent_ins = tVector::Zero();
+
+	mExternalForce.force_ground_pos = tVector::Zero();
+	mExternalForce.force_obstacle_pos = tVector::Zero();
+	mExternalForce.force_agent_pos = tVector::Zero();
+
+	mExternalForce.num_force_ground = 0;
+	mExternalForce.num_force_obstacle = 0;
+	mExternalForce.num_force_agent = 0;
 }
 
 cSimObj::~cSimObj()
 {
 	RemoveFromWorld();
+}
+
+void cSimObj::SetPreLinearVelocity()
+{
+	pre_linearvel = GetLinearVelocity();
+	pre_vel = GetVelocity();
+}
+
+tVector cSimObj::GetVelocity() const
+{
+	return mWorld->GetLinearVelocity(this, tVector::Zero());
+}
+
+void cSimObj::SetForce(){
+	next_vel = tVector(0, 0, 0, 0);
+	force = tVector(0, 0, 0, 0);
+	m_torque = tVector(0, 0, 0, 0);
+}
+
+void cSimObj::UpdateForce(){
+	tVector cur_vel = mWorld->GetLinearVelocity(this);
+	tVector acc =  GetMass() * (cur_vel - pre_linearvel) / 0.001667;
+	//printf("SimObj GetLinearAcceleration pre_linearvel: %f %f %f\n", pre_linearvel[0], pre_linearvel[1], pre_linearvel[2]);
+	pre_linearvel = GetLinearVelocity();
+
+	//printf("SimObj GetLinearAcceleration pre_linearvel: %f %f %f\n", pre_linearvel[0], pre_linearvel[1], pre_linearvel[2]);
+	
+	force = acc;
+	if(pre_linearvel[0] == 0 && pre_linearvel[1] == 0 && pre_linearvel[2] == 0){
+		force = tVector(0, 0, 0, 0);
+	}
+
+}
+tVector cSimObj::GetLinearForce() 
+{
+	tVector cur_vel = mWorld->GetLinearVelocity(this);
+	tVector acc =  GetMass() * (cur_vel - pre_linearvel) / 0.001667;
+	//printf("SimObj GetLinearAcceleration pre_linearvel: %f %f %f\n", pre_linearvel[0], pre_linearvel[1], pre_linearvel[2]);
+	pre_linearvel = GetLinearVelocity();
+
+	//printf("SimObj GetLinearAcceleration pre_linearvel: %f %f %f\n", pre_linearvel[0], pre_linearvel[1], pre_linearvel[2]);
+	
+	force = acc;
+	if(pre_linearvel[0] == 0 && pre_linearvel[1] == 0 && pre_linearvel[2] == 0){
+		acc = tVector(0, 0, 0, 0);
+	}
+	return acc;	
+}
+
+tVector cSimObj::GetForce() 
+{
+	tVector cur_vel = mWorld->GetLinearVelocity(this, tVector::Zero());
+	tVector force =  GetMass() * (cur_vel - pre_vel) / 0.001667;
+	//printf("SimObj GetLinearAcceleration pre_linearvel: %f %f %f\n", pre_linearvel[0], pre_linearvel[1], pre_linearvel[2]);
+	pre_vel = GetVelocity();
+
+	//printf("SimObj GetLinearAcceleration pre_linearvel: %f %f %f\n", pre_linearvel[0], pre_linearvel[1], pre_linearvel[2]);
+	
+	if(pre_vel[0] == 0 && pre_vel[1] == 0 && pre_vel[2] == 0){
+		return tVector(0, 0, 0, 0);
+	}
+	return force;
+	
+}
+/*
+tVector cSimObj::GetTorqueImpulse() const
+{
+	return mWorld->GetTorqueImpulse(this);
+}
+*/
+//Ray
+tVector cSimObj::GetTotalForce() const
+{
+	return mWorld->GetTotalForce(this);
+}
+
+tVector cSimObj::GetNextLinearVelocity() const
+{
+	return next_vel;
+}
+void cSimObj::SetLinearVelocity(const tVector& vel)
+{
+	//printf("SimObj SetLinearVelocity: %f %f %f\n", vel[0], vel[1], vel[2]);
+	next_vel = vel;
+	mWorld->SetLinearVelocity(vel, this);
+}
+tVector cSimObj::GetGravity() const
+{
+	return mWorld->GetGravity()*GetMass();
+}
+
+void cSimObj::ApplyTorque(const tVector& torque)
+{
+	//printf("SimObj.cpp Torque %f %f %f\n", torque[0], torque[1], torque[2]);
+	std::string filename("/home/ruizhang/Desktop/Data/Torques/llc_jg3.txt");
+	std::fstream file;
+	file.open(filename, std::ios_base::app | std::ios_base::in);
+	if(file.is_open()){
+		file << torque[0]  << std::endl;	
+		file << torque[1]  << std::endl;
+		file << torque[2]  << std::endl;	
+	}
+	file.close();
+	m_torque += torque;
+
+	mWorld->ApplyTorque(torque, this);
+}
+
+tVector cSimObj::GetmTorque()
+{
+	tVector temp = tVector(m_torque[0], m_torque[1], m_torque[2], m_torque[3]);
+	m_torque = tVector(0, 0, 0, 0);
+	return temp;
 }
 
 tVector cSimObj::GetPos() const
@@ -51,11 +219,6 @@ tVector cSimObj::GetLinearVelocity() const
 tVector cSimObj::GetLinearVelocity(const tVector& local_pos) const
 {
 	return mWorld->GetLinearVelocity(this, local_pos);
-}
-
-void cSimObj::SetLinearVelocity(const tVector& vel)
-{
-	mWorld->SetLinearVelocity(vel, this);
 }
 
 tVector cSimObj::GetAngularVelocity() const
@@ -127,11 +290,6 @@ void cSimObj::ApplyForce(const tVector& force)
 void cSimObj::ApplyForce(const tVector& force, const tVector& local_pos)
 {
 	mWorld->ApplyForce(force, local_pos, this);
-}
-
-void cSimObj::ApplyTorque(const tVector& torque)
-{
-	mWorld->ApplyTorque(torque, this);
 }
 
 void cSimObj::ClearForces()

@@ -2606,9 +2606,11 @@ bool cTerrainRLCtrlFactory::BuildBipedSymStepController3D(const tCtrlParams& par
     {
 	    ctrl->SetGroundSampleRes(params.mGroundSampleRes3d);
     }
-	ctrl->Init(params.mChar.get(), params.mGravity, params.mCtrlParamFile);
+	ctrl->Init(params.mChar.get(), params.mGravity, params.mCtrlParamFile, params.mAugType);
 	ctrl->SetUpdatePeriod(update_period);
 	ctrl->SetCycleDur(params.mCycleDur);
+	ctrl->SetAugType(params.mAugType);
+	std::cout << "TerrainRLCtrlFactory.cpp BuildBipedSymStepController3D mAugType: " << params.mAugType << std::endl;
     if(params.mGroundSampleRes3d >= 0)
     {
         ctrl->SetGroundSampleRes(params.mGroundSampleRes3d);
