@@ -90,10 +90,7 @@ protected:
 	virtual void EvalNet(const Eigen::VectorXd& x, Eigen::VectorXd& out_y) const;
 
 	virtual int GetExternalStateSize() const;
-	virtual int GetExternalStateOffset() const;	
-
-	virtual void BuildExternalState(Eigen::VectorXd& out_state) const;
-
+	virtual int GetExternalStateOffset() const;
 
 #if defined(ENABLE_HACK_LLC_LERP)
 public:
