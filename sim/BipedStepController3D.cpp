@@ -145,6 +145,7 @@ int cBipedStepController3D::GetExternalStateSize() const
 {
 	int state_size = 0;
 	int num_joints = mChar->GetNumJoints();
+	//printf("cBipedStepController3D::GetExternalStateSize num_joints:%d\n", num_joints);
 	switch (mAugType)
 	{
 	case jh:
@@ -187,6 +188,8 @@ int cBipedStepController3D::GetExternalStateSize() const
 
 int cBipedStepController3D::GetExternalStateOffset() const
 {
+	printf("cBipedStepController3D::GetExternalStateOffset GetPoliStateSize is:%d\n", cCtPDPhaseController::GetPoliStateSize());
+	printf("cBipedStepController3D::GetExternalStateOffset GetContactStateSize is:%d\n", GetContactStateSize());
 	return cCtPDPhaseController::GetPoliStateSize() + GetContactStateSize();
 }
 
@@ -202,7 +205,7 @@ int cBipedStepController3D::GetContactStateSize() const
 
 int cBipedStepController3D::GetTaskStateOffset() const
 {
-	return cCtPDPhaseController::GetPoliStateSize() + GetContactStateSize();
+	return cCtPDPhaseController::GetPoliStateSize() + GetContactStateSize() + GetExternalStateSize();
 }
 
 int cBipedStepController3D::GetTaskStateSize() const

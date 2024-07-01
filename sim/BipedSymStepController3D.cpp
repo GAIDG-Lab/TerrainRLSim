@@ -68,12 +68,14 @@ void cBipedSymStepController3D::BuildPoliState(Eigen::VectorXd& out_state) const
 	int task_size = GetTaskStateSize();//7
 
 	int external_offset = GetExternalStateOffset();
-	int external_size = GetExternalStateSize();
+	int external_size = GetExternalStateSize(); //15
 
 	//printf("BipedSymStepController3D::contact_offset: %d\n", contact_offset);
 	//printf("BipedSymStepController3D::contact_size: %d\n", contact_size);
 	//printf("BipedSymStepController3D::task_offset: %d\n", task_offset);
 	//printf("BipedSymStepController3D::task_size: %d\n", task_size);
+	//printf("BipedSymStepController3D::external_offset: %d\n", external_offset);
+	//printf("BipedSymStepController3D::external_size: %d\n", external_size);
 
 	out_state.segment(contact_offset, contact_size) = contact_state; //208
 	out_state.segment(external_offset, external_size) = external_state;
