@@ -188,8 +188,8 @@ int cBipedStepController3D::GetExternalStateSize() const
 
 int cBipedStepController3D::GetExternalStateOffset() const
 {
-	printf("cBipedStepController3D::GetExternalStateOffset GetPoliStateSize is:%d\n", cCtPDPhaseController::GetPoliStateSize());
-	printf("cBipedStepController3D::GetExternalStateOffset GetContactStateSize is:%d\n", GetContactStateSize());
+	//printf("cBipedStepController3D::GetExternalStateOffset GetPoliStateSize is:%d\n", cCtPDPhaseController::GetPoliStateSize());
+	//printf("cBipedStepController3D::GetExternalStateOffset GetContactStateSize is:%d\n", GetContactStateSize());
 	return cCtPDPhaseController::GetPoliStateSize() + GetContactStateSize();
 }
 
@@ -215,6 +215,7 @@ int cBipedStepController3D::GetTaskStateSize() const
 
 void cBipedStepController3D::BuildPoliState(Eigen::VectorXd &out_state) const
 {
+	time_t my_time = time(NULL);
 	cCtPDPhaseController::BuildPoliState(out_state);
 
 	Eigen::VectorXd contact_state;
@@ -229,8 +230,6 @@ void cBipedStepController3D::BuildPoliState(Eigen::VectorXd &out_state) const
 
 	out_state.segment(contact_offset, contact_size) = contact_state;
 	out_state.segment(task_offset, task_size) = task_state;
-
-	mChar->ResetExternalForce();
 }
 
 void cBipedStepController3D::BuildContactState(Eigen::VectorXd &out_state) const

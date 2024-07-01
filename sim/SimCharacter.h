@@ -73,6 +73,7 @@ public:
 	virtual tVector GetBodyPartVel(int idx) const;
 	virtual const std::shared_ptr<cSimObj>& GetRootPart() const;
 	virtual std::shared_ptr<cSimObj> GetRootPart();
+	virtual tVector GetBodyPartTotalForce(int idx) const;//Ray
 
 	virtual void RegisterContacts(int contact_flag, int filter_flag);
 	virtual bool HasFallen() const;

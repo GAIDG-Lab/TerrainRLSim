@@ -27,14 +27,10 @@ public:
 
 	virtual std::string GetName() const;
 	virtual const std::shared_ptr<cScenarioSimChar>& GetScene() const;
-	virtual void SpawnProjectile();
-
-
 
 protected:
 	std::shared_ptr<cScenarioSimChar> mScene;
 	
-	int count_box;
 	bool mDrawInfo;
 	bool mDrawGround;
 	bool mDrawCharacter;
@@ -43,6 +39,16 @@ protected:
 	bool mDrawPolicyPlots;
 	bool mEnableCharDrawShapes;
 	bool mPauseSim;
+	bool mDrawLinearVelocity;
+	bool mDrawTotalForce;
+	bool mDrawNetForce;
+	bool mDrawmForces;
+	bool mDrawForces;
+	bool mDrawAngularVelocity;
+	bool mDrawVelocity;
+	bool mDrawImpulse;
+	bool mDrawNetLinearVelocity;
+	bool mDrawGRFs;
 
 	bool mEnableTrace;
 	cCharTracer mTracer;
@@ -85,6 +91,19 @@ protected:
 
 	virtual void DrawCoM() const;
 	virtual void DrawTorque() const;
+	virtual void DrawLinearVelocity() const;//ray
+	virtual void DrawTotalForce() const;
+	virtual void DrawNetForce() const;
+	virtual void DrawGRFs() const;
+	virtual void DrawmForces() const;
+	virtual void DrawForces() const;
+
+
+	virtual void DrawAngularVelocity() const;
+	virtual void DrawVelocity() const;
+	virtual void DrawImpulse() const;
+	virtual void DrawNetLinearVelocity() const;
+
 	virtual void DrawHeading() const;
 	virtual void DrawPerturbs() const;
 	virtual void DrawCtrlInfo() const;
@@ -100,6 +119,7 @@ protected:
 	virtual std::string GetOutputCharFile() const;
 	virtual void OutputCharState(const std::string& out_file) const;
 
+	virtual void SpawnProjectile();
 	virtual void SpawnBigProjectile();
 
 	virtual void BuildGroundDrawMesh();

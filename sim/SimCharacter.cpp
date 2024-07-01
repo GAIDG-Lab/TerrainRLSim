@@ -439,6 +439,14 @@ tVector cSimCharacter::GetBodyPartVel(int idx) const
 	return vel;
 }
 
+//Ray
+tVector cSimCharacter::GetBodyPartTotalForce(int idx) const
+{
+	auto& part = GetBodyPart(idx);
+	tVector force = part->GetTotalForce();
+	return force;
+}
+
 const std::shared_ptr<cSimObj>& cSimCharacter::GetRootPart() const
 {
 	int root_idx = GetRootID();
