@@ -95,6 +95,7 @@ cWorld::cWorld()
 {
 	mDefaultLinearDamping = 0;
 	mDefaultAngularDamping = 0;
+	mTimeStep = 0;
 }
 
 cWorld::~cWorld()
@@ -131,6 +132,7 @@ void cWorld::Reset()
 {
 	mContactManager.Reset();
 	mPerturbManager.Clear();
+	mTimeStep = 0;
 
 	mSimWorld->clearForces();
 	mSolver->reset();
@@ -150,8 +152,10 @@ void cWorld::Update(double time_elapsed)
 	mPerturbManager.Update(time_elapsed);
 
 	btScalar time_step = static_cast<btScalar>(time_elapsed);
+	btScalar subtimestep = time_step / mParams.mNumSubsteps;
 	mSimWorld->stepSimulation(time_step, mParams.mNumSubsteps, time_step / mParams.mNumSubsteps);
 
+	mTimeStep = subtimestep;
 	mContactManager.Update();
 }
 
@@ -798,7 +802,7 @@ double cWorld::GetManifoldImpulseLateral1(const btManifoldPoint& manifold_pt) co
 double cWorld::GetManifoldImpulseLateral2(const btManifoldPoint& manifold_pt) const
 {
 	double scale = GetScale();
-	double impulse = manifold_pt.m_appliedImpulseLateral1/ scale;
+	double impulse = manifold_pt.m_appliedImpulseLateral2/ scale;
 
 	return impulse;
 }
