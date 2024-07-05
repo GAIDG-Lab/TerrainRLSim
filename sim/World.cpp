@@ -148,14 +148,13 @@ void cWorld::Reset()
 
 void cWorld::Update(double time_elapsed)
 {
-	time_elapsed = std::max(0.0, time_elapsed);
+	time_elapsed = std::max(0.0, time_elapsed); //0.001667
 	mPerturbManager.Update(time_elapsed);
 
-	btScalar time_step = static_cast<btScalar>(time_elapsed);
+	btScalar time_step = static_cast<btScalar>(time_elapsed); 
 	btScalar subtimestep = time_step / mParams.mNumSubsteps;
-	mSimWorld->stepSimulation(time_step, mParams.mNumSubsteps, time_step / mParams.mNumSubsteps);
-
-	mTimeStep = subtimestep;
+	mSimWorld->stepSimulation(time_step, mParams.mNumSubsteps, subtimestep);
+	mTimeStep = subtimestep; //0.001667
 	mContactManager.Update();
 }
 

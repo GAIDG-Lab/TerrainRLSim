@@ -188,8 +188,6 @@ int cBipedStepController3D::GetExternalStateSize() const
 
 int cBipedStepController3D::GetExternalStateOffset() const
 {
-	//printf("cBipedStepController3D::GetExternalStateOffset GetPoliStateSize is:%d\n", cCtPDPhaseController::GetPoliStateSize());
-	//printf("cBipedStepController3D::GetExternalStateOffset GetContactStateSize is:%d\n", GetContactStateSize());
 	return cCtPDPhaseController::GetPoliStateSize() + GetContactStateSize();
 }
 
@@ -213,23 +211,271 @@ int cBipedStepController3D::GetTaskStateSize() const
 	return eTaskParamMax;
 }
 
-void cBipedStepController3D::BuildPoliState(Eigen::VectorXd &out_state) const
+void cBipedStepController3D::BuildExternalState(Eigen::VectorXd &out_state) const
 {
-	time_t my_time = time(NULL);
+	int rot_dim = 3;
+	out_state = Eigen::VectorXd::Zero(GetExternalStateSize());
+
+	switch (mAugType)
+	{
+		case jh:
+		{
+			int idx = 0;
+			int num_parts = mChar->GetNumBodyParts();
+
+			for (int i = 0; i < num_parts; ++i)
+			{
+				int part_id = RetargetJointID(i);
+				if (mChar->IsValidBodyPart(part_id))
+				{
+					const auto &curr_part = mChar->GetBodyPart(part_id);
+
+					tVector curr_pos = curr_part->GetPos();
+					out_state[idx] = curr_pos[1];
+					idx += 1;
+				}
+			}
+			break;
+		}
+		case avg_EFs:
+		{
+			int num_parts = mChar->GetNumBodyParts();
+
+			int idx = 0;
+			tVector net_force = tVector::Zero();
+			double num_forces = 0;
+			for (int i = 0; i < num_parts; ++i)
+			{
+				if (mChar->IsValidBodyPart(i))
+				{
+					const auto &curr_part = mChar->GetBodyPart(i);
+					net_force += curr_part->mExternalForce.external_force_agent;
+					net_force += curr_part->mExternalForce.external_force_obstacle;
+					if (mChar->IsEndEffector(i))
+					{
+						net_force += curr_part->mExternalForce.external_force_ground;
+						num_forces += curr_part->mExternalForce.num_force_ground;
+					}
+
+					num_forces += curr_part->mExternalForce.num_force_agent;
+					num_forces += curr_part->mExternalForce.num_force_obstacle;
+
+					if (num_forces > 0)
+					{
+						net_force /= num_forces;
+					}
+					out_state.segment(idx, rot_dim) = net_force.segment(0, rot_dim);
+
+					idx += rot_dim;
+				}
+			}
+			break;
+		}
+		case ins_EFs:
+		{
+			int num_parts = mChar->GetNumBodyParts();
+
+			int idx = 0;
+			tVector net_force = tVector::Zero();
+			for (int i = 0; i < num_parts; ++i)
+			{
+				if (mChar->IsValidBodyPart(i))
+				{
+					const auto &curr_part = mChar->GetBodyPart(i);
+					net_force += curr_part->mExternalForce.external_force_agent_ins;
+					net_force += curr_part->mExternalForce.external_force_obstacle_ins;
+					if (mChar->IsEndEffector(i))
+					{
+						net_force += curr_part->mExternalForce.external_force_ground_ins;
+					}
+
+					out_state.segment(idx, rot_dim) = net_force.segment(0, rot_dim);
+
+					idx += rot_dim;
+				}
+			}
+			break;
+		}
+		case cum_EFs:
+		{
+			int num_parts = mChar->GetNumBodyParts();
+
+			int idx = 0;
+			tVector net_force = tVector::Zero();
+			for (int i = 0; i < num_parts; ++i)
+			{
+				if (mChar->IsValidBodyPart(i))
+				{
+					const auto &curr_part = mChar->GetBodyPart(i);
+					net_force += curr_part->mExternalForce.external_force_agent;
+					net_force += curr_part->mExternalForce.external_force_obstacle;
+					if (mChar->IsEndEffector(i))
+					{
+						net_force += curr_part->mExternalForce.external_force_ground;
+					}
+
+					out_state.segment(idx, rot_dim) = net_force.segment(0, rot_dim);
+
+					idx += rot_dim;
+				}
+			}
+			break;
+		}
+		case avg_NF:
+		{
+			int num_parts = mChar->GetNumBodyParts();
+			tVector avg_net_force = tVector::Zero();
+			double num_forces = 0;
+			// tVector net_gravity = tVector::Zero();
+			for (int i = 0; i < num_parts; ++i)
+			{
+				if (mChar->IsValidBodyPart(i))
+				{
+					const auto &curr_part = mChar->GetBodyPart(i);
+					// net_gravity += curr_part->GetGravity();
+					avg_net_force += curr_part->mExternalForce.external_force_agent;
+					avg_net_force += curr_part->mExternalForce.external_force_ground;
+					avg_net_force += curr_part->mExternalForce.external_force_obstacle;
+
+					num_forces += curr_part->mExternalForce.num_force_agent;
+					num_forces += curr_part->mExternalForce.num_force_ground;
+					num_forces += curr_part->mExternalForce.num_force_obstacle;
+				}
+			}
+			if (num_forces > 0)
+			{
+				avg_net_force /= num_forces;
+			}
+			out_state.segment(0, 3) = avg_net_force.segment(0, 3);
+
+			break;
+		}
+		case ins_NF:
+		{
+			int num_parts = mChar->GetNumBodyParts();
+			tVector ins_net_force = tVector::Zero();
+			// tVector net_gravity = tVector::Zero();
+			for (int i = 0; i < num_parts; ++i)
+			{
+				if (mChar->IsValidBodyPart(i))
+				{
+					const auto &curr_part = mChar->GetBodyPart(i);
+					// net_gravity += curr_part->GetGravity();
+					ins_net_force += curr_part->mExternalForce.external_force_agent_ins;
+					ins_net_force += curr_part->mExternalForce.external_force_ground_ins;
+					ins_net_force += curr_part->mExternalForce.external_force_obstacle_ins;
+				}
+			}
+			out_state.segment(0, 3) = ins_net_force.segment(0, 3);
+
+			break;
+		}
+		case cum_NF:
+		{
+			int num_parts = mChar->GetNumBodyParts();
+			tVector cum_net_force = tVector::Zero();
+			// tVector net_gravity = tVector::Zero();
+			for (int i = 0; i < num_parts; ++i)
+			{
+				if (mChar->IsValidBodyPart(i))
+				{
+					const auto &curr_part = mChar->GetBodyPart(i);
+					// net_gravity += curr_part->GetGravity();
+					cum_net_force += curr_part->mExternalForce.external_force_agent;
+					cum_net_force += curr_part->mExternalForce.external_force_ground;
+					cum_net_force += curr_part->mExternalForce.external_force_obstacle;
+				}
+			}
+			out_state.segment(0, 3) = cum_net_force.segment(0, 3);
+
+			break;
+		}
+		case avg_GRFs:
+		{
+			int num_parts = mChar->GetNumBodyParts();
+
+			int idx = 0;
+			for (int i = 0; i < num_parts; ++i)
+			{
+				if (mChar->IsValidBodyPart(i) && mChar->IsEndEffector(i))
+				{
+					const auto &curr_part = mChar->GetBodyPart(i);
+
+					tVector GRFs = curr_part->mExternalForce.external_force_ground;
+					double num_forces = curr_part->mExternalForce.num_force_ground;
+					if (num_forces > 0)
+					{
+						GRFs /= num_forces;
+					}
+					out_state.segment(idx, rot_dim) = GRFs.segment(0, rot_dim);
+					idx += rot_dim;
+				}
+			}
+			break;
+		}
+		case ins_GRFs:
+		{
+			int num_parts = mChar->GetNumBodyParts();
+			int idx = 0;
+			for (int i = 0; i < num_parts; ++i)
+			{
+				if (mChar->IsValidBodyPart(i) && mChar->IsEndEffector(i))
+				{
+					const auto &curr_part = mChar->GetBodyPart(i);
+
+					tVector GRFs = curr_part->mExternalForce.external_force_ground_ins;
+					out_state.segment(idx, rot_dim) = GRFs.segment(0, rot_dim);
+					idx += rot_dim;
+				}
+			}
+			break;
+		}
+		case cum_GRFs:
+		{
+			int num_parts = mChar->GetNumBodyParts();
+			int idx = 0;
+			for (int i = 0; i < num_parts; ++i)
+			{
+				if (mChar->IsValidBodyPart(i) && mChar->IsEndEffector(i))
+				{
+					const auto &curr_part = mChar->GetBodyPart(i);
+
+					tVector GRFs = curr_part->mExternalForce.external_force_ground;
+					out_state.segment(idx, rot_dim) = GRFs.segment(0, rot_dim);
+					idx += rot_dim;
+				}
+			}
+			break;
+		}
+		default:
+			break;
+	}
+}
+
+void cBipedStepController3D::BuildPoliState(Eigen::VectorXd& out_state) const
+{
 	cCtPDPhaseController::BuildPoliState(out_state);
 
 	Eigen::VectorXd contact_state;
+	Eigen::VectorXd external_state;
 	Eigen::VectorXd task_state;
 	BuildContactState(contact_state);
+	BuildExternalState(external_state);
 	BuildTaskState(task_state);
 
-	int contact_offset = GetContactStateOffset();
-	int contact_size = GetContactStateSize();
-	int task_offset = GetTaskStateOffset();
-	int task_size = GetTaskStateSize();
+	int contact_offset = GetContactStateOffset(); //199
+	int contact_size = GetContactStateSize(); //2
+	int task_offset = GetTaskStateOffset(); //201
+	int task_size = GetTaskStateSize();//7
 
-	out_state.segment(contact_offset, contact_size) = contact_state;
-	out_state.segment(task_offset, task_size) = task_state;
+	int external_offset = GetExternalStateOffset();
+	int external_size = GetExternalStateSize(); //15
+
+	out_state.segment(contact_offset, contact_size) = contact_state; //208
+	out_state.segment(external_offset, external_size) = external_state;
+	out_state.segment(task_offset, task_size) = task_state; //208
+
+	mChar->ResetExternalForce();
 }
 
 void cBipedStepController3D::BuildContactState(Eigen::VectorXd &out_state) const
@@ -309,6 +555,7 @@ void cBipedStepController3D::BuildTaskState(Eigen::VectorXd &out_state) const
 	out_state[eTaskParamStepLeftY1] = left_delta1[1];
 	out_state[eTaskParamStepLeftZ1] = left_delta1[2];
 	out_state[eTaskParamRootHeading] = tar_heading;
+	printf("cBipedStepController3D::BuildTaskState is done!\n");
 }
 
 // hack to get around pdphase controller being 2d, terrain should be compositional not inherited

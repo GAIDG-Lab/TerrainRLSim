@@ -40,7 +40,4 @@ protected:
 #if defined(ENABLE_PHASE_STATE_BINS)
 	virtual int GetNumPhaseBins() const;
 #endif // ENABLE_PHASE_STATE_BINS
-
-	virtual void BuildPoliState(Eigen::VectorXd& out_state) const;
-	virtual void BuildExternalState(Eigen::VectorXd& out_state) const;
 };

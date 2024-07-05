@@ -73,6 +73,8 @@ public:
 	virtual void BuildContactState(Eigen::VectorXd& out_state) const;
 	virtual void BuildTaskState(Eigen::VectorXd& out_state) const;
 
+	virtual void BuildExternalState(Eigen::VectorXd& out_state) const;
+
 protected:
 	int mAugType;
 	std::vector<int> mEndEffectors;

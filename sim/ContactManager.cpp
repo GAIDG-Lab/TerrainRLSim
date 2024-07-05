@@ -42,7 +42,7 @@ void cContactManager::Reset()
 {
 	for (int i = 0; i < GetNumEntries(); ++i)
 	{
-		tContactEntry &entry = mContactEntries[i];
+		tContactEntry &entry = mContactEntries[i]; // 15 entries
 		entry.mInContact = false;
 	}
 }
@@ -54,12 +54,11 @@ void cContactManager::Clear()
 
 void cContactManager::Update()
 {
-
 	ClearContacts();
 	std::unique_ptr<btDiscreteDynamicsWorld> &bt_world = mWorld.GetInternalWorld();
 	double timestep = mWorld.GetTimeStep();
-
-	int num_manifolds = bt_world->getDispatcher()->getNumManifolds();
+	int num_manifolds = bt_world->getDispatcher()->getNumManifolds(); // current is [15,16,17,...,37,38]
+	//printf("cContactManager::Update num_manifolds: %d\n", num_manifolds);
 	for (int i = 0; i < num_manifolds; ++i)
 	{
 		btPersistentManifold *mani = bt_world->getDispatcher()->getManifoldByIndexInternal(i);
@@ -289,7 +288,6 @@ cContactManager::tContactHandle cContactManager::RegisterContact(int contact_fla
 	tContactEntry& entry = mContactEntries[handle.mID];
 	entry.mFlags = contact_flags;
 	entry.mFilterFlags = filter_flags;
-
 	
 	tContactObser& entryobser = mContactEntriesObser[handle.mID];
 	entryobser.mContactImpulseGround = tVector::Zero();

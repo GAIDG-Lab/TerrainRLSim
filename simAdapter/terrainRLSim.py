@@ -509,7 +509,6 @@ class TerrainRLSimWrapper(gym.Env):
         self._done_multiAgent = [False for i in range(self._sim.getNumAgents())]
         self._collision_multiAgent = [False for i in range(self._sim.getNumAgents())]
 
-
         if ( "timestep_subsampling" in self._config ):
             for i in range(self._config["timestep_subsampling"]):
                 if ("process_visual_data" in self._config
