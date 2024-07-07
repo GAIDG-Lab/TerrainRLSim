@@ -875,7 +875,7 @@ double cWorld::GetManifoldImpulseLateral1(const btManifoldPoint& manifold_pt) co
 double cWorld::GetManifoldImpulseLateral2(const btManifoldPoint& manifold_pt) const
 {
 	double scale = GetScale();
-	double impulse = manifold_pt.m_appliedImpulseLateral1/ scale;
+	double impulse = manifold_pt.m_appliedImpulseLateral2/ scale;
 
 	return impulse;
 }
