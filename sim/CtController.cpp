@@ -62,7 +62,7 @@ void cCtController::UpdateCalcTau(double time_step, Eigen::VectorXd& out_tau)
 		mUpdateCounter = 0;
 	}
 
-	mUpdateCounter += time_step;
+	mUpdateCounter += time_step; // time_step: 0.001667
 
 	if (NewActionUpdate())
 	{

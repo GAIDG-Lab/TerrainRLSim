@@ -33,15 +33,6 @@ cWorld::tJointParams::tJointParams()
 	mRefTheta = 0;
 }
 
-tVector cWorld::GetTotalForce(const cSimObj* obj) const
-{
-	auto& body = obj->GetSimBody();
-	const btVector3& bt_vel = body->getTotalForce();
-	tVector force = tVector(bt_vel[0], bt_vel[1], bt_vel[2], 0);
-	//vel /= GetScale();
-	return force;
-}
-
 cWorld::tConstraintHandle::tConstraintHandle()
 {
 	mCons = nullptr;
@@ -148,13 +139,16 @@ void cWorld::Reset()
 
 void cWorld::Update(double time_elapsed)
 {
-	time_elapsed = std::max(0.0, time_elapsed); //0.001667
+	//printf("World.cpp Update time_elapsed: %f\n", time_elapsed);
+	time_elapsed = std::max(0.0, time_elapsed);
 	mPerturbManager.Update(time_elapsed);
 
-	btScalar time_step = static_cast<btScalar>(time_elapsed); 
+	btScalar time_step = static_cast<btScalar>(time_elapsed);
 	btScalar subtimestep = time_step / mParams.mNumSubsteps;
+	//printf("World::Update mSimWorld time_step: %f, mParams.mNumSubsteps:%d\n", time_step, mParams.mNumSubsteps);
 	mSimWorld->stepSimulation(time_step, mParams.mNumSubsteps, subtimestep);
-	mTimeStep = subtimestep; //0.001667
+
+	mTimeStep = subtimestep;
 	mContactManager.Update();
 }
 
@@ -280,6 +274,7 @@ void cWorld::SetGravity(const tVector& gravity)
 
 cContactManager::tContactHandle cWorld::RegisterContact(int contact_flags, int filter_flags)
 {
+	//printf("World RegisterContact\n");
 	return mContactManager.RegisterContact(contact_flags, filter_flags);
 }
 
@@ -353,14 +348,13 @@ tVector cWorld::GetGravity() const
 
 double cWorld::GetScale() const
 {
+	//printf("World::GetScale mScale: %f\n", mParams.mScale);
 	return mParams.mScale;
 }
-
 double cWorld::GetTimeStep() const
 {
 	return mTimeStep;
 }
-
 void cWorld::SetDefaultLinearDamping(double damping)
 {
 	mDefaultLinearDamping = damping;
@@ -416,7 +410,43 @@ tVector cWorld::GetLinearVelocity(const cSimObj* obj) const
 	vel /= GetScale();
 	return vel;
 }
-
+/*
+tVector cWorld::GetCentralImpulse(const cSimObj* obj) const
+{
+	auto& body = obj->GetSimBody();
+	const btVector3& bt_vel = body->getCentralImpulse();
+	tVector vel = tVector(bt_vel[0], bt_vel[1], bt_vel[2], 0);
+	//printf("World.cpp GetScale: %f\n\n", GetScale());
+	//printf("World.cpp Central Impulse: %f %f %f\n", vel[0], vel[1], vel[2]);
+	vel /= GetScale();
+	return vel;
+}
+tVector cWorld::GetTorqueImpulse(const cSimObj* obj) const
+{
+	auto& body = obj->GetSimBody();
+	const btVector3& bt_vel = body->getTorqueImpulse();
+	tVector vel = tVector(bt_vel[0], bt_vel[1], bt_vel[2], 0);
+	//vel /= GetScale();
+	//printf("World.cpp GetScale: %f\n\n", GetScale());
+	return vel;
+}
+*/
+tVector cWorld::GetTotalForce(const cSimObj* obj) const
+{
+	auto& body = obj->GetSimBody();
+	const btVector3& bt_vel = body->getTotalForce();
+	tVector force = tVector(bt_vel[0], bt_vel[1], bt_vel[2], 0);
+	//vel /= GetScale();
+	return force;
+}
+tVector cWorld::GetVelocity(const cSimObj* obj) const
+{
+	auto& body = obj->GetSimBody();
+	const btVector3& bt_vel = body->getLinearVelocity();
+	tVector vel = tVector(bt_vel[0], bt_vel[1], bt_vel[2], 0);
+	vel /= GetScale();
+	return vel;
+}
 tVector cWorld::GetLinearVelocity(const cSimObj* obj, const tVector& local_pos) const
 {
 	auto& body = obj->GetSimBody();
@@ -573,6 +603,7 @@ void cWorld::ApplyForce(const tVector& force, const tVector& local_pos, cSimObj*
 	bt_force *= scale;
 	bt_pos *= scale;
 	body->applyForce(bt_force, bt_pos);
+	//printf("World ApplyForce force: %f %f %f\n", bt_force[0], bt_force[1], bt_force[2]);
 }
 
 void cWorld::ApplyTorque(const tVector& torque, cSimObj* out_obj) const
@@ -765,25 +796,68 @@ tVector cWorld::GetManifoldPtB(const btManifoldPoint& manifold_pt) const
 	return tVector(contact_pt[0], contact_pt[1], contact_pt[2], 0) / scale;
 }
 
-
+//Ray
+int cWorld::GetNumContacts(const cContactManager::tContactHandle& handle) const
+{
+	return mContactManager.GetNumContacts(handle);
+}
 tVector cWorld::GetContactImpulse(const cContactManager::tContactHandle& handle) const
 {
 	return mContactManager.GetContactImpulse(handle);
+}
+tVector cWorld::GetContactImpulseGround(const cContactManager::tContactHandle& handle) const
+{
+	return mContactManager.GetContactImpulseGround(handle);
+}
+tVector cWorld::GetContactImpulseCharacter(const cContactManager::tContactHandle& handle) const
+{
+	return mContactManager.GetContactImpulseCharacter(handle);
+}
+tVector cWorld::GetContactImpulseObstacle(const cContactManager::tContactHandle& handle) const
+{
+	return mContactManager.GetContactImpulseObstacle(handle);
+}
+
+tVector cWorld::GetContactPtGround(const cContactManager::tContactHandle& handle) const
+{
+	return mContactManager.GetContactPtGround(handle);
+}
+tVector cWorld::GetContactPtCharacter(const cContactManager::tContactHandle& handle) const
+{
+	return mContactManager.GetContactPtCharacter(handle);
+}
+tVector cWorld::GetContactPtObstacle(const cContactManager::tContactHandle& handle) const
+{
+	return mContactManager.GetContactPtObstacle(handle);
+}
+
+int cWorld::GetNumContactGround(const cContactManager::tContactHandle& handle) const
+{
+	return mContactManager.GetNumContactGround(handle);
+}
+int cWorld::GetNumContactCharacter(const cContactManager::tContactHandle& handle) const
+{
+	return mContactManager.GetNumContactCharacter(handle);
+}
+int cWorld::GetNumContactObstacle(const cContactManager::tContactHandle& handle) const
+{
+	return mContactManager.GetNumContactObstacle(handle);
+}
+
+void cWorld::ResetContactImpulse(const cContactManager::tContactHandle& handle) 
+{
+	mContactManager.ResetContactImpulse(handle);
 }
 
 tVector cWorld::GetManifoldImpulse(const btManifoldPoint& manifold_pt) const
 {
 	double scale = GetScale();
 	const btVector3& contact_normal = manifold_pt.m_normalWorldOnB;
-	// std::cout << "contact normal " << contact_normal[0] << std::endl;
 	double impulse = manifold_pt.getAppliedImpulse();
-	// contact_normal = contact_normal * impulse;
+
 	tVector impulseV = tVector(contact_normal[0] * impulse, contact_normal[1] * impulse, contact_normal[2] * impulse, 0) / scale;
-	// tVector impulseV = tVector( impulse,  impulse, impulse, 0) / scale;
-	// std::cout << "contact normal " << impulseV << std::endl;
 	return impulseV;
 }
-
 double cWorld::GetManifoldImpulseValue(const btManifoldPoint& manifold_pt) const
 {
 	double scale = GetScale();
@@ -801,11 +875,20 @@ double cWorld::GetManifoldImpulseLateral1(const btManifoldPoint& manifold_pt) co
 double cWorld::GetManifoldImpulseLateral2(const btManifoldPoint& manifold_pt) const
 {
 	double scale = GetScale();
-	double impulse = manifold_pt.m_appliedImpulseLateral2/ scale;
+	double impulse = manifold_pt.m_appliedImpulseLateral1/ scale;
 
 	return impulse;
 }
-
+tVector cWorld::GetManifoldFrictionDirection1(const btManifoldPoint& manifold_pt) const
+{
+	btVector3 dicrection = manifold_pt.m_lateralFrictionDir1;
+	return tVector(dicrection[0], dicrection[1], dicrection[2], 0);
+}
+tVector cWorld::GetManifoldFrictionDirection2(const btManifoldPoint& manifold_pt) const
+{
+	btVector3 dicrection = manifold_pt.m_lateralFrictionDir2;
+	return tVector(dicrection[0], dicrection[1], dicrection[2], 0);
+}
 std::unique_ptr<btDiscreteDynamicsWorld>& cWorld::GetInternalWorld()
 {
 	return mSimWorld;

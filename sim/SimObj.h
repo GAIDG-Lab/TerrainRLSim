@@ -32,11 +32,9 @@ public:
 		eShapeCylinder,
 		eShapeMax,
 	};
-
-	virtual ~cSimObj();
-
 	struct ExternalForce
 	{
+
 		ExternalForce();
 
 		bool collision;
@@ -56,6 +54,7 @@ public:
 		int num_force_obstacle;
 		int num_force_agent;
 	};
+	virtual ~cSimObj();
 
 	mutable ExternalForce mExternalForce;
 
@@ -65,6 +64,9 @@ public:
 	virtual ExternalForce GetExternalForce(); 
 	virtual void ResetExternalForce();
 
+	virtual void SetAgentID(int id);
+	virtual int GetAgentID() const;
+
 	virtual tVector GetPos() const;
 	virtual void SetPos(const tVector& pos);
 	virtual void GetRotation(tVector& out_axis, double& out_theta) const;
@@ -72,6 +74,18 @@ public:
 	virtual void SetRotation(const tVector& axis, double theta);
 	virtual void SetRotation(const tQuaternion& q);
 	virtual tVector GetLinearVelocity() const;
+	virtual tVector GetTotalForce() const;//Ray
+	//virtual tVector GetTorqueImpulse() const;
+	//virtual tVector GetCentralImpulse() const;
+	virtual tVector GetLinearForce() ;
+	virtual tVector GetForce();
+	virtual tVector GetVelocity() const;
+	virtual tVector GetNextLinearVelocity() const;
+	virtual void SetPreLinearVelocity();
+	virtual void SetForce();
+	virtual void UpdateForce();
+	virtual tVector GetmTorque();
+
 	virtual tVector GetLinearVelocity(const tVector& local_pos) const;
 	virtual void SetLinearVelocity(const tVector& vel);
 	virtual tVector GetAngularVelocity() const;
@@ -98,7 +112,27 @@ public:
 	virtual const cContactManager::tContactHandle& GetContactHandle() const;
 	virtual bool IsInContact() const;
 	virtual tVector GetContactPt() const;
+	virtual tVector GetGravity() const;
+	virtual int GetNumContacts() const;
 	virtual tVector GetContactImpulse() const;
+	virtual tVector GetContactImpulseGround() const;
+	virtual tVector GetContactImpulseCharacter() const;
+	virtual tVector GetContactImpulseObstacle() const;
+
+	virtual tVector GetContactPtGround() const;
+	virtual tVector GetContactPtCharacter() const;
+	virtual tVector GetContactPtObstacle() const;
+
+	virtual int GetNumContactGround() const;
+	virtual int GetNumContactCharacter() const;
+	virtual int GetNumContactObstacle() const;
+
+
+	virtual tVector GetPerturbForce() const;
+	virtual void ClearPertubForce();
+
+	virtual void ResetContactImpulse() ;
+
 
 	virtual short GetColGroup() const;
 	virtual void SetColGroup(short col_group);
@@ -120,18 +154,6 @@ public:
 	virtual const std::unique_ptr<btCollisionShape>& GetCollisionShape() const;
 	virtual const std::shared_ptr<cWorld>& GetWorld() const;
 
-	virtual tVector GetTotalForce() const;//Ray
-	virtual tVector GetLinearForce() ;
-	virtual tVector GetForce();
-	virtual tVector GetVelocity() const;
-	virtual tVector GetNextLinearVelocity() const;
-	virtual void SetPreLinearVelocity();
-	virtual void SetForce();
-	virtual void UpdateForce();
-
-	virtual tVector GetmTorque();
-	virtual tVector GetGravity() const;
-
 protected:
 	std::shared_ptr<cWorld> mWorld;
 	std::unique_ptr<btRigidBody> mSimBody;
@@ -140,12 +162,18 @@ protected:
 	cWorld::tConstraintHandle mCons;
 
 	cContactManager::tContactHandle mContactHandle;
+	tVector pre_linearvel;
+	tVector pre_vel;
+	tVector force;
+	tVector m_torque;
+	tVector next_vel;
+	tVector m_perturbforce;
 
+	eObjType mObjType;
+	int mAgentID;
 	eType mType;
 	short mColGroup;
 	short mColMask;
-
-	eObjType mObjType;
 
 	cSimObj();
 
@@ -155,12 +183,4 @@ protected:
 
 	virtual int GetNumConstraints() const;
 	virtual cWorld::tConstraintHandle GetConstraint(int c) const;
-
-	tVector pre_linearvel;
-	tVector pre_vel;
-	tVector force;
-	tVector m_torque;
-	tVector next_vel;
-	tVector m_perturbforce;
-
 };

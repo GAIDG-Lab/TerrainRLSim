@@ -57,6 +57,7 @@ void cContactManager::Update()
 	ClearContacts();
 	std::unique_ptr<btDiscreteDynamicsWorld> &bt_world = mWorld.GetInternalWorld();
 	double timestep = mWorld.GetTimeStep();
+	//printf("cContactManager::Update timestep:%f \n", timestep);
 	int num_manifolds = bt_world->getDispatcher()->getNumManifolds(); // current is [15,16,17,...,37,38]
 	//printf("cContactManager::Update num_manifolds: %d\n", num_manifolds);
 	for (int i = 0; i < num_manifolds; ++i)
@@ -94,42 +95,9 @@ void cContactManager::Update()
 				const tContactHandle &h0 = sim_obj0->GetContactHandle();
 				const tContactHandle &h1 = sim_obj1->GetContactHandle();
 
-				/**
-				switch(obj0_type)
-				{
-				case cSimObj::eObjTypeGround:
-					printf("\nContactManager::Update obj0 type Ground mID: %d\n", h0.mID);
-					break;
-				case cSimObj::eObjTypeCharacter:
-					printf("\nContactManager::Update obj0 type Character mID: %d\n", h0.mID);
-					break;
-				case cSimObj::eObjTypeObstacle:
-					printf("\nContactManager::Update obj0 type Obstacle mID: %d\n", h0.mID);
-					break;
-				default:
-					printf("\nContactManager::Update obj0 type none mID: %d\n", h0.mID);
-				}
-				switch(obj1_type)
-				{
-				case cSimObj::eObjTypeGround:
-					printf("ContactManager::Update obj1 type Ground mID: %d\n", h1.mID);
-					break;
-				case cSimObj::eObjTypeCharacter:
-					printf("ContactManager::Update obj1 type Character mID: %d\n", h1.mID);
-					break;
-				case cSimObj::eObjTypeObstacle:
-					printf("ContactManager::Update obj1 type Obstacle mID: %d\n", h1.mID);
-					break;
-				default:
-					printf("ContactManager::Update obj1 type none mID: %d\n", h1.mID);
-				}
-				**/
-
 				bool valid_contact = IsValidContact(h0, h1);
 				if (valid_contact)
 				{
-					// printf("simObj 0 flag: %d, simObj 1 flag: %d\n", mContactEntries[h0.mID].mFlags, mContactEntries[h1.mID].mFlags);
-					// printf("SimObj0 type: %s, SimObj1 type: %s\n", typeid(obj0).name(), typeid(obj1).name());
 
 					if (h0.IsValid())
 					{
@@ -153,49 +121,37 @@ void cContactManager::Update()
 
 						tVector net_impulse_world = frict1 * left + up * normal + right * frict2;
 
+						//printf("frict1:%f,%f,%f \n", frict1.x(), frict1.y(), frict1.z());
+						//printf("frict2:%f,%f,%f \n", frict2.x(), frict2.y(), frict2.z());
+						//printf("normal:%f,%f,%f \n", normal.x(), normal.y(), normal.z());
+						//printf("up: %f \n", up);
+						//printf("left: %f \n", left);
+						//printf("right: %f \n", right);
+						//printf("net_impulse_world: %f,%f,%f \n", net_impulse_world.x(), net_impulse_world.y(), net_impulse_world.x());
+
 						if (obj0_type == cSimObj::eObjTypeCharacter)
 						{
 							// printf("ContactManager::Update obj0 type Character mID: %d\n", h0.mID);
 							switch (obj1_type)
 							{
 							case cSimObj::eObjTypeGround:
+								//printf("mExternalForce.external_force_ground:%f,%f,%f \n", sim_obj0->mExternalForce.external_force_ground.x(), sim_obj0->mExternalForce.external_force_ground.y(), sim_obj0->mExternalForce.external_force_ground.z());
 								sim_obj0->mExternalForce.external_force_ground += net_impulse_world;
 								sim_obj0->mExternalForce.external_force_ground_ins += net_impulse_world;
 								sim_obj0->mExternalForce.force_ground_pos += pt_pos;
-								// if(j == 0)
-								//{
 								sim_obj0->mExternalForce.num_force_ground += 1;
-								//}
-
-								// mContactEntriesObser[h0.mID].mContactImpulseGround = net_impulse_world;
-								// mContactEntriesObser[h0.mID].mContactPtGround = pt_pos;
-								// mContactEntriesObser[h0.mID].mNumImpulseGround += 1;
 								break;
 							case cSimObj::eObjTypeCharacter:
 								sim_obj0->mExternalForce.external_force_agent += net_impulse_world;
 								sim_obj0->mExternalForce.external_force_agent_ins += net_impulse_world;
 								sim_obj0->mExternalForce.force_agent_pos += pt_pos;
-								// if(j == 0)
-								//{
 								sim_obj0->mExternalForce.num_force_agent += 1;
-								//}
-
-								// mContactEntriesObser[h0.mID].mContactImpulseCharacter = net_impulse_world;
-								// mContactEntriesObser[h0.mID].mContactPtCharacter = pt_pos;
-								// mContactEntriesObser[h0.mID].mNumImpulseCharacter += 1;
 								break;
 							case cSimObj::eObjTypeObstacle:
 								sim_obj0->mExternalForce.external_force_obstacle += net_impulse_world;
 								sim_obj0->mExternalForce.external_force_obstacle_ins += net_impulse_world;
 								sim_obj0->mExternalForce.force_obstacle_pos += pt_pos;
-								// if(j == 0)
-								//{
 								sim_obj0->mExternalForce.num_force_obstacle += 1;
-								//}
-
-								// mContactEntriesObser[h0.mID].mContactImpulseObstacle = net_impulse_world;
-								// mContactEntriesObser[h0.mID].mContactPtObstacle = pt_pos;
-								// mContactEntriesObser[h0.mID].mNumImpulseObstacle += 1;
 								break;
 							default:
 								break;
@@ -232,40 +188,19 @@ void cContactManager::Update()
 								sim_obj1->mExternalForce.external_force_ground += net_impulse_world;
 								sim_obj1->mExternalForce.external_force_ground_ins += net_impulse_world;
 								sim_obj1->mExternalForce.force_ground_pos += pt_pos;
-								// if(j == 0)
-								//{
 								sim_obj1->mExternalForce.num_force_ground += 1;
-								//}
-
-								// mContactEntriesObser[h1.mID].mContactImpulseGround = net_impulse_world;
-								// mContactEntriesObser[h1.mID].mContactPtGround = pt_pos;
-								// mContactEntriesObser[h1.mID].mNumImpulseGround += 1;
 								break;
 							case cSimObj::eObjTypeCharacter:
 								sim_obj1->mExternalForce.external_force_agent += net_impulse_world;
 								sim_obj1->mExternalForce.external_force_agent_ins += net_impulse_world;
 								sim_obj1->mExternalForce.force_agent_pos += pt_pos;
-								// if(j == 0)
-								//{
 								sim_obj1->mExternalForce.num_force_agent += 1;
-								//}
-
-								// mContactEntriesObser[h1.mID].mContactImpulseCharacter = net_impulse_world;
-								// mContactEntriesObser[h1.mID].mContactPtCharacter = pt_pos;
-								// mContactEntriesObser[h1.mID].mNumImpulseCharacter += 1;
 								break;
 							case cSimObj::eObjTypeObstacle:
 								sim_obj1->mExternalForce.external_force_obstacle += net_impulse_world;
 								sim_obj1->mExternalForce.external_force_obstacle_ins += net_impulse_world;
 								sim_obj1->mExternalForce.force_obstacle_pos += pt_pos;
-								// if(j == 0)
-								//{
 								sim_obj1->mExternalForce.num_force_obstacle += 1;
-								//}
-
-								// mContactEntriesObser[h1.mID].mContactImpulseObstacle = net_impulse_world;
-								// mContactEntriesObser[h1.mID].mContactPtObstacle = pt_pos;
-								// mContactEntriesObser[h1.mID].mNumImpulseObstacle += 1;
 								break;
 							default:
 								break;
@@ -340,22 +275,10 @@ tVector cContactManager::GetContactPt(const tContactHandle &handle) const
 	}
 	return tVector::Zero();
 }
-/*
-tVector cContactManager::GetContactImpulse(const tContactHandle &handle) const
-{
-	/// Should be valid and in contact
-	if (handle.IsValid() && mContactEntries[handle.mID].mInContact)
-	{
-		return mContactEntries[handle.mID].mContactImpulse;
-	}
-	return tVector::Zero();
-}
-*/
 int cContactManager::GetNumContacts(const tContactHandle& handle) const
 {
-	return mContactEntriesObser[handle.mID].mNumImpulseGround +
-		mContactEntriesObser[handle.mID].mNumImpulseCharacter +
-		mContactEntriesObser[handle.mID].mNumImpulseObstacle;
+	int numc =  mContactEntriesObser[handle.mID].mNumImpulseGround + mContactEntriesObser[handle.mID].mNumImpulseCharacter + mContactEntriesObser[handle.mID].mNumImpulseObstacle;
+	return numc;
 }
 tVector cContactManager::GetContactImpulse(const tContactHandle& handle) const
 {

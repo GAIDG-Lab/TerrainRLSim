@@ -469,11 +469,13 @@ void cBipedStepController3D::BuildPoliState(Eigen::VectorXd& out_state) const
 	int task_size = GetTaskStateSize();//7
 
 	int external_offset = GetExternalStateOffset();
-	int external_size = GetExternalStateSize(); //15
+	int external_size = GetExternalStateSize(); //jh:15
 
 	out_state.segment(contact_offset, contact_size) = contact_state; //208
 	out_state.segment(external_offset, external_size) = external_state;
 	out_state.segment(task_offset, task_size) = task_state; //208
+
+	//printf("contact_offset:%d, contact_size:%d, external_offset:%d, external_size:%d, task_offset:%d, task_size:%d \n", contact_offset, contact_size, external_offset ,external_size, task_offset, task_size);
 
 	mChar->ResetExternalForce();
 }
@@ -555,7 +557,6 @@ void cBipedStepController3D::BuildTaskState(Eigen::VectorXd &out_state) const
 	out_state[eTaskParamStepLeftY1] = left_delta1[1];
 	out_state[eTaskParamStepLeftZ1] = left_delta1[2];
 	out_state[eTaskParamRootHeading] = tar_heading;
-	printf("cBipedStepController3D::BuildTaskState is done!\n");
 }
 
 // hack to get around pdphase controller being 2d, terrain should be compositional not inherited

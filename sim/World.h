@@ -44,9 +44,9 @@ public:
 	enum eContactFlag
 	{
 		eContactFlagCharacter = 0x1,
-		eContactFlagEnvironment = 0x1 << 1,
-		eContactFlagObject = 0x1 << 2,
-		eContactFlagAll = cContactManager::gFlagAll
+		eContactFlagEnvironment = 0x1 << 1, //2
+		eContactFlagObject = 0x1 << 2, //4
+		eContactFlagAll = cContactManager::gFlagAll //-1
 	};
 
 	struct tParams
@@ -147,6 +147,11 @@ public:
 	virtual tVector GetPos(const cSimObj* obj) const;
 	virtual void SetPos(const tVector& pos, cSimObj* out_obj) const;
 	virtual tVector GetLinearVelocity(const cSimObj* obj) const;
+	virtual tVector GetTotalForce(const cSimObj* obj) const; //Ray
+	//virtual tVector GetCentralImpulse(const cSimObj* obj) const;
+	//virtual tVector GetTorqueImpulse(const cSimObj* obj) const;
+	virtual tVector GetVelocity(const cSimObj* obj) const;
+	
 	virtual tVector GetLinearVelocity(const cSimObj* obj, const tVector& local_pos) const;
 	virtual void SetLinearVelocity(const tVector& vel, cSimObj* out_obj) const;
 	virtual tVector GetAngularVelocity(const cSimObj* obj) const;
@@ -187,21 +192,38 @@ public:
 	virtual tVector GetManifoldPtA(const btManifoldPoint& manifold_pt) const;
 	virtual tVector GetManifoldPtB(const btManifoldPoint& manifold_pt) const;
 
+	virtual int GetNumContacts(const cContactManager::tContactHandle& handle) const;
 	virtual tVector GetContactImpulse(const cContactManager::tContactHandle& handle) const;
-	virtual tVector GetManifoldImpulse(const btManifoldPoint& manifold_pt) const;
+	virtual tVector GetContactImpulseGround(const cContactManager::tContactHandle& handle) const;
+	virtual tVector GetContactImpulseCharacter(const cContactManager::tContactHandle& handle) const;
+	virtual tVector GetContactImpulseObstacle(const cContactManager::tContactHandle& handle) const;
 
+	virtual tVector GetContactPtGround(const cContactManager::tContactHandle& handle) const;
+	virtual tVector GetContactPtCharacter(const cContactManager::tContactHandle& handle) const;
+	virtual tVector GetContactPtObstacle(const cContactManager::tContactHandle& handle) const;
+
+	virtual int GetNumContactGround(const cContactManager::tContactHandle& handle) const;
+	virtual int GetNumContactCharacter(const cContactManager::tContactHandle& handle) const;
+	virtual int GetNumContactObstacle(const cContactManager::tContactHandle& handle) const;
+
+	virtual void ResetContactImpulse(const cContactManager::tContactHandle& handle) ;
+
+	virtual tVector GetManifoldImpulse(const btManifoldPoint& manifold_pt) const;
 	virtual double GetManifoldImpulseValue(const btManifoldPoint& manifold_pt) const;
 	virtual double GetManifoldImpulseLateral1(const btManifoldPoint& manifold_pt) const;
 	virtual double GetManifoldImpulseLateral2(const btManifoldPoint& manifold_pt) const;
 
-	virtual tVector GetTotalForce(const cSimObj* obj) const; //Ray
+	virtual tVector GetManifoldFrictionDirection1(const btManifoldPoint& manifold_pt) const;
+	virtual tVector GetManifoldFrictionDirection2(const btManifoldPoint& manifold_pt) const;
 
+	
 protected:
 	struct tConstraintEntry
 	{
 		cSimObj* mObj0;
 		cSimObj* mObj1;
 	};
+	tVector pertub_force; //Ray
 
 	double mTimeStep;
 	tParams mParams;
