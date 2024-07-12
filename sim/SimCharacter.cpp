@@ -461,12 +461,14 @@ std::shared_ptr<cSimObj> cSimCharacter::GetRootPart()
 
 void cSimCharacter::RegisterContacts(int contact_flag, int filter_flag)
 {
+	//printf("SimCharacter RegisterContacts\n");
 	for (int i = 0; i < static_cast<int>(mBodyParts.size()); ++i)
 	{
 		if (IsValidBodyPart(i))
 		{
 			std::shared_ptr<cSimObj>& part = mBodyParts[i];
 			part->RegisterContact(contact_flag, filter_flag);
+			part->SetObjType(cSimObj::eObjTypeCharacter);
 		}
 	}
 }
@@ -899,6 +901,7 @@ void cSimCharacter::BuildBoxPart(int part_id, const tVector& root_pos, double fr
 	box->SetColMask(col_mask);
 
 	box->Init(mWorld, params);
+	box->SetObjType(cSimObj::eObjTypeCharacter);
 
 	out_part = std::move(box);
 }
@@ -932,6 +935,7 @@ void cSimCharacter::BuildCapsulePart(int part_id, const tVector& root_pos, doubl
 	box->SetColMask(col_mask);
 
 	box->Init(mWorld, params);
+	box->SetObjType(cSimObj::eObjTypeCharacter);
 
 	out_part = std::move(box);
 }
@@ -965,6 +969,7 @@ void cSimCharacter::BuildSpherePart(int part_id, const tVector& root_pos, double
 	box->SetColMask(col_mask);
 
 	box->Init(mWorld, params);
+	box->SetObjType(cSimObj::eObjTypeCharacter);
 
 	out_part = std::move(box);
 }
@@ -998,6 +1003,7 @@ void cSimCharacter::BuildCylinderPart(int part_id, const tVector& root_pos, doub
 	box->SetColMask(col_mask);
 
 	box->Init(mWorld, params);
+	box->SetObjType(cSimObj::eObjTypeCharacter);
 
 	out_part = std::move(box);
 }

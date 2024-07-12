@@ -140,11 +140,11 @@ void cWorld::Reset()
 void cWorld::Update(double time_elapsed)
 {
 	//printf("World.cpp Update time_elapsed: %f\n", time_elapsed);
-	time_elapsed = std::max(0.0, time_elapsed);
+	time_elapsed = std::max(0.0, time_elapsed); // 0.001667
 	mPerturbManager.Update(time_elapsed);
 
 	btScalar time_step = static_cast<btScalar>(time_elapsed);
-	btScalar subtimestep = time_step / mParams.mNumSubsteps;
+	btScalar subtimestep = time_step / mParams.mNumSubsteps; // 0.0003334
 	//printf("World::Update mSimWorld time_step: %f, mParams.mNumSubsteps:%d\n", time_step, mParams.mNumSubsteps);
 	mSimWorld->stepSimulation(time_step, mParams.mNumSubsteps, subtimestep);
 

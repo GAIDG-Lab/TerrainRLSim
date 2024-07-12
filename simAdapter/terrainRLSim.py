@@ -414,6 +414,9 @@ class TerrainRLSimWrapper(gym.Env):
                         self._imitation_visual_state[i] = self._getImitationVisualState()
         else:
             self._sim.update()
+            #import datetime
+            #current_time = datetime.datetime.now()
+            #print("Current system time:", current_time)
             
     def step(self, action):
         """
@@ -446,7 +449,7 @@ class TerrainRLSimWrapper(gym.Env):
         # print("Num Agents: ", self._sim.getNumAgents())
         
         ob = self.getObservation()
-        self._steps = self._steps + 1    
+        self._steps = self._steps + 1   # 0,1,2,3...
             
         # self._done = self._sim.agentHasFallen() or self._done or (self._steps >= self._config["time_limit"])
         # observation, reward, done, info

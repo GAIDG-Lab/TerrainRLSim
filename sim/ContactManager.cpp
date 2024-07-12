@@ -127,7 +127,7 @@ void cContactManager::Update()
 						//printf("up: %f \n", up);
 						//printf("left: %f \n", left);
 						//printf("right: %f \n", right);
-						//printf("net_impulse_world: %f,%f,%f \n", net_impulse_world.x(), net_impulse_world.y(), net_impulse_world.x());
+						//printf("net_impulse_world h0:%f,%f,%f,%f \n", net_impulse_world.w(), net_impulse_world.x(), net_impulse_world.y(), net_impulse_world.z());
 
 						if (obj0_type == cSimObj::eObjTypeCharacter)
 						{
@@ -179,6 +179,7 @@ void cContactManager::Update()
 						tVector frict2 = tVector(pt.m_lateralFrictionDir2[0], pt.m_lateralFrictionDir2[1], pt.m_lateralFrictionDir2[2], 0).normalized();
 
 						tVector net_impulse_world = frict1 * left + up * normal + right * frict2;
+						//printf("net_impulse_world h1:%f,%f,%f,%f\n", net_impulse_world.w(), net_impulse_world.x(), net_impulse_world.y(), net_impulse_world.z());
 
 						if (obj1_type == cSimObj::eObjTypeCharacter)
 						{

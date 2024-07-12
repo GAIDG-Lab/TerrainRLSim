@@ -1030,10 +1030,10 @@ void cSimAdapter::update()
 		}
 		else
 		{
-			int num_steps = GetNumTimeSteps();
+			int num_steps = GetNumTimeSteps(); // 1
 
 			double timestep = (gPlaybackSpeed < 0) ? -gAnimStep : gAnimStep;
-			timestep = timestep;
+			timestep = timestep; // 0.033333
 
 			if (this->_gScenario != NULL)
 			{

@@ -285,6 +285,7 @@ void cScenarioSimChar::Clear()
 
 void cScenarioSimChar::Update(double time_elapsed)
 {
+	// time_elapsed: 0.033333
 #if defined(SIM_CHAR_PROFILER)
 	static int time_count = 0;
 	static double avg_time = 0;
@@ -294,7 +295,7 @@ void cScenarioSimChar::Update(double time_elapsed)
 	{
 		return;
 	}
-
+	//printf("cScenarioSimChar::Update mEnableRandPerturbs:%d\n", mEnableRandPerturbs);
 	if (mEnableRandPerturbs)
 	{
 		UpdateRandPerturb(time_elapsed);
@@ -311,11 +312,11 @@ void cScenarioSimChar::Update(double time_elapsed)
 		RecordMotion(time_elapsed);
 	}
 	
-	double update_step = time_elapsed / mNumUpdateSteps;
-	int num_update_steps = (time_elapsed == 0) ? 1 : mNumUpdateSteps;
+	double update_step = time_elapsed / mNumUpdateSteps; // 0.033333 / 20 = 0.001667
+	int num_update_steps = (time_elapsed == 0) ? 1 : mNumUpdateSteps; // 20
 	for (int i = 0; i < num_update_steps; ++i)
 	{  
-		mTime += update_step;
+		mTime += update_step; // 0.001667, 0.003333, 0.005000,...
 		PreSubstepUpdate(update_step);
 
 		// order matters!
@@ -707,13 +708,17 @@ void cScenarioSimChar::UpdateRandPerturb(double time_step)
 	mRandPerturbTimer += time_step;
 	if (mRandPerturbTimer >= mRandPertubTime)
 	{
+		//printf("ScenarioSimChar.cpp ApplyRandForce\n");
 		ApplyRandForce();
 		ResetRandPertrub();
 	}
+	//printf("mRand.RandDouble(0, 1):%f\n", mRand.RandDouble(0, 1));
 	if (mEnableRandProjectiles && ( mRand.RandDouble(0, 1) < mProjectileFrequency) )
 	{
+		//printf("ScenarioSimChar.cpp UpdateRandPerturb\n");
 		this->SpawnProjectile();
 	}
+	//printf("cScenarioSimChar::UpdateRandPerturb end!\n");
 }
 
 void cScenarioSimChar::ResetCharacters()
@@ -879,12 +884,15 @@ void cScenarioSimChar::SpawnProjectile()
 	double max_speed = 20;
 	double life_time = 3.5;
 	double y_offset = 0;
+	/*
 	count_box = count_box+1;
 	if(count_box>150)
 	{
+		SpawnProjectile(density, min_size, max_size, min_speed, max_speed, y_offset, life_time);
+		count_box=0;
+	}*/
 	SpawnProjectile(density, min_size, max_size, min_speed, max_speed, y_offset, life_time);
-	count_box=0;
-	}}
+}
 
 void cScenarioSimChar::SpawnBigProjectile()
 {
@@ -895,12 +903,14 @@ void cScenarioSimChar::SpawnBigProjectile()
 	double max_speed = 12;
 	double life_time = 2;
 	double y_offset = 0.5;
+	/*
 	count_box = count_box+1;
 	if(count_box>15)
 	{
+		SpawnProjectile(density, min_size, max_size, min_speed, max_speed, y_offset, life_time);
+		count_box=0;
+	}*/
 	SpawnProjectile(density, min_size, max_size, min_speed, max_speed, y_offset, life_time);
-	count_box=0;
-	}
 }
 
 const std::vector<cScenarioSimChar::tObjEntry, Eigen::aligned_allocator<cScenarioSimChar::tObjEntry>>& cScenarioSimChar::GetObjs() const
@@ -975,6 +985,7 @@ void cScenarioSimChar::SpawnProjectile(double density, double min_size, double m
 	double min_speed, double max_speed, double y_offset,
 	double life_time)
 {
+	//printf("ScenarioSimChar SpawnProjectile\n");
 	double min_dist = 1;
 	double max_dist = 2;
 	tVector aabb_min;
@@ -1026,7 +1037,10 @@ void cScenarioSimChar::SpawnProjectile(double density, double min_size, double m
 	params.mMass = density * params.mSize[0] * params.mSize[1] * params.mSize[2];
 	std::shared_ptr<cSimBox> box = std::shared_ptr<cSimBox>(new cSimBox());
 	box->Init(mWorld, params);
-	box->UpdateContact(cWorld::eContactFlagObject, cContactManager::gFlagNone);
+	box->SetObjType(cSimObj::eObjTypeObstacle);
+	box->RegisterContact(cWorld::eContactFlagObject, cWorld::eContactFlagObject);
+	box->UpdateContact(cWorld::eContactFlagObject, cWorld::eContactFlagObject);
+	//box->UpdateContact(cWorld::eContactFlagObject, cContactManager::gFlagNone);
 
 	tObjEntry obj_entry;
 	obj_entry.mObj = box;

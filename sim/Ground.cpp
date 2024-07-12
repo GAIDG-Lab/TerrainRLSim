@@ -154,6 +154,7 @@ cGround::cGround()
 	SeedRand(cMathUtil::RandUint());
 	mType = eTypeStatic;
 	mUpdateCount = 0;
+	mObjType = cSimObj::eObjTypeGround;
 }
 
 cGround::~cGround()
