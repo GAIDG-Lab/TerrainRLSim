@@ -1040,7 +1040,7 @@
 		}
 	},
 	"PD_Humanoid3D_LLC_Symetric_Step_MultiAgent_Terrain_WithObs_v0": {
-		"config_file": "./args/genbiped3D/biped3d_LLC_waypoint_sysemtric_step_controller.txt",
+		"config_file": "./args/humanoid3D/LLC_waypoint_symetric_step_controller.txt",
 		"time_limit": 512,
 		"comment__": "Parameters that are for the TerrainRL simulation directly",
 		"TerrainRL_Parameters": {
@@ -1061,7 +1061,7 @@
 		}
 	},
 	"PD_Humanoid3D_LLC_Symetric_Step_MultiAgent_Terrain_WithObs_v0_test_7": {
-		"config_file": "./args/genbiped3D/biped3d_LLC_waypoint_sysemtric_step_controller_humanoid.txt",
+		"config_file": "./args/humanoid3D/LLC_waypoint_symetric_step_controller.txt",
 		"time_limit": 512,
 		"comment__": "Parameters that are for the TerrainRL simulation directly",
 		"TerrainRL_Parameters": {
@@ -1082,7 +1082,7 @@
 		}
 	},
 	"PD_Humanoid3D_LLC_Symetric_Step_MultiAgent_Terrain_WithObs_v10p1_test_1": {
-		"config_file": "./args/genbiped3D/biped3d_LLC_waypoint_sysemtric_step_controller0p1.txt",
+		"config_file": "./args/humanoid3D/LLC_waypoint_symetric_step_controller.txt",
 		"time_limit": 512,
 		"comment__": "Parameters that are for the TerrainRL simulation directly",
 		"TerrainRL_Parameters": {
@@ -1103,7 +1103,7 @@
 		}
 	},
 	"PD_Humanoid3D_LLC_Symetric_Step_MultiAgent_Terrain_WithObs_v10p1_test_2": {
-		"config_file": "./args/genbiped3D/biped3d_LLC_waypoint_sysemtric_step_controller.txt",
+		"config_file": "./args/humanoid3D/LLC_waypoint_symetric_step_controller.txt",
 		"time_limit": 512,
 		"comment__": "Parameters that are for the TerrainRL simulation directly",
 		"TerrainRL_Parameters": {
@@ -1135,7 +1135,7 @@
 		}
 	},
 	"PD_Humanoid3D_LLC_Symetric_Step_MultiAgent_Terrain_WithObs_v10p1_test_3": {
-		"config_file": "./args/genbiped3D/biped3d_LLC_waypoint_sysemtric_step_controller.txt",
+		"config_file": "./args/humanoid3D/LLC_waypoint_symetric_step_controller.txt",
 		"time_limit": 512,
 		"comment__": "Parameters that are for the TerrainRL simulation directly",
 		"TerrainRL_Parameters": {
@@ -1158,7 +1158,7 @@
 		}
 	},
 	"PD_Humanoid3D_LLC_Symetric_Step_MultiAgent_Terrain_WithObs_v10p1_test_4": {
-		"config_file": "./args/genbiped3D/biped3d_LLC_waypoint_sysemtric_step_controller.txt",
+		"config_file": "./args/humanoid3D/LLC_waypoint_symetric_step_controller.txt",
 		"time_limit": 512,
 		"comment__": "Parameters that are for the TerrainRL simulation directly",
 		"TerrainRL_Parameters": {
@@ -1181,7 +1181,7 @@
 		}
 	},
 	"PD_Humanoid3D_LLC_Symetric_Step_MultiAgent_Terrain_WithObs_v10p1_test_5": {
-		"config_file": "./args/genbiped3D/biped3d_LLC_waypoint_sysemtric_step_controller.txt",
+		"config_file": "./args/humanoid3D/LLC_waypoint_symetric_step_controller.txt",
 		"time_limit": 512,
 		"comment__": "Parameters that are for the TerrainRL simulation directly",
 		"TerrainRL_Parameters": {
@@ -1213,7 +1213,7 @@
 		}
 	},
 	"PD_Humanoid3D_LLC_Symetric_Step_MultiAgent_Terrain_WithObs_v10p1_test_6": {
-		"config_file": "./args/genbiped3D/biped3d_LLC_waypoint_sysemtric_step_controller.txt",
+		"config_file": "./args/humanoid3D/LLC_waypoint_symetric_step_controller.txt",
 		"time_limit": 512,
 		"comment__": "Parameters that are for the TerrainRL simulation directly",
 		"TerrainRL_Parameters": {
@@ -1245,7 +1245,7 @@
 		}
 	},
 	"PD_Humanoid3D_LLC_Symetric_Step_MultiAgent_Terrain_WithObs_v10p1_test_8": {
-		"config_file": "./args/genbiped3D/biped3d_LLC_waypoint_sysemtric_step_controller_humanoid.txt",
+		"config_file": "./args/humanoid3D/LLC_waypoint_symetric_step_controller.txt",
 		"time_limit": 512,
 		"comment__": "Parameters that are for the TerrainRL simulation directly",
 		"TerrainRL_Parameters": {
@@ -1268,7 +1268,7 @@
 		}
 	},
 	"PD_Humanoid3D_LLC_Symetric_Step_MultiAgent_Terrain_WithObs_v10p1_test_9": {
-		"config_file": "./args/genbiped3D/biped3d_LLC_waypoint_sysemtric_step_controller_humanoid.txt",
+		"config_file": "./args/humanoid3D/LLC_waypoint_symetric_step_controller.txt",
 		"time_limit": 512,
 		"comment__": "Parameters that are for the TerrainRL simulation directly",
 		"TerrainRL_Parameters": {
@@ -1299,7 +1299,7 @@
 		}
 	},
 	"PD_Humanoid3D_LLC_Symetric_Step_MultiAgent_Terrain_WithObs_v10p1": {
-		"config_file": "./args/genbiped3D/biped3d_LLC_waypoint_sysemtric_step_controller_humanoid.txt",
+		"config_file": "./args/humanoid3D/LLC_waypoint_symetric_step_controller.txt",
 		"time_limit": 512,
 		"comment__": "Parameters that are for the TerrainRL simulation directly",
 		"TerrainRL_Parameters": {
@@ -1318,7 +1318,6 @@
 			"state_file": "data/states/humanoid3d_sim_walk_state_wrist.txt",
 			"kin_ctrl_file": "data/controllers/humanoid3d/mocap_step_ctrl0.txt",
 			"enable_rand_projectiles": "false",
-			"include_arms_in_mirror": "true",
 			"perturb_time_min": "2.0",
 			"perturb_time_max": "3.0",
 			"min_perturb": "20",
@@ -1331,7 +1330,7 @@
 		}
 	},
 	"PD_Humanoid3D_LLC_Symetric_Step_MultiAgent_Terrain_WithObs_v10p1_base": {
-		"config_file": "./args/genbiped3D/biped3d_LLC_waypoint_sysemtric_step_controller_humanoid.txt",
+		"config_file": "./args/humanoid3D/LLC_waypoint_symetric_step_controller.txt",
 		"time_limit": 512,
 		"comment__": "Parameters that are for the TerrainRL simulation directly",
 		"TerrainRL_Parameters": {
@@ -1351,11 +1350,12 @@
 			"kin_ctrl_file": "data/controllers/humanoid3d/mocap_step_ctrl0.txt",
 			"enable_rand_projectiles": "false",
 			"include_arms_in_mirror": "true",
+			"step_sharp_turn_prob": "0.25",
 			"aug_type": "-1"
 		}
 	},
 	"PD_Humanoid3D_LLC_Symetric_Step_MultiAgent_Terrain_WithObs_v10p1_jh": {
-		"config_file": "./args/genbiped3D/biped3d_LLC_waypoint_sysemtric_step_controller_humanoid.txt",
+		"config_file": "./args/humanoid3D/LLC_waypoint_symetric_step_controller.txt",
 		"time_limit": 512,
 		"comment__": "Parameters that are for the TerrainRL simulation directly",
 		"TerrainRL_Parameters": {
@@ -1368,25 +1368,26 @@
 			"comment__": "Add a joint torque penalty to the reward",
 			"add_torque_penalty": "true",
 			"comment__": "Randomly add forces to the links of the agent",
-			"enable_rand_perturbs": "false",
+			"enable_rand_perturbs": "true",
 			"character_file": "data/characters/humanoid3d_colourful2.txt",
 			"motion_file": "data/motions/humanoid3d_walk_wrap.txt",
 			"state_file": "data/states/humanoid3d_sim_walk_state_wrist.txt",
 			"kin_ctrl_file": "data/controllers/humanoid3d/mocap_step_ctrl0.txt",
 			"enable_rand_projectiles": "false",
-			"perturb_time_min": "2.0",
-			"perturb_time_max": "3.0",
+			"perturb_time_min": "0.5",
+			"perturb_time_max": "1.0",
 			"min_perturb":  "20",
 			"max_perturb": "50",
 			"min_pertrub_duration": "0.1",
 			"max_perturb_duration": "0.2",
 			"projectile_frequency": "0.01",
 			"include_arms_in_mirror": "true",
+			"step_sharp_turn_prob": "0.25",
 			"aug_type": "0"
 		}
 	},
 	"PD_Humanoid3D_LLC_Symetric_Step_MultiAgent_Terrain_WithObs_v10p1_ins_EFs": {
-		"config_file": "./args/genbiped3D/biped3d_LLC_waypoint_sysemtric_step_controller_humanoid.txt",
+		"config_file": "./args/humanoid3D/LLC_waypoint_symetric_step_controller.txt",
 		"time_limit": 512,
 		"comment__": "Parameters that are for the TerrainRL simulation directly",
 		"TerrainRL_Parameters": {
@@ -1406,11 +1407,12 @@
 			"kin_ctrl_file": "data/controllers/humanoid3d/mocap_step_ctrl0.txt",
 			"enable_rand_projectiles": "false",
 			"include_arms_in_mirror": "true",
+			"step_sharp_turn_prob": "0.25",
 			"aug_type": "2"
 		}
 	},
 	"PD_Humanoid3D_LLC_Symetric_Step_MultiAgent_Terrain_WithObs_v10p1_avg_EFs": {
-		"config_file": "./args/genbiped3D/biped3d_LLC_waypoint_sysemtric_step_controller_humanoid.txt",
+		"config_file": "./args/humanoid3D/LLC_waypoint_symetric_step_controller.txt",
 		"time_limit": 512,
 		"comment__": "Parameters that are for the TerrainRL simulation directly",
 		"TerrainRL_Parameters": {
@@ -1430,11 +1432,12 @@
 			"kin_ctrl_file": "data/controllers/humanoid3d/mocap_step_ctrl0.txt",
 			"enable_rand_projectiles": "false",
 			"include_arms_in_mirror": "true",
+			"step_sharp_turn_prob": "0.25",
 			"aug_type": "1"
 		}
 	},
 	"PD_Humanoid3D_LLC_Symetric_Step_MultiAgent_Terrain_WithObs_v10p1_cum_EFs": {
-		"config_file": "./args/genbiped3D/biped3d_LLC_waypoint_sysemtric_step_controller_humanoid.txt",
+		"config_file": "./args/humanoid3D/LLC_waypoint_symetric_step_controller.txt",
 		"time_limit": 512,
 		"comment__": "Parameters that are for the TerrainRL simulation directly",
 		"TerrainRL_Parameters": {
@@ -1447,18 +1450,26 @@
 			"comment__": "Add a joint torque penalty to the reward",
 			"add_torque_penalty": "true",
 			"comment__": "Randomly add forces to the links of the agent",
-			"enable_rand_perturbs": "false",
+			"enable_rand_perturbs": "true",
 			"character_file": "data/characters/humanoid3d_colourful2.txt",
 			"motion_file": "data/motions/humanoid3d_walk_wrap.txt",
 			"state_file": "data/states/humanoid3d_sim_walk_state_wrist.txt",
 			"kin_ctrl_file": "data/controllers/humanoid3d/mocap_step_ctrl0.txt",
-			"enable_rand_projectiles": "false",
+			"enable_rand_projectiles": "true",
+			"perturb_time_min": "0.5",
+			"perturb_time_max": "1.0",
+			"min_perturb":  "20",
+			"max_perturb": "50",
+			"min_pertrub_duration": "0.1",
+			"max_perturb_duration": "0.2",
+			"projectile_frequency": "0.01",
 			"include_arms_in_mirror": "true",
+			"step_sharp_turn_prob": "0.25",
 			"aug_type": "3"
 		}
 	},
 	"PD_Humanoid3D_LLC_Symetric_Step_MultiAgent_Terrain_WithObs_v10p1_ins_GRFs": {
-		"config_file": "./args/genbiped3D/biped3d_LLC_waypoint_sysemtric_step_controller_humanoid.txt",
+		"config_file": "./args/humanoid3D/LLC_waypoint_symetric_step_controller.txt",
 		"time_limit": 512,
 		"comment__": "Parameters that are for the TerrainRL simulation directly",
 		"TerrainRL_Parameters": {
@@ -1471,18 +1482,26 @@
 			"comment__": "Add a joint torque penalty to the reward",
 			"add_torque_penalty": "true",
 			"comment__": "Randomly add forces to the links of the agent",
-			"enable_rand_perturbs": "false",
+			"enable_rand_perturbs": "true",
 			"character_file": "data/characters/humanoid3d_colourful2.txt",
 			"motion_file": "data/motions/humanoid3d_walk_wrap.txt",
 			"state_file": "data/states/humanoid3d_sim_walk_state_wrist.txt",
 			"kin_ctrl_file": "data/controllers/humanoid3d/mocap_step_ctrl0.txt",
-			"enable_rand_projectiles": "false",
+			"enable_rand_projectiles": "true",
+			"perturb_time_min": "0.5",
+			"perturb_time_max": "1.0",
+			"min_perturb":  "20",
+			"max_perturb": "50",
+			"min_pertrub_duration": "0.1",
+			"max_perturb_duration": "0.2",
+			"projectile_frequency": "0.01",
 			"include_arms_in_mirror": "true",
+			"step_sharp_turn_prob": "0.25",
 			"aug_type": "8"
 		}
 	},
 	"PD_Humanoid3D_LLC_Symetric_Step_MultiAgent_Terrain_WithObs_v10p1_avg_GRFs": {
-		"config_file": "./args/genbiped3D/biped3d_LLC_waypoint_sysemtric_step_controller_humanoid.txt",
+		"config_file": "./args/humanoid3D/LLC_waypoint_symetric_step_controller.txt",
 		"time_limit": 512,
 		"comment__": "Parameters that are for the TerrainRL simulation directly",
 		"TerrainRL_Parameters": {
@@ -1502,11 +1521,12 @@
 			"kin_ctrl_file": "data/controllers/humanoid3d/mocap_step_ctrl0.txt",
 			"enable_rand_projectiles": "false",
 			"include_arms_in_mirror": "true",
+			"step_sharp_turn_prob": "0.25",
 			"aug_type": "7"
 		}
 	},
 	"PD_Humanoid3D_LLC_Symetric_Step_MultiAgent_Terrain_WithObs_v10p1_cum_GRFs": {
-		"config_file": "./args/genbiped3D/biped3d_LLC_waypoint_sysemtric_step_controller_humanoid.txt",
+		"config_file": "./args/humanoid3D/LLC_waypoint_symetric_step_controller.txt",
 		"time_limit": 512,
 		"comment__": "Parameters that are for the TerrainRL simulation directly",
 		"TerrainRL_Parameters": {
@@ -1526,11 +1546,12 @@
 			"kin_ctrl_file": "data/controllers/humanoid3d/mocap_step_ctrl0.txt",
 			"enable_rand_projectiles": "false",
 			"include_arms_in_mirror": "true",
+			"step_sharp_turn_prob": "0.25",
 			"aug_type": "9"
 		}
 	},
 	"PD_Humanoid3D_LLC_Symetric_Step_MultiAgent_Terrain_WithObs_v10p1_ins_NF": {
-		"config_file": "./args/genbiped3D/biped3d_LLC_waypoint_sysemtric_step_controller_humanoid.txt",
+		"config_file": "./args/humanoid3D/LLC_waypoint_symetric_step_controller.txt",
 		"time_limit": 512,
 		"comment__": "Parameters that are for the TerrainRL simulation directly",
 		"TerrainRL_Parameters": {
@@ -1550,11 +1571,12 @@
 			"kin_ctrl_file": "data/controllers/humanoid3d/mocap_step_ctrl0.txt",
 			"enable_rand_projectiles": "false",
 			"include_arms_in_mirror": "true",
+			"step_sharp_turn_prob": "0.25",
 			"aug_type": "5"
 		}
 	},
 	"PD_Humanoid3D_LLC_Symetric_Step_MultiAgent_Terrain_WithObs_v10p1_avg_NF": {
-		"config_file": "./args/genbiped3D/biped3d_LLC_waypoint_sysemtric_step_controller_humanoid.txt",
+		"config_file": "./args/humanoid3D/LLC_waypoint_symetric_step_controller.txt",
 		"time_limit": 512,
 		"comment__": "Parameters that are for the TerrainRL simulation directly",
 		"TerrainRL_Parameters": {
@@ -1574,11 +1596,12 @@
 			"kin_ctrl_file": "data/controllers/humanoid3d/mocap_step_ctrl0.txt",
 			"enable_rand_projectiles": "false",
 			"include_arms_in_mirror": "true",
+			"step_sharp_turn_prob": "0.25",
 			"aug_type": "4"
 		}
 	},
 	"PD_Humanoid3D_LLC_Symetric_Step_MultiAgent_Terrain_WithObs_v10p1_cum_NF": {
-		"config_file": "./args/genbiped3D/biped3d_LLC_waypoint_sysemtric_step_controller_humanoid.txt",
+		"config_file": "./args/humanoid3D/LLC_waypoint_symetric_step_controller.txt",
 		"time_limit": 512,
 		"comment__": "Parameters that are for the TerrainRL simulation directly",
 		"TerrainRL_Parameters": {
@@ -1598,6 +1621,7 @@
 			"kin_ctrl_file": "data/controllers/humanoid3d/mocap_step_ctrl0.txt",
 			"enable_rand_projectiles": "false",
 			"include_arms_in_mirror": "true",
+			"step_sharp_turn_prob": "0.25",
 			"aug_type": "6"
 		}
 	},
