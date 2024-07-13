@@ -48,9 +48,9 @@ void cDrawScenario::Keyboard(unsigned char key, int x, int y)
 {
 }
 
-void cDrawScenario::SpawnProjectile()
-{
-}
+//void cDrawScenario::SpawnProjectile()
+//{
+//}
 
 void cDrawScenario::MouseClick(int button, int state, double world_x, double world_y)
 {

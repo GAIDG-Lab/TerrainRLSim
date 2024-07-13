@@ -35,7 +35,7 @@ public:
 	virtual void EnableFilmstrip(bool enable);
 
 	virtual std::string BuildTextInfoStr() const;
-	virtual void SpawnProjectile();
+	//virtual void SpawnProjectile();
 
 protected:
 	cCamera& mCam;

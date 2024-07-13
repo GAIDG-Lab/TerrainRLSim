@@ -1013,9 +1013,37 @@
 		}
 	},
 	"PD_Biped3D_LLC_Symetric_Step_MultiAgent_Terrain_WithObs_v1": {
-		"config_file": "./args/genbiped3D/biped3d_LLC_waypoint_sysemtric_step_controller.txt",
+		"config_file": "./args/humanoid3D/LLC_waypoint_symetric_step_controller.txt",
 		"time_limit": 512,
-		"comment__": "Parameters that are for the TPD_Humanoid3D_LLC_Symetric_Step_MultiAgent_Terrain_WithObs_v10p1errainRL simulation directly",
+		"comment__": "Parameters that are for the TerrainRL simulation directly",
+		"TerrainRL_Parameters": {
+			"comment__": "Whether or not the initial pose for the character should be sampled from the mocap data",
+			"enable_rand_state_reset": "true",
+			"comment__": "Use a different rotation representation for the policy learning state [quaternion|axisangle|euler]",
+			"terrain_file": "data/terrain/dynamicCharacters3D_Obs_0.txt",
+			"comment__": "If true the initial faceing direction of the agent will be random",
+			"randomize_initial_rotation": "true",
+			"comment__": "Add a joint torque penalty to the reward",
+			"add_torque_penalty": "true",
+			"comment__": "Randomly add forces to the links of the agent",
+			"enable_rand_perturbs": "true",
+			"enable_rand_projectiles": "false",
+			"comment__": "Setting for how much to preterb the agent, these are added to random links",
+			"perturb_time_min": "0.5",
+			"perturb_time_max": "1.0",
+			"min_perturb": "20",
+			"max_perturb": "50",
+			"min_pertrub_duration": "0.1",
+			"max_perturb_duration": "0.2",
+			"step_sharp_turn_prob": "0.25",
+			"projectile_frequency": "0.01",
+			"include_arms_in_mirror": "true"
+		}
+	},
+	"PD_Biped3D_LLC_Symetric_Step_MultiAgent_Terrain_WithObs_v1_2": {
+		"config_file": "./args/humanoid3D/LLC_waypoint_symetric_step_controller.txt",
+		"time_limit": 512,
+		"comment__": "Parameters that are for the TerrainRL simulation directly",
 		"TerrainRL_Parameters": {
 			"comment__": "Whether or not the initial pose for the character should be sampled from the mocap data",
 			"enable_rand_state_reset": "true",
@@ -1030,17 +1058,84 @@
 			"enable_rand_projectiles": "true",
 			"comment__": "Setting for how much to preterb the agent, these are added to random links",
 			"perturb_time_min": "0.5",
-			"perturb_time_max": "1",
-			"min_perturb": "50",
-			"max_perturb": "100",
-			"min_pertrub_duration": "0.2",
-			"max_perturb_duration": "0.5",
+			"perturb_time_max": "1.0",
+			"min_perturb": "20",
+			"max_perturb": "50",
+			"min_pertrub_duration": "0.1",
+			"max_perturb_duration": "0.2",
 			"step_sharp_turn_prob": "0.25",
-			"projectile_frequency": "0.025"
+			"projectile_frequency": "0.01",
+			"include_arms_in_mirror": "true"
+		}
+	},
+	"PD_Biped3D_LLC_Symetric_Step_MultiAgent_Terrain_WithObs_v1_ins_GRFs": {
+		"config_file": "./args/genbiped3D/biped3d_LLC_waypoint_sysemtric_step_controller.txt",
+		"time_limit": 512,
+		"comment__": "Parameters that are for the TerrainRL simulation directly",
+		"TerrainRL_Parameters": {
+			"comment__": "Whether or not the initial pose for the character should be sampled from the mocap data",
+			"enable_rand_state_reset": "true",
+			"comment__": "Use a different rotation representation for the policy learning state [quaternion|axisangle|euler]",
+			"terrain_file": "data/terrain/dynamicCharacters3D_Obs_0.txt",
+			"comment__": "If true the initial faceing direction of the agent will be random",
+			"randomize_initial_rotation": "true",
+			"comment__": "Add a joint torque penalty to the reward",
+			"add_torque_penalty": "true",
+			"comment__": "Randomly add forces to the links of the agent",
+			"enable_rand_perturbs": "true",
+			"character_file": "data/characters/humanoid3d_colourful2.txt",
+			"motion_file": "data/motions/humanoid3d_walk_wrap.txt",
+			"state_file": "data/states/humanoid3d_sim_walk_state_wrist.txt",
+			"kin_ctrl_file": "data/controllers/humanoid3d/mocap_step_ctrl0.txt",
+			"enable_rand_projectiles": "true",
+			"comment__": "Setting for how much to preterb the agent, these are added to random links",
+			"perturb_time_min": "0.5",
+			"perturb_time_max": "1.0",
+			"min_perturb": "20",
+			"max_perturb": "50",
+			"min_pertrub_duration": "0.1",
+			"max_perturb_duration": "0.2",
+			"step_sharp_turn_prob": "0.25",
+			"projectile_frequency": "0.01",
+			"include_arms_in_mirror": "true",
+			"aug_type": "8"
+		}
+	},
+	"PD_Biped3D_LLC_Symetric_Step_MultiAgent_Terrain_WithObs_v1_cum_EFs": {
+		"config_file": "./args/genbiped3D/biped3d_LLC_waypoint_sysemtric_step_controller.txt",
+		"time_limit": 512,
+		"comment__": "Parameters that are for the TerrainRL simulation directly",
+		"TerrainRL_Parameters": {
+			"comment__": "Whether or not the initial pose for the character should be sampled from the mocap data",
+			"enable_rand_state_reset": "true",
+			"comment__": "Use a different rotation representation for the policy learning state [quaternion|axisangle|euler]",
+			"terrain_file": "data/terrain/dynamicCharacters3D_Obs_0.txt",
+			"comment__": "If true the initial faceing direction of the agent will be random",
+			"randomize_initial_rotation": "true",
+			"comment__": "Add a joint torque penalty to the reward",
+			"add_torque_penalty": "true",
+			"comment__": "Randomly add forces to the links of the agent",
+			"enable_rand_perturbs": "true",
+			"character_file": "data/characters/humanoid3d_colourful2.txt",
+			"motion_file": "data/motions/humanoid3d_walk_wrap.txt",
+			"state_file": "data/states/humanoid3d_sim_walk_state_wrist.txt",
+			"kin_ctrl_file": "data/controllers/humanoid3d/mocap_step_ctrl0.txt",
+			"enable_rand_projectiles": "true",
+			"comment__": "Setting for how much to preterb the agent, these are added to random links",
+			"perturb_time_min": "0.5",
+			"perturb_time_max": "1.0",
+			"min_perturb": "20",
+			"max_perturb": "50",
+			"min_pertrub_duration": "0.1",
+			"max_perturb_duration": "0.2",
+			"step_sharp_turn_prob": "0.25",
+			"projectile_frequency": "0.01",
+			"include_arms_in_mirror": "true",
+			"aug_type": "3"
 		}
 	},
 	"PD_Humanoid3D_LLC_Symetric_Step_MultiAgent_Terrain_WithObs_v0": {
-		"config_file": "./args/humanoid3D/LLC_waypoint_symetric_step_controller.txt",
+		"config_file": "./args/genbiped3D/biped3d_LLC_waypoint_sysemtric_step_controller.txt",
 		"time_limit": 512,
 		"comment__": "Parameters that are for the TerrainRL simulation directly",
 		"TerrainRL_Parameters": {
@@ -1154,7 +1249,7 @@
 			"state_file": "data/states/humanoid3d_sim_walk_state_wrist.txt",
 			"kin_ctrl_file": "data/controllers/humanoid3d/mocap_step_ctrl0.txt",
 			"enable_rand_projectiles": "false",
-			"aug_type":"-1"
+			"aug_type": "-1"
 		}
 	},
 	"PD_Humanoid3D_LLC_Symetric_Step_MultiAgent_Terrain_WithObs_v10p1_test_4": {
@@ -1177,7 +1272,7 @@
 			"state_file": "data/states/humanoid3d_sim_walk_state_wrist.txt",
 			"kin_ctrl_file": "data/controllers/humanoid3d/mocap_step_ctrl0.txt",
 			"enable_rand_projectiles": "false",
-			"aug_type":"-1"
+			"aug_type": "-1"
 		}
 	},
 	"PD_Humanoid3D_LLC_Symetric_Step_MultiAgent_Terrain_WithObs_v10p1_test_5": {
@@ -1209,7 +1304,7 @@
 			"step_sharp_turn_prob": "0.25",
 			"projectile_frequency": "0.025",
 			"include_arms_in_mirror": "true",
-			"aug_type":"-1"
+			"aug_type": "-1"
 		}
 	},
 	"PD_Humanoid3D_LLC_Symetric_Step_MultiAgent_Terrain_WithObs_v10p1_test_6": {
@@ -1241,7 +1336,7 @@
 			"step_sharp_turn_prob": "0.25",
 			"projectile_frequency": "0.025",
 			"include_arms_in_mirror": "true",
-			"aug_type":"0"
+			"aug_type": "0"
 		}
 	},
 	"PD_Humanoid3D_LLC_Symetric_Step_MultiAgent_Terrain_WithObs_v10p1_test_8": {
@@ -1264,7 +1359,7 @@
 			"state_file": "data/states/humanoid3d_sim_walk_state_wrist.txt",
 			"kin_ctrl_file": "data/controllers/humanoid3d/mocap_step_ctrl0.txt",
 			"enable_rand_projectiles": "false",
-			"aug_type":"-1"
+			"aug_type": "-1"
 		}
 	},
 	"PD_Humanoid3D_LLC_Symetric_Step_MultiAgent_Terrain_WithObs_v10p1_test_9": {
@@ -1376,7 +1471,7 @@
 			"enable_rand_projectiles": "false",
 			"perturb_time_min": "0.5",
 			"perturb_time_max": "1.0",
-			"min_perturb":  "20",
+			"min_perturb": "20",
 			"max_perturb": "50",
 			"min_pertrub_duration": "0.1",
 			"max_perturb_duration": "0.2",
@@ -1450,7 +1545,7 @@
 			"comment__": "Add a joint torque penalty to the reward",
 			"add_torque_penalty": "true",
 			"comment__": "Randomly add forces to the links of the agent",
-			"enable_rand_perturbs": "true",
+			"enable_rand_perturbs": "false",
 			"character_file": "data/characters/humanoid3d_colourful2.txt",
 			"motion_file": "data/motions/humanoid3d_walk_wrap.txt",
 			"state_file": "data/states/humanoid3d_sim_walk_state_wrist.txt",
@@ -1458,7 +1553,7 @@
 			"enable_rand_projectiles": "true",
 			"perturb_time_min": "0.5",
 			"perturb_time_max": "1.0",
-			"min_perturb":  "20",
+			"min_perturb": "20",
 			"max_perturb": "50",
 			"min_pertrub_duration": "0.1",
 			"max_perturb_duration": "0.2",
@@ -1474,7 +1569,7 @@
 		"comment__": "Parameters that are for the TerrainRL simulation directly",
 		"TerrainRL_Parameters": {
 			"comment__": "Whether or not the initial pose for the character should be sampled from the mocap data",
-			"enable_rand_state_reset": "true",
+			"enable_rand_state_reset": "false",
 			"comment__": "Use a different rotation representation for the policy learning state [quaternion|axisangle|euler]",
 			"terrain_file": "data/terrain/dynamicCharacters3D_Obs_0.txt",
 			"comment__": "If true the initial faceing direction of the agent will be random",
@@ -1482,7 +1577,7 @@
 			"comment__": "Add a joint torque penalty to the reward",
 			"add_torque_penalty": "true",
 			"comment__": "Randomly add forces to the links of the agent",
-			"enable_rand_perturbs": "true",
+			"enable_rand_perturbs": "false",
 			"character_file": "data/characters/humanoid3d_colourful2.txt",
 			"motion_file": "data/motions/humanoid3d_walk_wrap.txt",
 			"state_file": "data/states/humanoid3d_sim_walk_state_wrist.txt",
@@ -1490,7 +1585,7 @@
 			"enable_rand_projectiles": "true",
 			"perturb_time_min": "0.5",
 			"perturb_time_max": "1.0",
-			"min_perturb":  "20",
+			"min_perturb": "20",
 			"max_perturb": "50",
 			"min_pertrub_duration": "0.1",
 			"max_perturb_duration": "0.2",
