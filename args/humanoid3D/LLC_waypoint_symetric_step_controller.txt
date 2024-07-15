@@ -19,7 +19,7 @@
 -terrain_file= data/terrain/plane.txt
 
 -num_update_steps= 20
--num_sim_substeps= 5
+-num_sim_substeps= 2
 -world_scale= 4
 
 // -policy_solver= data/policies/biped3d/nets/biped3d_sym_step_dphase_actor_solver.prototxt

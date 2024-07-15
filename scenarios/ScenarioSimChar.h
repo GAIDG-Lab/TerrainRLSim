@@ -77,6 +77,7 @@ public:
 	virtual eCharType GetCharType() const;
 
 	virtual void SpawnProjectile();
+	virtual void SpawnProjectileTest();
 	virtual void SpawnBigProjectile();
 	virtual const std::vector<tObjEntry, Eigen::aligned_allocator<tObjEntry>>& GetObjs() const;
 
@@ -106,6 +107,8 @@ protected:
 	cWorld::tParams mWorldParams;
 	double mTime; // in seconds
 	int mNumUpdateSteps;
+	int mProjectileCount;
+	bool mProjectileCountBool;
 
 	cSimCharacter::tParams mCharParams;
 	std::string mCharCtrlParamFile;
@@ -123,6 +126,11 @@ protected:
 
 	bool mEnableRandPerturbs;
 	bool mEnableRandProjectiles;
+	bool mEnableRandPerturbsTest;
+	bool mEnableRandProjectilesTest;
+	double mRandPerturbTimerTest;
+	double mRandPertubTimeTest;
+
 	double mRandPerturbTimer;
 	double mPerturbTimeMin;
 	double mPerturbTimeMax;
@@ -160,6 +168,8 @@ protected:
 	virtual void UpdateCharacter(double time_step);
 	virtual void UpdateGround(double time_elapsed);
 	virtual void UpdateRandPerturb(double time_step);
+	virtual void UpdateRandPerturbForceTest(double time_step);
+	virtual void UpdateRandPerturbProjectileTest(double time_step);
 
 	virtual void ResetCharacters();
 	virtual void ResetWorld();
@@ -181,8 +191,10 @@ protected:
 
 	virtual void SpawnProjectile(double density, double min_size, double max_size,
 									double min_speed, double max_speed, double y_offset, double life_time);
+	virtual void SpawnProjectileTest(double density, double size, double speed, double y_offset, double life_time);
 
 	virtual void ResetRandPertrub();
+	virtual void ResetRandPertrubTest();
 
 	virtual void StartRecordMotion();
 	virtual void RecordMotion(double time_step);

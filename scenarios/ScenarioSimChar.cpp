@@ -66,6 +66,12 @@ cScenarioSimChar::cScenarioSimChar()
 
 	mEnableRandPerturbs = false;
 	mEnableRandProjectiles = false;
+	mEnableRandPerturbsTest = false;
+	mEnableRandProjectilesTest = false;
+	mProjectileCount = 0;
+	mProjectileCountBool = false;
+	mRandPerturbTimerTest = 0;
+
 	mRandPerturbTimer = 0;
 	mPerturbTimeMin = std::numeric_limits<double>::infinity();
 	mPerturbTimeMax = std::numeric_limits<double>::infinity();
@@ -135,6 +141,21 @@ void cScenarioSimChar::ParseArgs(const std::shared_ptr<cArgParser>& parser)
 
 	parser->ParseBool("enable_rand_perturbs", mEnableRandPerturbs);
 	parser->ParseBool("enable_rand_projectiles", mEnableRandProjectiles);
+	parser->ParseBool("enable_rand_perturbs_test", mEnableRandPerturbsTest);
+	parser->ParseBool("enable_rand_projectiles_test", mEnableRandProjectilesTest);
+	if(mEnableRandPerturbsTest){
+		printf("ScenarioSimChar enable_rand_perturbs_test\n");
+	}
+	else{
+		printf("ScenarioSimChar disable enable_rand_perturbs_test\n");
+	}
+	if(mEnableRandProjectilesTest){
+		printf("ScenarioSimChar enable_rand_projectiles_test\n");
+	}
+	else{
+		printf("ScenarioSimChar disable enable_rand_projectiles_test\n");
+	}
+
 	parser->ParseDouble("perturb_time_min", mPerturbTimeMin);
 	parser->ParseDouble("perturb_time_max", mPerturbTimeMax);
 	parser->ParseDouble("min_perturb", mMinPerturb);
@@ -142,6 +163,7 @@ void cScenarioSimChar::ParseArgs(const std::shared_ptr<cArgParser>& parser)
 	parser->ParseDouble("min_pertrub_duration", mMinPerturbDuration);
 	parser->ParseDouble("max_perturb_duration", mMaxPerturbDuration);
 	parser->ParseDouble("projectile_frequency", mProjectileFrequency);
+	
 
 	mPerturbPartIDs.clear();
 	parser->ParseIntArray("perturb_part_ids", mPerturbPartIDs);
@@ -225,6 +247,7 @@ void cScenarioSimChar::ParseArgs(const std::shared_ptr<cArgParser>& parser)
 void cScenarioSimChar::Init()
 {
 	mTime = 0;
+	mProjectileCount = 0;
 
 	if (HasRandSeed())
 	{
@@ -299,6 +322,25 @@ void cScenarioSimChar::Update(double time_elapsed)
 	if (mEnableRandPerturbs)
 	{
 		UpdateRandPerturb(time_elapsed);
+	}
+	if(mEnableRandPerturbsTest){
+		UpdateRandPerturbForceTest(time_elapsed);
+	}
+	if(mEnableRandProjectilesTest){
+		//printf("ScenarioSimChar Update mEnableRandProjectilesTest\n");
+		//printf("ScenarioSimChar mChar COM height: %f\n", mChar->GetRootPos()[1]);
+		if(mChar->GetRootPos()[1] < 0.4 && mProjectileCountBool == false){
+			//std::string filename("/home/beth/Desktop/llc_base.txt");
+			//std::fstream file;
+			//file.open(filename, std::ios_base::app | std::ios_base::in);
+			//if(file.is_open()){
+			//	file << mProjectileCount  << std::endl;	
+			//}
+			//file.close();
+			mProjectileCountBool = true;
+			//kill(getpid(), SIGINT);
+		}
+		UpdateRandPerturbProjectileTest(time_elapsed);
 	}
 
 	double prev_time = mTime;
@@ -720,6 +762,31 @@ void cScenarioSimChar::UpdateRandPerturb(double time_step)
 	}
 	//printf("cScenarioSimChar::UpdateRandPerturb end!\n");
 }
+void cScenarioSimChar::UpdateRandPerturbForceTest(double time_step)
+{
+	mRandPerturbTimerTest += time_step;
+	if (mRandPerturbTimerTest >= mRandPertubTimeTest)
+	{
+		printf("ScenarioSimChar.cpp ApplyRandForce\n");
+		ApplyRandForce();
+		ResetRandPertrubTest();
+	}
+}
+void cScenarioSimChar::UpdateRandPerturbProjectileTest(double time_step)
+{
+	mRandPerturbTimerTest += time_step; //0.033333
+	//printf("ScenarioSimChar.cpp mRandPerturbTimerTest: %f\n", mRandPerturbTimerTest); 0.033333
+	//printf("ScenarioSimChar.cpp mRandPertubTimeTest: %f\n", mRandPertubTimeTest); 0
+	if (mRandPerturbTimerTest >= mRandPertubTimeTest)
+	{
+		//printf("ScenarioSimChar.cpp UpdateRandPerturb\n");
+		this->SpawnProjectileTest();
+		ResetRandPertrubTest();
+		if(mChar->GetRootPos()[1] > 0.4){
+			mProjectileCount += 1;
+		}
+	}
+}
 
 void cScenarioSimChar::ResetCharacters()
 {
@@ -894,6 +961,82 @@ void cScenarioSimChar::SpawnProjectile()
 	SpawnProjectile(density, min_size, max_size, min_speed, max_speed, y_offset, life_time);
 }
 
+void cScenarioSimChar::SpawnProjectileTest()
+{
+	double density = 100;
+	double size = 0.25;
+	double speed = 15;
+	double life_time = 2;
+	double y_offset = 0;
+	SpawnProjectileTest(density, size, speed, y_offset, life_time);
+}
+
+void cScenarioSimChar::SpawnProjectileTest(double density, double size, double speed, double y_offset,
+	double life_time)
+{
+	//printf("ScenarioSimChar SpawnProjectile\n");
+	double min_dist = 1;
+	double max_dist = 2;
+	tVector aabb_min;
+	tVector aabb_max;
+	mChar->CalcAABB(aabb_min, aabb_max);
+
+	tVector aabb_center = (aabb_min + aabb_max) * 0.5;
+	tVector obj_size = tVector(1, 1, 1, 0) * size;
+	
+	cWorld::eSimMode sim_mode = mWorld->GetSimMode();
+
+	double rand_theta = (sim_mode == cWorld::eSimMode3D) ? mRand.RandDouble(0, M_PI) : 0;
+	double rand_dist = mRand.RandDouble(min_dist, max_dist);
+
+	double aabb_size_x = (aabb_max[0] - aabb_min[0]);
+	double aabb_size_z = (aabb_max[2] - aabb_min[2]);
+	double buffer_dist = std::sqrt(aabb_size_x * aabb_size_x + aabb_size_z * aabb_size_z);
+
+	double rand_x = 0.5 * buffer_dist + rand_dist * std::cos(rand_theta);
+	rand_x *= mRand.RandSign();
+	rand_x += aabb_center[0];
+	double rand_y = mRand.RandDouble(aabb_min[1], aabb_max[1]) + obj_size[1] * 0.5;
+	rand_y += y_offset;
+
+	double rand_z = aabb_center[2];
+	
+	if (sim_mode == cWorld::eSimMode3D)
+	{
+		rand_z = 0.5 * buffer_dist + rand_dist * std::sin(rand_theta);
+		rand_z *= mRand.RandSign();
+		rand_z += aabb_center[2];
+	}
+
+	tVector pos = tVector(rand_x, rand_y, rand_z, 0);
+	tVector target = tVector(mRand.RandDouble(aabb_min[0], aabb_max[0]),
+		mRand.RandDouble(aabb_min[1], aabb_max[1]), aabb_center[2], 0);
+
+	tVector com_vel = mChar->CalcCOMVel();
+	tVector vel = (target - pos).normalized();
+	vel *= speed;
+	vel[0] += com_vel[0];
+	vel[2] += com_vel[2];
+
+	cSimBox::tParams params;
+	params.mSize = obj_size;
+	params.mPos = pos;
+	params.mVel = vel;
+	params.mFriction = 0.9;
+	params.mMass = density * params.mSize[0] * params.mSize[1] * params.mSize[2];
+	std::shared_ptr<cSimBox> box = std::shared_ptr<cSimBox>(new cSimBox());
+	box->Init(mWorld, params);
+	box->RegisterContact(cWorld::eContactFlagEnvironment, cWorld::eContactFlagAll);
+	
+	box->UpdateContact(cWorld::eContactFlagEnvironment, cWorld::eContactFlagAll);
+
+	tObjEntry obj_entry;
+	obj_entry.mObj = box;
+	obj_entry.mEndTime = mTime + life_time;
+	
+	AddObj(obj_entry);
+}
+
 void cScenarioSimChar::SpawnBigProjectile()
 {
 	double density = 100;
@@ -1053,6 +1196,10 @@ void cScenarioSimChar::ResetRandPertrub()
 {
 	mRandPerturbTimer = 0;
 	mRandPertubTime = mRand.RandDouble(mPerturbTimeMin, mPerturbTimeMax);
+}
+void cScenarioSimChar::ResetRandPertrubTest()
+{
+	mRandPerturbTimerTest = 0;
 }
 
 void cScenarioSimChar::StartRecordMotion()
