@@ -143,6 +143,7 @@ void cScenarioSimChar::ParseArgs(const std::shared_ptr<cArgParser>& parser)
 	parser->ParseBool("enable_rand_projectiles", mEnableRandProjectiles);
 	parser->ParseBool("enable_rand_perturbs_test", mEnableRandPerturbsTest);
 	parser->ParseBool("enable_rand_projectiles_test", mEnableRandProjectilesTest);
+	/*
 	if(mEnableRandPerturbsTest){
 		printf("ScenarioSimChar enable_rand_perturbs_test\n");
 	}
@@ -155,7 +156,7 @@ void cScenarioSimChar::ParseArgs(const std::shared_ptr<cArgParser>& parser)
 	else{
 		printf("ScenarioSimChar disable enable_rand_projectiles_test\n");
 	}
-
+	*/
 	parser->ParseDouble("perturb_time_min", mPerturbTimeMin);
 	parser->ParseDouble("perturb_time_max", mPerturbTimeMax);
 	parser->ParseDouble("min_perturb", mMinPerturb);
@@ -777,7 +778,7 @@ void cScenarioSimChar::UpdateRandPerturbProjectileTest(double time_step)
 	mRandPerturbTimerTest += time_step; //0.033333
 	//printf("ScenarioSimChar.cpp mRandPerturbTimerTest: %f\n", mRandPerturbTimerTest); 0.033333
 	//printf("ScenarioSimChar.cpp mRandPertubTimeTest: %f\n", mRandPertubTimeTest); 0
-	if (mRandPerturbTimerTest >= mRandPertubTimeTest)
+	if (mRandPerturbTimerTest >= mRandPertubTimeTest && ( mRand.RandDouble(0, 1) < mProjectileFrequency))
 	{
 		//printf("ScenarioSimChar.cpp UpdateRandPerturb\n");
 		this->SpawnProjectileTest();

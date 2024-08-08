@@ -1068,13 +1068,13 @@
 			"include_arms_in_mirror": "true"
 		}
 	},
-	"PD_Biped3D_LLC_Symetric_Step_MultiAgent_Terrain_WithObs_v1_ins_GRFs": {
+	"PD_Humanoid3D_LLC_Symetric_Step_MultiAgent_Terrain_WithObs_v1_base": {
 		"config_file": "./args/genbiped3D/biped3d_LLC_waypoint_sysemtric_step_controller.txt",
 		"time_limit": 512,
 		"comment__": "Parameters that are for the TerrainRL simulation directly",
 		"TerrainRL_Parameters": {
 			"comment__": "Whether or not the initial pose for the character should be sampled from the mocap data",
-			"enable_rand_state_reset": "false",
+			"enable_rand_state_reset": "true",
 			"comment__": "Use a different rotation representation for the policy learning state [quaternion|axisangle|euler]",
 			"terrain_file": "data/terrain/dynamicCharacters3D_Obs_0.txt",
 			"comment__": "If true the initial faceing direction of the agent will be random",
@@ -1082,19 +1082,23 @@
 			"comment__": "Add a joint torque penalty to the reward",
 			"add_torque_penalty": "true",
 			"comment__": "Randomly add forces to the links of the agent",
-			"enable_rand_projectiles": "true",
-			"enable_rand_projectiles_test": "true",
-			"projectile_frequency": "0.01",
-			"aug_type": "8"
+			"enable_rand_projectiles": "false",
+			"aug_type": "-1",
+			"character_file": "data/characters/humanoid3d_colourful2.txt",
+			"motion_file": "data/motions/humanoid3d_walk_wrap.txt",
+			"state_file": "data/states/humanoid3d_sim_walk_state_wrist.txt",
+			"kin_ctrl_file": "data/controllers/humanoid3d/mocap_step_ctrl0.txt",
+			"enable_rand_projectiles_test":"true",
+			"projectile_frequency": "0.05"
 		}
 	},
-	"PD_Biped3D_LLC_Symetric_Step_MultiAgent_Terrain_WithObs_v1_cum_EFs": {
+	"PD_Humanoid3D_LLC_Symetric_Step_MultiAgent_Terrain_WithObs_v1_jh": {
 		"config_file": "./args/genbiped3D/biped3d_LLC_waypoint_sysemtric_step_controller.txt",
 		"time_limit": 512,
 		"comment__": "Parameters that are for the TerrainRL simulation directly",
 		"TerrainRL_Parameters": {
 			"comment__": "Whether or not the initial pose for the character should be sampled from the mocap data",
-			"enable_rand_state_reset": "false",
+			"enable_rand_state_reset": "true",
 			"comment__": "Use a different rotation representation for the policy learning state [quaternion|axisangle|euler]",
 			"terrain_file": "data/terrain/dynamicCharacters3D_Obs_0.txt",
 			"comment__": "If true the initial faceing direction of the agent will be random",
@@ -1102,10 +1106,230 @@
 			"comment__": "Add a joint torque penalty to the reward",
 			"add_torque_penalty": "true",
 			"comment__": "Randomly add forces to the links of the agent",
-			"enable_rand_projectiles": "true",
-			"enable_rand_projectiles_test": "true",
-			"projectile_frequency": "0.01",
-			"aug_type": "3"
+			"enable_rand_projectiles": "false",
+			"aug_type": "0",
+			"character_file": "data/characters/humanoid3d_colourful2.txt",
+			"motion_file": "data/motions/humanoid3d_walk_wrap.txt",
+			"state_file": "data/states/humanoid3d_sim_walk_state_wrist.txt",
+			"kin_ctrl_file": "data/controllers/humanoid3d/mocap_step_ctrl0.txt",
+			"enable_rand_projectiles_test":"true",
+			"projectile_frequency": "0.05"
+		}
+	},
+	"PD_Humanoid3D_LLC_Symetric_Step_MultiAgent_Terrain_WithObs_v1_avg_EFs": {
+		"config_file": "./args/genbiped3D/biped3d_LLC_waypoint_sysemtric_step_controller.txt",
+		"time_limit": 512,
+		"comment__": "Parameters that are for the TerrainRL simulation directly",
+		"TerrainRL_Parameters": {
+			"comment__": "Whether or not the initial pose for the character should be sampled from the mocap data",
+			"enable_rand_state_reset": "true",
+			"comment__": "Use a different rotation representation for the policy learning state [quaternion|axisangle|euler]",
+			"terrain_file": "data/terrain/dynamicCharacters3D_Obs_0.txt",
+			"comment__": "If true the initial faceing direction of the agent will be random",
+			"randomize_initial_rotation": "true",
+			"comment__": "Add a joint torque penalty to the reward",
+			"add_torque_penalty": "true",
+			"comment__": "Randomly add forces to the links of the agent",
+			"enable_rand_projectiles": "false",
+			"aug_type": "1",
+			"character_file": "data/characters/humanoid3d_colourful2.txt",
+			"motion_file": "data/motions/humanoid3d_walk_wrap.txt",
+			"state_file": "data/states/humanoid3d_sim_walk_state_wrist.txt",
+			"kin_ctrl_file": "data/controllers/humanoid3d/mocap_step_ctrl0.txt",
+			"enable_rand_projectiles_test":"true",
+			"projectile_frequency": "0.05"
+		}
+	},
+	"PD_Humanoid3D_LLC_Symetric_Step_MultiAgent_Terrain_WithObs_v1_ins_EFs": {
+		"config_file": "./args/genbiped3D/biped3d_LLC_waypoint_sysemtric_step_controller.txt",
+		"time_limit": 512,
+		"comment__": "Parameters that are for the TerrainRL simulation directly",
+		"TerrainRL_Parameters": {
+			"comment__": "Whether or not the initial pose for the character should be sampled from the mocap data",
+			"enable_rand_state_reset": "true",
+			"comment__": "Use a different rotation representation for the policy learning state [quaternion|axisangle|euler]",
+			"terrain_file": "data/terrain/dynamicCharacters3D_Obs_0.txt",
+			"comment__": "If true the initial faceing direction of the agent will be random",
+			"randomize_initial_rotation": "true",
+			"comment__": "Add a joint torque penalty to the reward",
+			"add_torque_penalty": "true",
+			"comment__": "Randomly add forces to the links of the agent",
+			"enable_rand_projectiles": "false",
+			"aug_type": "2",
+			"character_file": "data/characters/humanoid3d_colourful2.txt",
+			"motion_file": "data/motions/humanoid3d_walk_wrap.txt",
+			"state_file": "data/states/humanoid3d_sim_walk_state_wrist.txt",
+			"kin_ctrl_file": "data/controllers/humanoid3d/mocap_step_ctrl0.txt",
+			"enable_rand_projectiles_test":"true",
+			"projectile_frequency": "0.05"
+		}
+	},
+	"PD_Humanoid3D_LLC_Symetric_Step_MultiAgent_Terrain_WithObs_v1_cum_EFs": {
+		"config_file": "./args/genbiped3D/biped3d_LLC_waypoint_sysemtric_step_controller.txt",
+		"time_limit": 512,
+		"comment__": "Parameters that are for the TerrainRL simulation directly",
+		"TerrainRL_Parameters": {
+			"comment__": "Whether or not the initial pose for the character should be sampled from the mocap data",
+			"enable_rand_state_reset": "true",
+			"comment__": "Use a different rotation representation for the policy learning state [quaternion|axisangle|euler]",
+			"terrain_file": "data/terrain/dynamicCharacters3D_Obs_0.txt",
+			"comment__": "If true the initial faceing direction of the agent will be random",
+			"randomize_initial_rotation": "true",
+			"comment__": "Add a joint torque penalty to the reward",
+			"add_torque_penalty": "true",
+			"comment__": "Randomly add forces to the links of the agent",
+			"enable_rand_projectiles": "false",
+			"aug_type": "3",
+			"character_file": "data/characters/humanoid3d_colourful2.txt",
+			"motion_file": "data/motions/humanoid3d_walk_wrap.txt",
+			"state_file": "data/states/humanoid3d_sim_walk_state_wrist.txt",
+			"kin_ctrl_file": "data/controllers/humanoid3d/mocap_step_ctrl0.txt",
+			"enable_rand_projectiles_test":"true",
+			"projectile_frequency": "0.05"
+		}
+	},
+	"PD_Humanoid3D_LLC_Symetric_Step_MultiAgent_Terrain_WithObs_v1_avg_NF": {
+		"config_file": "./args/genbiped3D/biped3d_LLC_waypoint_sysemtric_step_controller.txt",
+		"time_limit": 512,
+		"comment__": "Parameters that are for the TerrainRL simulation directly",
+		"TerrainRL_Parameters": {
+			"comment__": "Whether or not the initial pose for the character should be sampled from the mocap data",
+			"enable_rand_state_reset": "true",
+			"comment__": "Use a different rotation representation for the policy learning state [quaternion|axisangle|euler]",
+			"terrain_file": "data/terrain/dynamicCharacters3D_Obs_0.txt",
+			"comment__": "If true the initial faceing direction of the agent will be random",
+			"randomize_initial_rotation": "true",
+			"comment__": "Add a joint torque penalty to the reward",
+			"add_torque_penalty": "true",
+			"comment__": "Randomly add forces to the links of the agent",
+			"enable_rand_projectiles": "false",
+			"aug_type": "4",
+			"character_file": "data/characters/humanoid3d_colourful2.txt",
+			"motion_file": "data/motions/humanoid3d_walk_wrap.txt",
+			"state_file": "data/states/humanoid3d_sim_walk_state_wrist.txt",
+			"kin_ctrl_file": "data/controllers/humanoid3d/mocap_step_ctrl0.txt",
+			"enable_rand_projectiles_test":"true",
+			"projectile_frequency": "0.05"
+		}
+	},
+	"PD_Humanoid3D_LLC_Symetric_Step_MultiAgent_Terrain_WithObs_v1_cum_NF": {
+		"config_file": "./args/genbiped3D/biped3d_LLC_waypoint_sysemtric_step_controller.txt",
+		"time_limit": 512,
+		"comment__": "Parameters that are for the TerrainRL simulation directly",
+		"TerrainRL_Parameters": {
+			"comment__": "Whether or not the initial pose for the character should be sampled from the mocap data",
+			"enable_rand_state_reset": "true",
+			"comment__": "Use a different rotation representation for the policy learning state [quaternion|axisangle|euler]",
+			"terrain_file": "data/terrain/dynamicCharacters3D_Obs_0.txt",
+			"comment__": "If true the initial faceing direction of the agent will be random",
+			"randomize_initial_rotation": "true",
+			"comment__": "Add a joint torque penalty to the reward",
+			"add_torque_penalty": "true",
+			"comment__": "Randomly add forces to the links of the agent",
+			"enable_rand_projectiles": "false",
+			"aug_type": "6",
+			"character_file": "data/characters/humanoid3d_colourful2.txt",
+			"motion_file": "data/motions/humanoid3d_walk_wrap.txt",
+			"state_file": "data/states/humanoid3d_sim_walk_state_wrist.txt",
+			"kin_ctrl_file": "data/controllers/humanoid3d/mocap_step_ctrl0.txt",
+			"enable_rand_projectiles_test":"true",
+			"projectile_frequency": "0.05"
+		}
+	},
+	"PD_Humanoid3D_LLC_Symetric_Step_MultiAgent_Terrain_WithObs_v1_ins_GRFs": {
+		"config_file": "./args/genbiped3D/biped3d_LLC_waypoint_sysemtric_step_controller.txt",
+		"time_limit": 512,
+		"comment__": "Parameters that are for the TerrainRL simulation directly",
+		"TerrainRL_Parameters": {
+			"comment__": "Whether or not the initial pose for the character should be sampled from the mocap data",
+			"enable_rand_state_reset": "true",
+			"comment__": "Use a different rotation representation for the policy learning state [quaternion|axisangle|euler]",
+			"terrain_file": "data/terrain/dynamicCharacters3D_Obs_0.txt",
+			"comment__": "If true the initial faceing direction of the agent will be random",
+			"randomize_initial_rotation": "true",
+			"comment__": "Add a joint torque penalty to the reward",
+			"add_torque_penalty": "true",
+			"comment__": "Randomly add forces to the links of the agent",
+			"enable_rand_projectiles": "false",
+			"aug_type": "8",
+			"character_file": "data/characters/humanoid3d_colourful2.txt",
+			"motion_file": "data/motions/humanoid3d_walk_wrap.txt",
+			"state_file": "data/states/humanoid3d_sim_walk_state_wrist.txt",
+			"kin_ctrl_file": "data/controllers/humanoid3d/mocap_step_ctrl0.txt",
+			"enable_rand_projectiles_test":"true",
+			"projectile_frequency": "0.05"
+		}
+	},
+	"PD_Humanoid3D_LLC_Symetric_Step_MultiAgent_Terrain_WithObs_v1_avg_GRFs": {
+		"config_file": "./args/genbiped3D/biped3d_LLC_waypoint_sysemtric_step_controller.txt",
+		"time_limit": 512,
+		"comment__": "Parameters that are for the TerrainRL simulation directly",
+		"TerrainRL_Parameters": {
+			"comment__": "Whether or not the initial pose for the character should be sampled from the mocap data",
+			"enable_rand_state_reset": "true",
+			"comment__": "Use a different rotation representation for the policy learning state [quaternion|axisangle|euler]",
+			"terrain_file": "data/terrain/dynamicCharacters3D_Obs_0.txt",
+			"comment__": "If true the initial faceing direction of the agent will be random",
+			"randomize_initial_rotation": "true",
+			"comment__": "Add a joint torque penalty to the reward",
+			"add_torque_penalty": "true",
+			"comment__": "Randomly add forces to the links of the agent",
+			"enable_rand_projectiles": "false",
+			"aug_type": "7",
+			"character_file": "data/characters/humanoid3d_colourful2.txt",
+			"motion_file": "data/motions/humanoid3d_walk_wrap.txt",
+			"state_file": "data/states/humanoid3d_sim_walk_state_wrist.txt",
+			"kin_ctrl_file": "data/controllers/humanoid3d/mocap_step_ctrl0.txt",
+			"enable_rand_projectiles_test":"true",
+			"projectile_frequency": "0.05"
+		}
+	},
+	"PD_Humanoid3D_LLC_Symetric_Step_MultiAgent_Terrain_WithObs_v1_ins_NF": {
+		"config_file": "./args/genbiped3D/biped3d_LLC_waypoint_sysemtric_step_controller.txt",
+		"time_limit": 512,
+		"comment__": "Parameters that are for the TerrainRL simulation directly",
+		"TerrainRL_Parameters": {
+			"comment__": "Whether or not the initial pose for the character should be sampled from the mocap data",
+			"enable_rand_state_reset": "true",
+			"comment__": "Use a different rotation representation for the policy learning state [quaternion|axisangle|euler]",
+			"terrain_file": "data/terrain/dynamicCharacters3D_Obs_0.txt",
+			"comment__": "If true the initial faceing direction of the agent will be random",
+			"randomize_initial_rotation": "true",
+			"comment__": "Add a joint torque penalty to the reward",
+			"add_torque_penalty": "true",
+			"comment__": "Randomly add forces to the links of the agent",
+			"enable_rand_projectiles": "false",
+			"aug_type": "5",
+			"character_file": "data/characters/humanoid3d_colourful2.txt",
+			"motion_file": "data/motions/humanoid3d_walk_wrap.txt",
+			"state_file": "data/states/humanoid3d_sim_walk_state_wrist.txt",
+			"kin_ctrl_file": "data/controllers/humanoid3d/mocap_step_ctrl0.txt",
+			"enable_rand_projectiles_test":"true",
+			"projectile_frequency": "0.05"
+		}
+	},
+	"PD_Humanoid3D_LLC_Symetric_Step_MultiAgent_Terrain_WithObs_v1_cum_GRFs": {
+		"config_file": "./args/genbiped3D/biped3d_LLC_waypoint_sysemtric_step_controller.txt",
+		"time_limit": 512,
+		"comment__": "Parameters that are for the TerrainRL simulation directly",
+		"TerrainRL_Parameters": {
+			"comment__": "Whether or not the initial pose for the character should be sampled from the mocap data",
+			"enable_rand_state_reset": "true",
+			"comment__": "Use a different rotation representation for the policy learning state [quaternion|axisangle|euler]",
+			"terrain_file": "data/terrain/dynamicCharacters3D_Obs_0.txt",
+			"comment__": "If true the initial faceing direction of the agent will be random",
+			"randomize_initial_rotation": "true",
+			"comment__": "Add a joint torque penalty to the reward",
+			"add_torque_penalty": "true",
+			"comment__": "Randomly add forces to the links of the agent",
+			"enable_rand_projectiles": "false",
+			"aug_type": "9",
+			"character_file": "data/characters/humanoid3d_colourful2.txt",
+			"motion_file": "data/motions/humanoid3d_walk_wrap.txt",
+			"state_file": "data/states/humanoid3d_sim_walk_state_wrist.txt",
+			"kin_ctrl_file": "data/controllers/humanoid3d/mocap_step_ctrl0.txt",
+			"enable_rand_projectiles_test":"true",
+			"projectile_frequency": "0.05"
 		}
 	},
 	"PD_Humanoid3D_LLC_Symetric_Step_MultiAgent_Terrain_WithObs_v0": {
@@ -1126,7 +1350,8 @@
 			"character_file": "data/characters/humanoid3d_colourful2.txt",
 			"motion_file": "data/motions/humanoid3d_walk_wrap.txt",
 			"state_file": "data/states/humanoid3d_sim_walk_state_wrist.txt",
-			"kin_ctrl_file": "data/controllers/humanoid3d/mocap_step_ctrl0.txt"
+			"kin_ctrl_file": "data/controllers/humanoid3d/mocap_step_ctrl0.txt",
+			"aug_type": "-1"
 		}
 	},
 	"PD_Humanoid3D_LLC_Symetric_Step_MultiAgent_Terrain_WithObs_v0_test_7": {
@@ -1399,7 +1624,7 @@
 		}
 	},
 	"PD_Humanoid3D_LLC_Symetric_Step_MultiAgent_Terrain_WithObs_v10p1_base": {
-		"config_file": "./args/humanoid3D/LLC_waypoint_symetric_step_controller.txt",
+		"config_file": "./args/genbiped3D/biped3d_LLC_waypoint_sysemtric_step_controller.txt",
 		"time_limit": 512,
 		"comment__": "Parameters that are for the TerrainRL simulation directly",
 		"TerrainRL_Parameters": {
@@ -1412,14 +1637,26 @@
 			"comment__": "Add a joint torque penalty to the reward",
 			"add_torque_penalty": "true",
 			"comment__": "Randomly add forces to the links of the agent",
+			"enable_rand_perturbs": "true",
 			"enable_rand_projectiles": "true",
-			"enable_rand_projectiles_test": "true",
-			"projectile_frequency": "0.01",
-			"aug_type": "-1"
+			"enable_rand_projectiles_test": "false",
+			"aug_type": "-1",
+			"character_file": "data/characters/humanoid3d_colourful2.txt",
+			"motion_file": "data/motions/humanoid3d_walk_wrap.txt",
+			"state_file": "data/states/humanoid3d_sim_walk_state_wrist.txt",
+			"kin_ctrl_file": "data/controllers/humanoid3d/mocap_step_ctrl0.txt",
+			"perturb_time_min": "0.5",
+			"perturb_time_max": "1",
+			"min_perturb":  "50",
+			"max_perturb": "100",
+			"min_pertrub_duration": "0.2",
+			"max_perturb_duration": "0.5",
+			"step_sharp_turn_prob": "0.25",
+			"projectile_frequency": "0.025"
 		}
 	},
 	"PD_Humanoid3D_LLC_Symetric_Step_MultiAgent_Terrain_WithObs_v10p1_jh": {
-		"config_file": "./args/humanoid3D/LLC_waypoint_symetric_step_controller.txt",
+		"config_file": "./args/genbiped3D/biped3d_LLC_waypoint_sysemtric_step_controller.txt",
 		"time_limit": 512,
 		"comment__": "Parameters that are for the TerrainRL simulation directly",
 		"TerrainRL_Parameters": {
@@ -1432,14 +1669,19 @@
 			"comment__": "Add a joint torque penalty to the reward",
 			"add_torque_penalty": "true",
 			"comment__": "Randomly add forces to the links of the agent",
+			"enable_rand_perturbs": "true",
 			"enable_rand_projectiles": "true",
-			"enable_rand_projectiles_test": "true",
+			"enable_rand_projectiles_test": "false",
 			"projectile_frequency": "0.01",
-			"aug_type": "0"
+			"aug_type": "0",
+			"character_file": "data/characters/humanoid3d_colourful2.txt",
+			"motion_file": "data/motions/humanoid3d_walk_wrap.txt",
+			"state_file": "data/states/humanoid3d_sim_walk_state_wrist.txt",
+			"kin_ctrl_file": "data/controllers/humanoid3d/mocap_step_ctrl0.txt"
 		}
 	},
 	"PD_Humanoid3D_LLC_Symetric_Step_MultiAgent_Terrain_WithObs_v10p1_ins_EFs": {
-		"config_file": "./args/humanoid3D/LLC_waypoint_symetric_step_controller.txt",
+		"config_file": "./args/genbiped3D/biped3d_LLC_waypoint_sysemtric_step_controller.txt",
 		"time_limit": 512,
 		"comment__": "Parameters that are for the TerrainRL simulation directly",
 		"TerrainRL_Parameters": {
@@ -1464,7 +1706,7 @@
 		}
 	},
 	"PD_Humanoid3D_LLC_Symetric_Step_MultiAgent_Terrain_WithObs_v10p1_avg_EFs": {
-		"config_file": "./args/humanoid3D/LLC_waypoint_symetric_step_controller.txt",
+		"config_file": "./args/genbiped3D/biped3d_LLC_waypoint_sysemtric_step_controller.txt",
 		"time_limit": 512,
 		"comment__": "Parameters that are for the TerrainRL simulation directly",
 		"TerrainRL_Parameters": {
@@ -1489,7 +1731,7 @@
 		}
 	},
 	"PD_Humanoid3D_LLC_Symetric_Step_MultiAgent_Terrain_WithObs_v10p1_cum_EFs": {
-		"config_file": "./args/humanoid3D/LLC_waypoint_symetric_step_controller.txt",
+		"config_file": "./args/genbiped3D/biped3d_LLC_waypoint_sysemtric_step_controller.txt",
 		"time_limit": 512,
 		"comment__": "Parameters that are for the TerrainRL simulation directly",
 		"TerrainRL_Parameters": {
@@ -1502,14 +1744,19 @@
 			"comment__": "Add a joint torque penalty to the reward",
 			"add_torque_penalty": "true",
 			"comment__": "Randomly add forces to the links of the agent",
+			"enable_rand_perturbs": "true",
 			"enable_rand_projectiles": "true",
-			"enable_rand_projectiles_test": "true",
+			"enable_rand_projectiles_test": "false",
 			"projectile_frequency": "0.01",
-			"aug_type": "3"
+			"aug_type": "3",
+			"character_file": "data/characters/humanoid3d_colourful2.txt",
+			"motion_file": "data/motions/humanoid3d_walk_wrap.txt",
+			"state_file": "data/states/humanoid3d_sim_walk_state_wrist.txt",
+			"kin_ctrl_file": "data/controllers/humanoid3d/mocap_step_ctrl0.txt"
 		}
 	},
 	"PD_Humanoid3D_LLC_Symetric_Step_MultiAgent_Terrain_WithObs_v10p1_ins_GRFs": {
-		"config_file": "./args/humanoid3D/LLC_waypoint_symetric_step_controller.txt",
+		"config_file": "./args/genbiped3D/biped3d_LLC_waypoint_sysemtric_step_controller.txt",
 		"time_limit": 512,
 		"comment__": "Parameters that are for the TerrainRL simulation directly",
 		"TerrainRL_Parameters": {
@@ -1525,11 +1772,15 @@
 			"enable_rand_projectiles": "true",
 			"enable_rand_projectiles_test": "true",
 			"projectile_frequency": "0.01",
-			"aug_type": "8"
+			"aug_type": "8",
+			"character_file": "data/characters/humanoid3d_colourful2.txt",
+			"motion_file": "data/motions/humanoid3d_walk_wrap.txt",
+			"state_file": "data/states/humanoid3d_sim_walk_state_wrist.txt",
+			"kin_ctrl_file": "data/controllers/humanoid3d/mocap_step_ctrl0.txt"
 		}
 	},
 	"PD_Humanoid3D_LLC_Symetric_Step_MultiAgent_Terrain_WithObs_v10p1_avg_GRFs": {
-		"config_file": "./args/humanoid3D/LLC_waypoint_symetric_step_controller.txt",
+		"config_file": "./args/genbiped3D/biped3d_LLC_waypoint_sysemtric_step_controller.txt",
 		"time_limit": 512,
 		"comment__": "Parameters that are for the TerrainRL simulation directly",
 		"TerrainRL_Parameters": {
@@ -1554,7 +1805,7 @@
 		}
 	},
 	"PD_Humanoid3D_LLC_Symetric_Step_MultiAgent_Terrain_WithObs_v10p1_cum_GRFs": {
-		"config_file": "./args/humanoid3D/LLC_waypoint_symetric_step_controller.txt",
+		"config_file": "./args/genbiped3D/biped3d_LLC_waypoint_sysemtric_step_controller.txt",
 		"time_limit": 512,
 		"comment__": "Parameters that are for the TerrainRL simulation directly",
 		"TerrainRL_Parameters": {
@@ -1579,7 +1830,7 @@
 		}
 	},
 	"PD_Humanoid3D_LLC_Symetric_Step_MultiAgent_Terrain_WithObs_v10p1_ins_NF": {
-		"config_file": "./args/humanoid3D/LLC_waypoint_symetric_step_controller.txt",
+		"config_file": "./args/genbiped3D/biped3d_LLC_waypoint_sysemtric_step_controller.txt",
 		"time_limit": 512,
 		"comment__": "Parameters that are for the TerrainRL simulation directly",
 		"TerrainRL_Parameters": {
@@ -1604,7 +1855,7 @@
 		}
 	},
 	"PD_Humanoid3D_LLC_Symetric_Step_MultiAgent_Terrain_WithObs_v10p1_avg_NF": {
-		"config_file": "./args/humanoid3D/LLC_waypoint_symetric_step_controller.txt",
+		"config_file": "./args/genbiped3D/biped3d_LLC_waypoint_sysemtric_step_controller.txt",
 		"time_limit": 512,
 		"comment__": "Parameters that are for the TerrainRL simulation directly",
 		"TerrainRL_Parameters": {
@@ -1629,7 +1880,7 @@
 		}
 	},
 	"PD_Humanoid3D_LLC_Symetric_Step_MultiAgent_Terrain_WithObs_v10p1_cum_NF": {
-		"config_file": "./args/humanoid3D/LLC_waypoint_symetric_step_controller.txt",
+		"config_file": "./args/genbiped3D/biped3d_LLC_waypoint_sysemtric_step_controller.txt",
 		"time_limit": 512,
 		"comment__": "Parameters that are for the TerrainRL simulation directly",
 		"TerrainRL_Parameters": {

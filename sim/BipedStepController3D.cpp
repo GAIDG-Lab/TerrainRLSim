@@ -319,6 +319,7 @@ void cBipedStepController3D::BuildExternalState(Eigen::VectorXd &out_state) cons
 					idx += rot_dim;
 				}
 			}
+			//printf("net_force:%f\n", net_force);
 			break;
 		}
 		case avg_NF:
@@ -386,6 +387,7 @@ void cBipedStepController3D::BuildExternalState(Eigen::VectorXd &out_state) cons
 					cum_net_force += curr_part->mExternalForce.external_force_obstacle;
 				}
 			}
+			//printf("cum_net_force:%f\n", cum_net_force);
 			out_state.segment(0, 3) = cum_net_force.segment(0, 3);
 
 			break;

@@ -19,28 +19,15 @@
 
 void cDrawSimCharacter::Draw(const cSimCharacter& character, const tVector& fill_tint, const tVector& line_col, bool enable_draw_shape)
 {
-
-	{
-		tVector line_col2 = line_col;
-		line_col2[0]=0.0;
-		line_col2[1]=0.0;
-		line_col2[2]=0.0;
-
-
-		DrawSimBody(character, fill_tint, line_col2);
-	}
-
 	bool has_draw_shapes = character.HasDrawShapes();
-	// if (has_draw_shapes )
-	// {
-	// 			tVector line_col3 = line_col;
-	// 	line_col3[0]=0.0;
-	// 	line_col3[1]=0.0;
-	// 	line_col3[2]=0.0;
-	// 	DrawShapes(character, fill_tint, line_col3);
-	// }
-//	else
-
+	if (has_draw_shapes && enable_draw_shape)
+	{
+		DrawShapes(character, fill_tint, line_col);
+	}
+	else
+	{
+		DrawSimBody(character, fill_tint, line_col);
+	}
 }
 
 void cDrawSimCharacter::DrawCoM(const cSimCharacter& character, double marker_size, double vel_scale, 
@@ -209,7 +196,6 @@ void cDrawSimCharacter::DrawNetForce(const cSimCharacter& character, const tVect
 	net_force += net_gravity;
 	tVector net_force_pos = character.GetNetExternalForcePos();
 	
-
 	printf("DrawSimCharacter.cpp net_force: %f %f %f\n",  net_force[0], net_force[1], net_force[2]);
 	cDrawUtil::SetColor(tVector(1, 0, 0, 0.5));
 	cDrawUtil::DrawArrow2D(net_force_pos, net_force_pos+net_force, arrow_size);
@@ -267,6 +253,7 @@ void cDrawSimCharacter::DrawGRFs(const cSimCharacter& character, const cGround& 
 }
 void cDrawSimCharacter::DrawForces(const cSimCharacter& character, const tVector& offset)
 {
+	//printf("cDrawSimCharacter::DrawForces start!\n");
 	int num_parts = character.GetNumBodyParts();
 	const double marker_size = 0.50;
 	const double arrow_size = marker_size * 0.65;
@@ -281,6 +268,7 @@ void cDrawSimCharacter::DrawForces(const cSimCharacter& character, const tVector
 			// if (curr_part->IsInContact() && character.IsEndEffector(i))
 			{
 				tVector pos = curr_part->GetPos();
+				//printf("pos:%f,%f,%f,%f\n", pos[0], pos[1], pos[2], pos[3]);
 				tVector external_force = tVector::Zero();
 				external_force += curr_part->mExternalForce.external_force_ground_ins;
 				external_force += curr_part->mExternalForce.external_force_agent_ins;
@@ -650,6 +638,21 @@ void cDrawSimCharacter::DrawSimBody(const cSimCharacter& character, const tVecto
 			else
 			{
 				col = character.GetPartColor(i);
+				/*
+				printf("fill_tint\n");
+				for (int i = 0; i < fill_tint.size(); ++i) {
+					std::cout << fill_tint[i] << " ";
+				}
+				std::cout << std::endl;
+				*/
+				//col = col.cwiseProduct(fill_tint);
+
+				const tVector fill_tint_constant; // A const vector
+				tVector fill_tint = fill_tint_constant; // Mutable copy
+				fill_tint[0] = 0.0; // Now this assignment is allowed
+				fill_tint[1] = 0.0;
+				fill_tint[2] = 0.0;
+				fill_tint[3] = 0.5;
 				col = col.cwiseProduct(fill_tint);
 			}
 

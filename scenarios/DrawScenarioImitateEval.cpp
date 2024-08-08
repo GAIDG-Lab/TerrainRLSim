@@ -6,7 +6,7 @@
 
 const double gLinkWidth = 0.025;
 const tVector gLineColor = tVector(0, 0, 0, 1);
-const tVector gFilLColor = tVector(0.6, 0.65, 0.675, 1);
+const tVector gFilLColor = tVector(0.6, 0.65, 0.675, 1); // kinchar color
 const tVector gKinCharOffset = tVector(0, 0, 0.5, 0);
 
 cDrawScenarioImitateEval::cDrawScenarioImitateEval(cCamera& cam)

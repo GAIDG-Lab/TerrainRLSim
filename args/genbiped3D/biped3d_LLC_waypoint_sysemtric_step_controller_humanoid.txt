@@ -19,7 +19,7 @@
 -terrain_file= data/terrain/plane.txt
 
 //differs
--num_update_steps= 20
+-num_update_steps= 10
 -num_sim_substeps= 2
 -world_scale= 4
 
@@ -66,7 +66,7 @@
 -rand_target_pos_time_min= 1
 -rand_target_pos_time_max= 5
 
--enable_rand_perturbs= false
+-enable_rand_perturbs= true
 -perturb_time_min= 2
 -perturb_time_max= 5
 -min_perturb= 50

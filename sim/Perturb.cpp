@@ -20,6 +20,7 @@ tPerturb::tPerturb(ePerturb type, cSimObj* obj, const tVector& local_pos,
 	assert(type != ePerturbInvalid);
 	mType = type;
 	mObj = obj;
+	mObj->SetObjType(cSimObj::eObjTypeObstacle);
 	mLocalPos = local_pos;
 	mPerturb = perturb;
 	mDuration = duration;

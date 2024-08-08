@@ -467,8 +467,8 @@ void cSimCharacter::RegisterContacts(int contact_flag, int filter_flag)
 		if (IsValidBodyPart(i))
 		{
 			std::shared_ptr<cSimObj>& part = mBodyParts[i];
-			part->RegisterContact(contact_flag, filter_flag);
 			part->SetObjType(cSimObj::eObjTypeCharacter);
+			part->RegisterContact(contact_flag, filter_flag);
 		}
 	}
 }
@@ -546,7 +546,10 @@ tVector cSimCharacter::GetNetExternalForcePos() const
 			num_forces += curr_part->mExternalForce.num_force_agent;
 		}
 	}
-	return net_external_force_pos/num_forces;
+	if(num_forces==0){
+		printf("num_forces = 0; no NetExternalForce positions can be computed.\n");
+	}
+	return net_external_force_pos/num_forces;	
 }
 tVector cSimCharacter::GetInsNetExternalForce() const
 {

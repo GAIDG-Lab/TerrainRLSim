@@ -12,7 +12,7 @@ void cDrawObj::Draw(const cSimObj* obj, cDrawUtil::eDrawMode draw_mode)
 		DrawPlane(reinterpret_cast<const cSimPlane*>(obj), draw_mode);
 		break;
 	case cSimObj::eShapeCapsule:
-		DrawCapsule(reinterpret_cast<const cSimCapsule*>(obj), draw_mode);
+		DrawCapsule(reinterpret_cast<const cSimCapsule*>(obj), draw_mode); // Called
 		break;
 	case cSimObj::eShapeSphere:
 		DrawSphere(reinterpret_cast<const cSimSphere*>(obj), draw_mode);

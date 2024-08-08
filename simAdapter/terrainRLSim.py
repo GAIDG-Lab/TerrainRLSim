@@ -31,7 +31,7 @@ def checkDataIsValid(data, verbose=False, scale=1.0, identifier="Data"):
         for data__ in data:
             valid = valid and checkDataIsValid(data__, verbose=verbose, scale=scale, identifier=identifier)
     """
-    bad_value_boundary=100000
+    bad_value_boundary=100000 # 300000 for cum cases
     data = np.array(data)
     if (not np.all(np.isfinite(data))):
         if ( verbose ):
@@ -54,6 +54,8 @@ def checkDataIsValid(data, verbose=False, scale=1.0, identifier="Data"):
         return False
     
     if (np.any(np.greater(data, bad_value_boundary*scale))):
+        indices_of_greater_values = np.where(data > bad_value_boundary * scale)[0]
+        print("greater_values:", data[indices_of_greater_values], "\n")
         if ( verbose ):
             less_ = np.greater(data, bad_value_boundary*scale)
             bad_indecies = np.where(less_ == True)
