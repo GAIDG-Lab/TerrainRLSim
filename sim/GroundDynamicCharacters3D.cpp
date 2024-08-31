@@ -58,7 +58,7 @@ void cGroundDynamicCharacters3D::SampleHeightVel(const tVector& pos, double& out
 
 	bool foundIntersectedChar = false;
 
-	printf("\n\n\nGroundDynamicCharacters3D.cpp steersuite here\n\n\n");
+	//printf("\n\n\nGroundDynamicCharacters3D.cpp steersuite here\n\n\n");
 	// Check to see if this sample point contains any of the other characters
 	for(std::vector<std::shared_ptr<cSimCharacter>>::const_iterator it = mChars.begin(); it != mChars.end(); ++it) 
 	{

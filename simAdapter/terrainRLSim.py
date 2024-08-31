@@ -431,7 +431,7 @@ class TerrainRLSimWrapper(gym.Env):
             self._sim.update()
             
     def step(self, action):
-        print("step function here\n\n")
+        #print("step function here\n\n")
         """
             Adding multi character support
         """
