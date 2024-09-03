@@ -188,6 +188,8 @@ public:
 
 	virtual tVector GetContactImpulse(const cContactManager::tContactHandle& handle) const;
 	virtual tVector GetManifoldImpulse(const btManifoldPoint& manifold_pt) const;
+	virtual tVector GetManifoldImpulseLateral1(const btManifoldPoint& manifold_pt) const;
+	virtual tVector GetManifoldImpulseLateral2(const btManifoldPoint& manifold_pt) const;
 protected:
 	struct tConstraintEntry
 	{

@@ -81,6 +81,22 @@ void cContactManager::Update()
 				const tContactHandle& h0 = sim_obj0->GetContactHandle();
 				const tContactHandle& h1 = sim_obj1->GetContactHandle();
 			
+				if(sim_obj0->mContactForce.mID == 0)
+				{
+					
+					tVector net_force = mWorld.GetManifoldImpulse(pt) 
+						+ mWorld.GetManifoldImpulseLateral1(pt) + mWorld.GetManifoldImpulseLateral2(pt);
+					sim_obj0->mContactForce.mInsForce = tVector(net_force[0], net_force[1], net_force[2], 0);	
+				}
+				
+				if(sim_obj1->mContactForce.mID == 0)
+				{
+					
+					tVector net_force = mWorld.GetManifoldImpulse(pt) 
+						+ mWorld.GetManifoldImpulseLateral1(pt) + mWorld.GetManifoldImpulseLateral2(pt);
+					sim_obj1->mContactForce.mInsForce = tVector(-net_force[0], -net_force[1], -net_force[2], 0);	
+				}
+
 				bool valid_contact = IsValidContact(h0, h1);
 				if (valid_contact)
 				{

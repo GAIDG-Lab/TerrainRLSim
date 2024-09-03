@@ -766,6 +766,28 @@ tVector cWorld::GetManifoldImpulse(const btManifoldPoint& manifold_pt) const
 	// std::cout << "contact normal " << impulseV << std::endl;
 	return impulseV;
 }
+tVector cWorld::GetManifoldImpulseLateral1(const btManifoldPoint& manifold_pt) const
+{
+	double scale = GetScale();
+	const btVector3& contact_dir = manifold_pt.m_lateralFrictionDir1;
+
+	double impulse = manifold_pt.m_appliedImpulseLateral1;
+
+	tVector impulseV = tVector(contact_dir[0] * impulse, contact_dir[1] * impulse, contact_dir[2] * impulse, 0) / scale;
+
+	return impulseV;
+}
+tVector cWorld::GetManifoldImpulseLateral2(const btManifoldPoint& manifold_pt) const
+{
+	double scale = GetScale();
+	const btVector3& contact_dir = manifold_pt.m_lateralFrictionDir2;
+
+	double impulse = manifold_pt.m_appliedImpulseLateral2;
+
+	tVector impulseV = tVector(contact_dir[0] * impulse, contact_dir[1] * impulse, contact_dir[2] * impulse, 0) / scale;
+
+	return impulseV;
+}
 
 std::unique_ptr<btDiscreteDynamicsWorld>& cWorld::GetInternalWorld()
 {

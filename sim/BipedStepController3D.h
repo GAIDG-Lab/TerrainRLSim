@@ -69,6 +69,7 @@ public:
 	virtual void BuildPoliState(Eigen::VectorXd& out_state) const;
 	virtual void BuildContactState(Eigen::VectorXd& out_state) const;
 	virtual void BuildTaskState(Eigen::VectorXd& out_state) const;
+	virtual void BuildAugState(Eigen::VectorXd& out_state) const;
 
 protected:
 
@@ -83,6 +84,9 @@ protected:
 	virtual int GetContactStateSize() const;
 	virtual int GetTaskStateOffset() const;
 	virtual int GetTaskStateSize() const;
+
+	virtual int GetAugStateOffset() const;
+	virtual int GetAugStateSize() const;
 
 	virtual void EvalNet(const Eigen::VectorXd& x, Eigen::VectorXd& out_y) const;
 

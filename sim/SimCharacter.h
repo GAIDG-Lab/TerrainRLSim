@@ -98,6 +98,8 @@ public:
 	virtual void EnableController(bool enable);
 
 	virtual void ApplyControlForces(const Eigen::VectorXd& tau);
+	virtual void ClearExternalForces();
+
 	virtual void PlayPossum();
 
 	virtual tVector GetCurrentGroundTarget();

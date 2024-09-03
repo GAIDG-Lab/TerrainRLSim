@@ -607,7 +607,21 @@ void cSimCharacter::ApplyControlForces(const Eigen::VectorXd& tau)
 		}
 	}
 }
+void cSimCharacter::ClearExternalForces()
+{
+	int num_joints = GetNumJoints();
+	for (int j = 0; j < num_joints; ++j)
+	{
+		auto& curr_part = mBodyParts[j];
 
+		if (curr_part != nullptr)
+		{
+			curr_part->mContactForce.mInsForce = tVector::Zero();
+			curr_part->mContactForce.mCumForce = tVector::Zero();
+			curr_part->mContactForce.mNumForce = 0;
+		}
+	}
+}
 void cSimCharacter::PlayPossum()
 {
 	if (HasController())
@@ -656,6 +670,9 @@ bool cSimCharacter::BuildSimBody(const tParams& params, const tVector& root_pos)
 
 		if (curr_part != nullptr)
 		{
+			std::cout << "SimCharacter::BuildSimBody curr_part type: " << typeid(curr_part).name() << std::endl;
+			curr_part->mContactForce.mID = 0;
+			std::cout << "SimCharacter::BuildSimBody curr_part mContactForce mID: " << curr_part->mContactForce.mID << std::endl;
 			curr_part->UpdateContact(cWorld::eContactFlagCharacter, cWorld::eContactFlagAll);
 			curr_part->DisableDeactivation();
 		}

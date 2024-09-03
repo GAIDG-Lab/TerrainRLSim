@@ -1,5 +1,13 @@
 #include "SimObj.h"
 
+cSimObj::tContactForce::tContactForce()
+{
+	mID = -1;
+	mInsForce = tVector::Zero();
+	mCumForce = tVector::Zero();
+	mNumForce = 0;
+}
+
 cSimObj::cSimObj()
 	: mWorld(nullptr)
 {

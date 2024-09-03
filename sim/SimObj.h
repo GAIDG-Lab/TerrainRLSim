@@ -24,6 +24,18 @@ public:
 		eShapeCylinder,
 		eShapeMax,
 	};
+	struct tContactForce
+	{
+		int mID;
+		tVector mInsForce;
+		tVector mCumForce;
+		int mNumForce;
+
+		tContactForce();
+		
+	};
+
+	mutable tContactForce mContactForce;
 
 	virtual ~cSimObj();
 
