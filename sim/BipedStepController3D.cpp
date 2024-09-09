@@ -2,6 +2,12 @@
 #include "sim/SimCharacter.h"
 
 #define AUG
+//#define CUM_EXTERNAL
+//#define AVG_EXTERNAL
+//#define CUM_GRF
+//#define AVG_GRF
+#define CUM_NET
+//#define AVG_NET
 
 cBipedStepController3D::tStepPlan::tStepPlan()
 {
@@ -144,7 +150,23 @@ int cBipedStepController3D::GetAugStateOffset() const
 
 int cBipedStepController3D::GetAugStateSize() const
 {
-	return mChar->GetNumJoints() * 3;
+	int aug_size = 0;
+#if defined(CUM_EXTERNAL)
+	aug_size = mChar->GetNumJoints() * 3;
+#elif defined(AVG_EXTERNAL)
+	aug_size = mChar->GetNumJoints() * 3;
+#elif defined(CUM_GRF)
+	aug_size = 6;
+#elif defined(AVG_GRF)
+	aug_size = 6;
+#elif defined(CUM_NET)
+	aug_size = 3;
+#elif defined(AVG_NET)
+	aug_size = 3;
+#else
+
+#endif
+	return aug_size;
 }
 
 void cBipedStepController3D::BuildPoliState(Eigen::VectorXd& out_state) const
@@ -178,6 +200,8 @@ void cBipedStepController3D::BuildPoliState(Eigen::VectorXd& out_state) const
 void cBipedStepController3D::BuildAugState(Eigen::VectorXd& out_state) const
 {
 	//printf("BipedStepController3D::BuildAugState\n");
+	
+#if defined(CUM_EXTERNAL)
 	int num_parts = mChar->GetNumBodyParts();
 	out_state.resize(num_parts * 3);
 
@@ -187,11 +211,93 @@ void cBipedStepController3D::BuildAugState(Eigen::VectorXd& out_state) const
 		if (mChar->IsValidBodyPart(part_id))
 		{
 			const auto& curr_part = mChar->GetBodyPart(part_id);
-			tVector curr_force = curr_part->mContactForce.mInsForce;
+			tVector curr_force = curr_part->mContactForce.mCumForce;
 
 			out_state.segment(i * 3, 3) = curr_force.segment(0, 3);
 		}
 	}
+#elif defined(AVG_EXTERNAL)
+	int num_parts = mChar->GetNumBodyParts();
+	out_state.resize(num_parts * 3);
+
+	for (int i = 0; i < num_parts; ++i)
+	{
+		int part_id = RetargetJointID(i);
+		if (mChar->IsValidBodyPart(part_id))
+		{
+			const auto& curr_part = mChar->GetBodyPart(part_id);
+			tVector curr_force = curr_part->mContactForce.mCumForce / (double)(curr_part->mContactForce.mNumForce);
+
+			out_state.segment(i * 3, 3) = curr_force.segment(0, 3);
+		}
+	}
+
+#elif defined(CUM_GRF)
+	out_state.resize(6);
+	int num_end_effectors = GetNumEndEffectors();
+	for (int e = 0; e < num_end_effectors; ++e)
+	{
+		int joint_id = mEndEffectors[e];
+		joint_id = RetargetJointID(joint_id);
+		if (mChar->IsValidBodyPart(joint_id))
+		{
+			const auto& curr_part = mChar->GetBodyPart(joint_id);
+			tVector curr_force = curr_part->mContactForce.mCumForce;
+
+			out_state.segment(e * 3, 3) = curr_force.segment(0, 3);
+		}
+	}
+#elif defined(AVG_GRF)
+	out_state.resize(6);
+	int num_end_effectors = GetNumEndEffectors();
+	for (int e = 0; e < num_end_effectors; ++e)
+	{
+		int joint_id = mEndEffectors[e];
+		joint_id = RetargetJointID(joint_id);
+		if (mChar->IsValidBodyPart(joint_id))
+		{
+			const auto& curr_part = mChar->GetBodyPart(joint_id);
+			tVector curr_force = curr_part->mContactForce.mCumForce / (double)(curr_part->mContactForce.mNumForce);
+			
+			out_state.segment(e * 3, 3) = curr_force.segment(0, 3);
+		}
+	}
+#elif defined(CUM_NET)
+	out_state.resize(3);
+	int num_parts = mChar->GetNumBodyParts();
+
+	tVector net_force = tVector::Zero();
+	for (int i = 0; i < num_parts; ++i)
+	{
+		int part_id = RetargetJointID(i);
+		if (mChar->IsValidBodyPart(part_id))
+		{
+			const auto& curr_part = mChar->GetBodyPart(part_id);
+			net_force += curr_part->mContactForce.mCumForce;
+		}
+	}
+	out_state.segment(0, 3) = net_force.segment(0, 3);
+#elif defined(AVG_NET)
+	out_state.resize(3);
+	int num_parts = mChar->GetNumBodyParts();
+
+	tVector net_force = tVector::Zero();
+	double num_forces = 0;
+	for (int i = 0; i < num_parts; ++i)
+	{
+		int part_id = RetargetJointID(i);
+		if (mChar->IsValidBodyPart(part_id))
+		{
+			const auto& curr_part = mChar->GetBodyPart(part_id);
+			net_force += curr_part->mContactForce.mCumForce;
+			num_forces += curr_part->mContactForce.mNumForce;
+		}
+	}
+	net_force = net_force / num_forces;
+	out_state.segment(0, 3) = net_force.segment(0, 3);
+#else
+
+#endif
 	//std::cout << "BipedStepController3D::BuildAugState state: \n" << out_state << std::endl;
 	mChar->ClearExternalForces();
 }
