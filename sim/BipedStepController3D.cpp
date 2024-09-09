@@ -1,12 +1,12 @@
 #include "sim/BipedStepController3D.h"
 #include "sim/SimCharacter.h"
 
-#define AUG
+//#define AUG
 //#define CUM_EXTERNAL
 //#define AVG_EXTERNAL
 //#define CUM_GRF
 //#define AVG_GRF
-#define CUM_NET
+//#define CUM_NET
 //#define AVG_NET
 
 cBipedStepController3D::tStepPlan::tStepPlan()

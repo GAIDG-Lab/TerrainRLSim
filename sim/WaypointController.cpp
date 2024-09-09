@@ -272,6 +272,7 @@ int cWaypointController::GetGroundSampleRes() const
 
 void cWaypointController::BuildPoliState(Eigen::VectorXd& out_state) const
 {
+	//printf("WaypointController::BuildPoliState out_state\n");
 	cCtTargetController::BuildPoliState(out_state);
 
 #if defined(ENABLE_BILINEAR_PHASE)
@@ -282,6 +283,7 @@ void cWaypointController::BuildPoliState(Eigen::VectorXd& out_state) const
 	int phase_size = GetPhaseStateSize();
 	out_state.segment(phase_offset, phase_size) = phase_state;
 #endif
+	//printf("WaypointController::BuildPoliState out_state size: %d\n", out_state.size());
 }
 
 int cWaypointController::GetPhaseStateOffset() const

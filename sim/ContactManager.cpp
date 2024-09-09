@@ -3,7 +3,7 @@
 #include "SimObj.h"
 #include <iostream>
 
-#define AUG
+//#define AUG
 
 const int cContactManager::gInvalidID = -1;
 

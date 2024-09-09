@@ -4,7 +4,7 @@
 "Params": 
 [
 	{
-		"NumObstacles": 10,
+		"NumObstacles": 2,
 		"ObstacleWidth0": 0.5,
 		"ObstacleWidth1": 1.0,
 		"ObstacleHeight0": 0.5,
