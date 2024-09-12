@@ -58,6 +58,7 @@ void cBipedSymStepController3D::BuildPhaseState(Eigen::VectorXd& out_state) cons
 	int bin = static_cast<int>(phase * GetNumPhaseBins());
 	out_state[bin + dphase_offset] = 1;
 #endif // ENABLE_PHASE_STATE_BINS
+	//printf("BipedSymStepController3D::BuildPhaseState out_state size: %d\n", out_state.size());
 }
 
 void cBipedSymStepController3D::BuildTaskState(Eigen::VectorXd& out_state) const
@@ -100,6 +101,8 @@ void cBipedSymStepController3D::BuildTaskState(Eigen::VectorXd& out_state) const
 	out_state[eSymTaskParamStepX1] = delta1[0];
 	out_state[eSymTaskParamStepY1] = delta1[1];
 	out_state[eSymTaskParamStepZ1] = delta1[2];
+
+	//printf("BipedSymStepController3D::BuildTaskState size: %d\n", out_state.size());
 }
 
 int cBipedSymStepController3D::GetTaskStateSize() const

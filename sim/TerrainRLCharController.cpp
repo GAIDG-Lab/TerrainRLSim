@@ -351,6 +351,7 @@ bool cTerrainRLCharController::SampleGroundHeightVel(const tVector& pos, double&
 
 void cTerrainRLCharController::BuildPoliState(Eigen::VectorXd& out_state) const
 {
+	//printf("TerrainRLCharController::BuildPoliState\n");
 	int state_size = GetPoliStateSize();
 	out_state.resize(state_size);
 
@@ -376,6 +377,7 @@ void cTerrainRLCharController::BuildPoliState(Eigen::VectorXd& out_state) const
 void cTerrainRLCharController::BuildPoliStateGround(Eigen::VectorXd& out_ground) const
 {
 	out_ground = mGroundSamples;
+	//printf("TerrainRLCharController::BuildPoliStateGround out_ground size: %d\n", out_ground.size());
 }
 
 void cTerrainRLCharController::BuildPoliStatePose(Eigen::VectorXd& out_pose) const

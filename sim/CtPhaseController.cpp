@@ -86,6 +86,7 @@ int cCtPhaseController::GetPhaseStateSize() const
  */
 void cCtPhaseController::BuildPoliState(Eigen::VectorXd& out_state) const
 {
+	//printf("CtPhaseController::BuildPhaseState\n");
 	Eigen::VectorXd phase_state;
 	cCtController::BuildPoliState(out_state);
 	BuildPhaseState(phase_state);
@@ -136,6 +137,7 @@ void cCtPhaseController::BuildPhaseState(Eigen::VectorXd& out_state) const
 	int bin = static_cast<int>(phase * GetNumPhaseBins());
 	out_state[bin + dphase_offset] = 1;
 #endif // ENABLE_PHASE_STATE_BINS
+	//printf("CtPhaseController::BuildPhaseState size: %d\n", out_state.size());
 }
 
 #if defined(ENABLE_PHASE_STATE_BINS)

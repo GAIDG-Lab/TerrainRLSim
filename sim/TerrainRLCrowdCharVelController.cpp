@@ -111,11 +111,13 @@ int cTerrainRLCrowdCharVelController::GetGroundFeatureSize() const
 
 void cTerrainRLCrowdCharVelController::BuildPoliStateGround(Eigen::VectorXd& out_ground) const
 {
+	//printf("TerrainRLCrowdCharVelController::BuildPoliStateGround\n");
 	int num_samples = GetNumGroundSamples();
 	out_ground.resize(GetGroundFeatureSize());
 
 	out_ground.segment(0, num_samples) = mGroundVelSamples.col(0);
 	out_ground.segment(num_samples, num_samples) = mGroundVelSamples.col(2);
 
+	//printf("TerrainRLCrowdCharVelController::BuildPoliStateGround out_ground size: %d\n", out_ground.size());
 	// out_ground.segment(2 * num_samples, num_samples) = mGroundSamples;
 }

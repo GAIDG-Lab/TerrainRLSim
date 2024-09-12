@@ -348,11 +348,11 @@ void cGroundObstaclesDynamicCharacters3D::BuildObstacles()
 	{
 		tObstacle curr_obstacle;
 		if(steersuite_file != ""){
-			printf("\n\nGroundObstaclesDynamicCharacters3D.cpp  steersuite BuildObstacles\n\n");
+			//printf("\n\nGroundObstaclesDynamicCharacters3D.cpp  steersuite BuildObstacles\n\n");
 			BuildObstacle(curr_obstacle, i);
 		}
 		else{
-			printf("\n\nGroundObstaclesDynamicCharacters3D.cpp not steersuite BuildObstacles\n\n");
+			//printf("\n\nGroundObstaclesDynamicCharacters3D.cpp not steersuite BuildObstacles\n\n");
 			BuildObstacle(curr_obstacle);
 		}
 		

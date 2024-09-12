@@ -284,6 +284,7 @@ void cWaypointController::BuildPoliState(Eigen::VectorXd& out_state) const
 	out_state.segment(phase_offset, phase_size) = phase_state;
 #endif
 	//printf("WaypointController::BuildPoliState out_state size: %d\n", out_state.size());
+	//std::cout << "WaypointController::BuildPoliState out_state: \n" << out_state << std::endl;
 }
 
 int cWaypointController::GetPhaseStateOffset() const

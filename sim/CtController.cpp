@@ -586,6 +586,7 @@ void cCtController::BuildPoliStatePose(Eigen::VectorXd& out_pose) const
 #endif
 		}
 	}
+	//printf("CtController::BuildPoliStatePose out_pose size: %d\n", out_pose.size());
 }
 
 void cCtController::BuildPoliStateVel(Eigen::VectorXd& out_vel) const
@@ -640,6 +641,7 @@ void cCtController::BuildPoliStateVel(Eigen::VectorXd& out_vel) const
 		}
 #endif
 	}
+	//printf("CtController::BuildPoliStateVel out_vel size: %d\n", out_vel.size());
 }
 
 void cCtController::BuildJointActionBounds(int joint_id, Eigen::VectorXd& out_min, Eigen::VectorXd& out_max) const

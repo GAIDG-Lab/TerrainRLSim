@@ -91,6 +91,7 @@ int cTerrainRLCrowdCharController::GetGroundFeatureSize() const
 
 void cTerrainRLCrowdCharController::BuildPoliStateGround(Eigen::VectorXd& out_ground) const
 {
+	printf("TerrainRLCrowdCharController::BuildPoliStateGround\n");
 	int num_samples = GetNumGroundSamples();
 	out_ground.resize(GetGroundFeatureSize());
 

@@ -14,6 +14,7 @@ cMultiCharWaypointController::~cMultiCharWaypointController()
 
 void cMultiCharWaypointController::BuildTargetPosState(Eigen::VectorXd& out_state) const
 {
+	//printf("MultiCharWaypointController::BuildTargetPosState\n");
 	out_state = Eigen::VectorXd::Zero(GetTargetPosStateSize());
 	tVector target_pos = mChar->GetCurrentGroundTarget();
 	target_pos[3] = 1;
@@ -32,6 +33,8 @@ void cMultiCharWaypointController::BuildTargetPosState(Eigen::VectorXd& out_stat
 
 	out_state[0] = tar_theta;
 	out_state[1] = tar_dist;
+	//printf("MultiCharWaypointController::BuildTargetPosState out_state size: %d\n", out_state.size());
+	//printf("MultiCharWaypointController::BuildTargetPosState out_state: %f, %f\n", out_state[0], out_state[1]);
 }
 
 void cMultiCharWaypointController::ApplyAction(const tAction& action)

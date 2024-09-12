@@ -52,6 +52,7 @@ int cCtTargetController::GetTargetPosStateSize() const
 
 void cCtTargetController::BuildPoliState(Eigen::VectorXd& out_state) const
 {
+	//printf("CtTargetController::BuildPoliState\n");
 	Eigen::VectorXd tar_pos;
 	cCtController::BuildPoliState(out_state);
 	BuildTargetPosState(tar_pos);
@@ -63,6 +64,7 @@ void cCtTargetController::BuildPoliState(Eigen::VectorXd& out_state) const
 
 void cCtTargetController::BuildTargetPosState(Eigen::VectorXd& out_state) const
 {
+	//printf("CtTargetController::BuildTargetPosState\n");
 	out_state = Eigen::VectorXd::Zero(GetTargetPosStateSize());
 	tVector target_pos = mTargetPos;
 	target_pos[3] = 1;
@@ -81,4 +83,5 @@ void cCtTargetController::BuildTargetPosState(Eigen::VectorXd& out_state) const
 
 	out_state[0] = tar_theta;
 	out_state[1] = tar_dist;
+	//printf("CtTargetController::BuildTargetPosState out_state: %f, %f\n", out_state[0], out_state[1]);
 }

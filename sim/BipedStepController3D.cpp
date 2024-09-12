@@ -1,8 +1,8 @@
 #include "sim/BipedStepController3D.h"
 #include "sim/SimCharacter.h"
 
-//#define AUG
-//#define CUM_EXTERNAL
+#define AUG
+#define CUM_EXTERNAL
 //#define AVG_EXTERNAL
 //#define CUM_GRF
 //#define AVG_GRF
@@ -133,19 +133,11 @@ int cBipedStepController3D::GetContactStateSize() const
 	return GetNumEndEffectors();
 }
 
-int cBipedStepController3D::GetTaskStateOffset() const
-{
-	return cCtPDPhaseController::GetPoliStateSize() + GetContactStateSize();
-}
 
-int cBipedStepController3D::GetTaskStateSize() const
-{
-	return eTaskParamMax;
-}
 
 int cBipedStepController3D::GetAugStateOffset() const
 {
-	return cCtPDPhaseController::GetPoliStateSize() + GetContactStateSize() + GetTaskStateSize();
+	return cCtPDPhaseController::GetPoliStateSize() + GetContactStateSize() ;
 }
 
 int cBipedStepController3D::GetAugStateSize() const
@@ -168,7 +160,15 @@ int cBipedStepController3D::GetAugStateSize() const
 #endif
 	return aug_size;
 }
+int cBipedStepController3D::GetTaskStateOffset() const
+{
+	return cCtPDPhaseController::GetPoliStateSize() + GetContactStateSize() + GetAugStateSize();
+}
 
+int cBipedStepController3D::GetTaskStateSize() const
+{
+	return eTaskParamMax;
+}
 void cBipedStepController3D::BuildPoliState(Eigen::VectorXd& out_state) const
 {
 	//printf("BipedStepController3D::BuildPoliState\n");
@@ -184,6 +184,8 @@ void cBipedStepController3D::BuildPoliState(Eigen::VectorXd& out_state) const
 	int task_offset = GetTaskStateOffset();
 	int task_size = GetTaskStateSize();
 
+	//printf("BipedStepController3D::BuildPoliState task_offset: %d\n", task_offset);
+
 	out_state.segment(contact_offset, contact_size) = contact_state;
 	out_state.segment(task_offset, task_size) = task_state;
 
@@ -195,6 +197,7 @@ void cBipedStepController3D::BuildPoliState(Eigen::VectorXd& out_state) const
 	int aug_size = GetAugStateSize();
 	out_state.segment(aug_offset, aug_size) = aug_state;
 #endif
+	//printf("BipedStepController3D::BuildPoliState out_state size: %d\n", out_state.size());
 }
 
 void cBipedStepController3D::BuildAugState(Eigen::VectorXd& out_state) const
@@ -299,6 +302,7 @@ void cBipedStepController3D::BuildAugState(Eigen::VectorXd& out_state) const
 
 #endif
 	//std::cout << "BipedStepController3D::BuildAugState state: \n" << out_state << std::endl;
+	//printf("BipedStepController3D::BuildPoliStateAug size: %d\n", out_state.size());
 	mChar->ClearExternalForces();
 }
 
@@ -314,6 +318,7 @@ void cBipedStepController3D::BuildContactState(Eigen::VectorXd& out_state) const
 		double val = (in_contact) ? 1 : 0;
 		out_state[e] = val;
 	}
+	//printf("BipedStepController3D::BuildContactState size: %d\n", out_state.size());
 }
 
 void cBipedStepController3D::BuildTaskState(Eigen::VectorXd& out_state) const
@@ -379,6 +384,8 @@ void cBipedStepController3D::BuildTaskState(Eigen::VectorXd& out_state) const
 	out_state[eTaskParamStepLeftY1] = left_delta1[1];
 	out_state[eTaskParamStepLeftZ1] = left_delta1[2];
 	out_state[eTaskParamRootHeading] = tar_heading;
+
+	//printf("BipedStepController3D::BuildTaskState size: %d\n", out_state.size());
 }
 
 // hack to get around pdphase controller being 2d, terrain should be compositional not inherited
