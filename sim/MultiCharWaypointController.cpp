@@ -16,7 +16,9 @@ void cMultiCharWaypointController::BuildTargetPosState(Eigen::VectorXd& out_stat
 {
 	//printf("MultiCharWaypointController::BuildTargetPosState\n");
 	out_state = Eigen::VectorXd::Zero(GetTargetPosStateSize());
+
 	tVector target_pos = mChar->GetCurrentGroundTarget();
+	printf("MultiCharWaypointController::BuildTargetPosState target_pos: %f, %f\n", target_pos[0], target_pos[2]);
 	target_pos[3] = 1;
 	tMatrix origin_trans = mChar->BuildOriginTrans();
 	target_pos = origin_trans * target_pos;

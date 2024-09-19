@@ -102,6 +102,7 @@ void cBipedSymStepController3D::BuildTaskState(Eigen::VectorXd& out_state) const
 	out_state[eSymTaskParamStepY1] = delta1[1];
 	out_state[eSymTaskParamStepZ1] = delta1[2];
 
+	//std::cout << "BipedSymStepController3D::BuildTaskState out_state: \n" << out_state << std::endl;
 	//printf("BipedSymStepController3D::BuildTaskState size: %d\n", out_state.size());
 }
 

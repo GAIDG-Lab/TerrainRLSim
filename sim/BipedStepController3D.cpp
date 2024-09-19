@@ -1,7 +1,7 @@
 #include "sim/BipedStepController3D.h"
 #include "sim/SimCharacter.h"
 
-#define AUG
+//#define AUG
 #define CUM_EXTERNAL
 //#define AVG_EXTERNAL
 //#define CUM_GRF
@@ -130,7 +130,24 @@ int cBipedStepController3D::GetContactStateOffset() const
 int cBipedStepController3D::GetContactStateSize() const
 {
 	//printf("BipedStepController3D::GetContactStateSize\n");
-	return GetNumEndEffectors();
+
+	int aug_size = 0;
+#if defined(CUM_EXTERNAL)
+	aug_size = mChar->GetNumJoints() * 3;
+#elif defined(AVG_EXTERNAL)
+	aug_size = mChar->GetNumJoints() * 3;
+#elif defined(CUM_GRF)
+	aug_size = 6;
+#elif defined(AVG_GRF)
+	aug_size = 6;
+#elif defined(CUM_NET)
+	aug_size = 3;
+#elif defined(AVG_NET)
+	aug_size = 3;
+#else
+
+#endif
+	return GetNumEndEffectors() + aug_size;
 }
 
 
@@ -162,7 +179,11 @@ int cBipedStepController3D::GetAugStateSize() const
 }
 int cBipedStepController3D::GetTaskStateOffset() const
 {
+#if defined(AUG)
 	return cCtPDPhaseController::GetPoliStateSize() + GetContactStateSize() + GetAugStateSize();
+#else
+	return cCtPDPhaseController::GetPoliStateSize() + GetContactStateSize();
+#endif
 }
 
 int cBipedStepController3D::GetTaskStateSize() const
@@ -171,23 +192,12 @@ int cBipedStepController3D::GetTaskStateSize() const
 }
 void cBipedStepController3D::BuildPoliState(Eigen::VectorXd& out_state) const
 {
-	//printf("BipedStepController3D::BuildPoliState\n");
+	//printf("\nBipedStepController3D::BuildPoliState\n");
 	cCtPDPhaseController::BuildPoliState(out_state);
 
 	Eigen::VectorXd contact_state;
 	Eigen::VectorXd task_state;
 	BuildContactState(contact_state);
-	BuildTaskState(task_state);
-
-	int contact_offset = GetContactStateOffset();
-	int contact_size = GetContactStateSize();
-	int task_offset = GetTaskStateOffset();
-	int task_size = GetTaskStateSize();
-
-	//printf("BipedStepController3D::BuildPoliState task_offset: %d\n", task_offset);
-
-	out_state.segment(contact_offset, contact_size) = contact_state;
-	out_state.segment(task_offset, task_size) = task_state;
 
 #if defined(AUG)
 	//printf("BipedStepController3D::BuildPoliState\n");
@@ -195,9 +205,35 @@ void cBipedStepController3D::BuildPoliState(Eigen::VectorXd& out_state) const
 	BuildAugState(aug_state);
 	int aug_offset = GetAugStateOffset();
 	int aug_size = GetAugStateSize();
+	//printf("BipedStepController3D::BuildPoliState aug_offset: %d\n", aug_offset);
+	//printf("BipedStepController3D::BuildPoliState aug_size: %d\n", aug_size);
+	
+#endif
+
+	BuildTaskState(task_state);
+
+	int contact_offset = GetContactStateOffset();
+	int contact_size = GetContactStateSize();
+	int task_offset = GetTaskStateOffset();
+	int task_size = GetTaskStateSize();
+
+	//printf("BipedStepController3D::BuildPoliState contact_offset: %d\n", contact_offset);
+	//printf("BipedStepController3D::BuildPoliState contact_size: %d\n", contact_size);
+	
+	//printf("BipedStepController3D::BuildPoliState task_offset: %d\n", task_offset);
+	//printf("BipedStepController3D::BuildPoliState task_size: %d\n", task_size);
+
+	out_state.segment(contact_offset, contact_size) = contact_state;
+
+#if defined(AUG)
 	out_state.segment(aug_offset, aug_size) = aug_state;
 #endif
+
+	out_state.segment(task_offset, task_size) = task_state;
+
+
 	//printf("BipedStepController3D::BuildPoliState out_state size: %d\n", out_state.size());
+	//std::cout << "BipedStepController3D::BuildPoliState out_state:\n" << out_state << std::endl;
 }
 
 void cBipedStepController3D::BuildAugState(Eigen::VectorXd& out_state) const
@@ -309,7 +345,9 @@ void cBipedStepController3D::BuildAugState(Eigen::VectorXd& out_state) const
 void cBipedStepController3D::BuildContactState(Eigen::VectorXd& out_state) const
 {
 	int num_end_effectors = GetNumEndEffectors();
-	out_state.resize(num_end_effectors);
+	int num_parts = mChar->GetNumBodyParts();
+
+	out_state.resize(num_end_effectors + num_parts * 3);
 	for (int e = 0; e < num_end_effectors; ++e)
 	{
 		int joint_id = mEndEffectors[e];
@@ -317,6 +355,19 @@ void cBipedStepController3D::BuildContactState(Eigen::VectorXd& out_state) const
 		bool in_contact = mChar->IsInContact(joint_id);
 		double val = (in_contact) ? 1 : 0;
 		out_state[e] = val;
+	}
+	
+
+	for (int i = 0; i < num_parts; ++i)
+	{
+		int part_id = RetargetJointID(i);
+		if (mChar->IsValidBodyPart(part_id))
+		{
+			const auto& curr_part = mChar->GetBodyPart(part_id);
+			tVector curr_force = curr_part->mContactForce.mCumForce;
+
+			out_state.segment(num_end_effectors + i * 3, 3) = curr_force.segment(0, 3);
+		}
 	}
 	//printf("BipedStepController3D::BuildContactState size: %d\n", out_state.size());
 }

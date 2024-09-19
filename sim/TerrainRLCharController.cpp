@@ -372,6 +372,7 @@ void cTerrainRLCharController::BuildPoliState(Eigen::VectorXd& out_state) const
 	out_state.segment(ground_offset, ground_size) = ground;
 	out_state.segment(pose_offset, pose_size) = pose;
 	out_state.segment(vel_offset, vel_size) = vel;
+	//printf("TerrainRLCharController::BuildPoliState out_state size: %d\n", out_state.size());
 }
 
 void cTerrainRLCharController::BuildPoliStateGround(Eigen::VectorXd& out_ground) const
